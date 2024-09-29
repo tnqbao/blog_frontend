@@ -1,0 +1,17 @@
+{
+    "login":"Login",
+    "register":"Register",
+    "logout":"Logout",  
+    
+    "welcome":"Welcome back!",
+    "username":"Username",
+    "password":"Password",
+    "keep_me_logged_in":"Keep me logged in",
+    "no_have_account":"No account? Create one.",
+
+    "register_title":"Create an account",
+    "have_account" :"Already have account? Login.",
+    "fullname": "Fullname",
+    "mail": "E-mail",
+    "date_of_birth" : "Date of birth"
+}

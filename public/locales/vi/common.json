@@ -1,0 +1,17 @@
+{
+    "login":"Đăng nhập",
+    "register":"Đăng ký",
+    "logout":"Đăng xuất",
+
+    "welcome":"Chào mừng trở lại!",
+    "username":"Tên đăng nhập",
+    "password":"Mật khẩu",
+    "keep_me_logged_in":"Nhớ mật khẩu",
+    "no_have_account":"Chưa có tài khoản? Đăng ký ngay.",
+
+    "register_title":"Tạo tài khoản của bạn",
+    "have_account" :"Bạn đã có tài khoản? Đăng nhập",
+    "fullname": "Tên của bạn",
+    "mail": "E-mail",
+    "date_of_birth" : "Ngày sinh"
+}
