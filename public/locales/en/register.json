@@ -1,0 +1,16 @@
+{
+    "title": "Create an account!",
+    "username": "Username",
+    "password": "Password",
+    "fullname": "Fullname",
+    "mail": "Email",
+    "phone" : "Phone",
+    "dateOfBirth" : "Birthday",
+    "register": "Register",
+    "have_account" : "Already have account? Go login.",
+    "pleaseInputUsername": "Please input your username!",
+    "pleaseInputPassword": "Please input your password!",
+    "pleaseInputFullname" : "Please input your name",
+    "notValidEmail" : "The input is not valid E-mail!",
+    "notValidPhone" : "The input is not valid Phone!"
+}

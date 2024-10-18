@@ -1,0 +1,17 @@
+{
+    "title": "Tạo tài khoản mới!",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "fullname": "Họ và tên",
+    "mail": "Email",
+    "phone" : "Số điện thoại",
+    "dateOfBirth": "Ngày sinh",
+    "register": "Đăng ký",
+    "have_account": "Đã có tài khoản? Đi tới đăng nhập.",
+    "pleaseInputUsername": "Xin mời nhập tên tài khoản của bạn!",
+    "pleaseInputPassword": "Xin mời nhập mật khẩu của bạn!",
+    "pleaseInputFullname": "Xin mời nhập tên của bạn!",
+    "notValidEmail": "E-mail của bạn không hợp lệ!",
+    "notValidPhone": "Số điện thoại không chính xác!"
+  }
+  
