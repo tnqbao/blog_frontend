@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Layout } from 'antd';
 import nextI18NextConfig from '../../next-i18next.config.js';
+import Upload from '@/components/uploadBlog';
 
 const { Content } = Layout;
 
@@ -9,9 +10,7 @@ const HomePage = () => {
   return (
     <Layout>
       <Content>
-        <div className="flex-row h-full items-center justify-center">
-        <h1 className=''>Welcome to the Home Page</h1>
-        </div>
+        <Upload></Upload>
       </Content>
     </Layout>
   );
