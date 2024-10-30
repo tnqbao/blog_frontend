@@ -21,7 +21,7 @@ function App({ Component, pageProps }: AppProps) {
     <AuthProvider>
     <Layout className='bg-black/90'>
       <HeaderComp />
-      <Content>
+      <Content className='mx-5 md:ml-20'>
         <Component {...pageProps} />
       </Content>
       <FooterComp />

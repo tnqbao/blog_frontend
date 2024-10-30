@@ -16,7 +16,7 @@ const HeaderComp: React.FC = () => {
   return (
     <header className="bg-black/80">
       <div className="bg-none flex flex-wrap shadow-md justify-around items-center px-4 py-3 h-auto">
-        <div className="flex items-center bg-[url('https://i.imgur.com/aMY5YTJ.png')] bg-cover bg-center h-16 w-16 rounded-md"></div>
+        <div className="flex items-center bg-[url('https://i.imgur.com/I9Qjk2t.png')] bg-cover bg-center h-16 w-16 rounded-md"></div>
         <div className="text-start ml-3 flex-grow min-w-[150px]">
           <h1 className="text-2xl md:text-3xl font-bold text-white">
             Blog MindMap

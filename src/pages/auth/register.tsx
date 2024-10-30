@@ -93,6 +93,7 @@ const Register: React.FC = () => {
               name="mail"
               rules={[
                 { type: "email", message: t('notValidEmail')},
+                { required: true, message: t("pleaseInputPassword") },
               ]}
             >
               <Input placeholder={t("mail")}/>
