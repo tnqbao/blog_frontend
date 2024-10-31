@@ -30,7 +30,7 @@ const Register: React.FC = () => {
     try {
       const response = await userApiInstance.post("/auth/register", formattedValues);
       if (response.status==200) {
-        router.push("../auth/login");
+        await router.push("../auth/login");
       }
     } catch (error) {
       console.error("Error:", error);

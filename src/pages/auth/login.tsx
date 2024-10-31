@@ -16,7 +16,8 @@ type FieldType = {
 
 const Login: React.FC = () => {
     const [form] = Form.useForm();
-    const [loading, setLoading] = useState(false);
+        const [loading, setLoading] = useState(false);
+    const jwt = localStorage.getItem("jwt") || sessionStorage.getItem("jwt");
     const router = useRouter();
     const {t} = useTranslation("login");
     const {login} = useAuth();

@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Form, Input, Button} from "antd";
-import {runes} from "runes2";
 import SubmitButton from "./disableSubmitButton";
 import {userApiInstance} from "@/utils/axiosConfig";
 import {useRouter} from "next/router";
+import {useLocalStorage} from "usehooks-ts";
 
 const {TextArea} = Input;
 type FieldType = {
@@ -12,6 +12,7 @@ type FieldType = {
 };
 const Upload: React.FC = () => {
     const [value, setValue] = useState("");
+    const [username] = useLocalStorage("username", "");
     const [form] = Form.useForm();
     const router = useRouter();
 
@@ -22,6 +23,7 @@ const Upload: React.FC = () => {
         try {
             const response = await userApiInstance.post("/post", values, {withCredentials: true});
             if (response.status === 200) {
+                alert("Post successfully!");
                 await router.push("../");
             }
         } catch {
@@ -29,7 +31,7 @@ const Upload: React.FC = () => {
         }
     };
     return (
-        <div className="flex flex-wrap justify-center items-center mx-20 ">
+        <div className="flex-grow flex flex-wrap justify-center items-center mx-20 ">
             <Form
                 form={form}
                 layout="vertical"
@@ -37,14 +39,14 @@ const Upload: React.FC = () => {
                 autoComplete="off"
                 className="w-2/3 md:w-2/3 border rounded-lg border-black p-5 md:p-7 m-2 "
             >
+                <Form.Item>
+                    <h1 className="text-left text-2xl font-bold mb-4 w-full">{username}</h1>
+                </Form.Item>
                 <Form.Item name={"title"} rules={[{required: true, message: ""}]}>
                     <Input
                         count={{
                             show: false,
-                            max: 100,
-                            strategy: (txt) => runes(txt).length,
-                            exceedFormatter: (txt, {max}) =>
-                                runes(txt).slice(0, max).join(""),
+                            max: 100
                         }}
                         placeholder="New title"
                         variant="borderless"

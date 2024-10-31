@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
+import {useLocalStorage} from "usehooks-ts";
 
 const createUserApiInstance = (): AxiosInstance => {
+
   const instance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_USER_API,
     headers: {
@@ -10,7 +12,7 @@ const createUserApiInstance = (): AxiosInstance => {
   });
 
   instance.interceptors.request.use(config => {
-    const jwt = localStorage.getItem('jwt');
+    const [jwt] = useLocalStorage<string | null>('jwt', null)
     if (jwt) {
       config.headers.Authorization = `${jwt}`;
     }

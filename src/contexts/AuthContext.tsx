@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
+import { useLocalStorage, useSessionStorage } from "usehooks-ts";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -7,43 +8,38 @@ interface AuthContextType {
   logout: () => void;
 }
 
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState<string | null>(null);
+  const [username, setUsername] = useState("");
+  const [jwt, setJwt] = useState("");
+  const [sessionUsername, setSessionUsername, removeSessionUsername] = useSessionStorage<string | null>("username", null);
 
   useEffect(() => {
-    const savedUsername = localStorage.getItem("username") || sessionStorage.getItem("username");
-    if (savedUsername) {
-      setUsername(savedUsername);
-      setIsAuthenticated(true);
-    }
-  }, []);
+    setIsAuthenticated(!!username || !!sessionUsername);
+
+  }, [username, sessionUsername]);
 
   const login = (username: string, keepLogin: string) => {
-    setUsername(username);
-    setIsAuthenticated(true);
-    
-    if (keepLogin) {
-      localStorage.setItem("username", username);
+    if (keepLogin==="true") {
+      setUsername(username);
     } else {
-      sessionStorage.setItem("username", username);
+      setSessionUsername(username);
     }
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
-    setUsername(null);
+    setUsername("");
+    removeSessionUsername();
     setIsAuthenticated(false);
-    localStorage.removeItem("username");
-    sessionStorage.removeItem("username");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, username, login, logout }}>
-    {children}
-  </AuthContext.Provider>
+      <AuthContext.Provider value={{ isAuthenticated, username: username || sessionUsername, login, logout }}>
+        {children}
+      </AuthContext.Provider>
   );
 };
 
