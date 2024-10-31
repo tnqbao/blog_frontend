@@ -3,6 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Layout } from 'antd';
 import nextI18NextConfig from '../../next-i18next.config.js';
 import Upload from '@/components/uploadBlog';
+import PostComment from "@/components/postComment";
 
 const { Content } = Layout;
 
@@ -10,7 +11,7 @@ const HomePage = () => {
   return (
     <Layout>
       <Content>
-        <Upload></Upload>
+        <PostComment></PostComment>
       </Content>
     </Layout>
   );
