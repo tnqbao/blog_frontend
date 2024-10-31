@@ -23,7 +23,7 @@ const Login: React.FC = () => {
     const {login} = useAuth();
 
     useEffect(() => {
-        if (sessionStorage.getItem("jwt")) {
+        if (jwt !== "" && jwt !== null) {
             router.push("../");
         }
     }, [router]);
@@ -41,7 +41,6 @@ const Login: React.FC = () => {
             );
 
             if (response.status === 200) {
-                localStorage.setItem("jwt", response.data.token);
                 login(values.username, typeWithStringField.keepLogin);
                 await router.push("../");
             }

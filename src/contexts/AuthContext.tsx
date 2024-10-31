@@ -1,10 +1,9 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
-import { useLocalStorage, useSessionStorage } from "usehooks-ts";
 
 interface AuthContextType {
   isAuthenticated: boolean;
   username: string | null;
-  login: (username: string, keepLogin: string) => void;
+  login: (username: string, keepLogin: string, jwt : string) => void;
   logout: () => void;
 }
 
@@ -13,31 +12,36 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
-  const [jwt, setJwt] = useState("");
-  const [sessionUsername, setSessionUsername, removeSessionUsername] = useSessionStorage<string | null>("username", null);
 
   useEffect(() => {
-    setIsAuthenticated(!!username || !!sessionUsername);
+    const storedUsername = localStorage.getItem("username") || sessionStorage.getItem("username") || "";
+    setUsername(storedUsername);
+    setIsAuthenticated(!!storedUsername);
+  }, []);
 
-  }, [username, sessionUsername]);
-
-  const login = (username: string, keepLogin: string) => {
-    if (keepLogin==="true") {
-      setUsername(username);
+  const login = (username: string, keepLogin: string, jwt : string) => {
+    if (keepLogin === "true") {
+      localStorage.setItem("username", username);
+      localStorage.setItem("jwt", jwt);
     } else {
-      setSessionUsername(username);
+      sessionStorage.setItem("username", username);
+      sessionStorage.setItem("jwt", jwt);
     }
+    setUsername(username);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("jwt");
     setUsername("");
-    removeSessionUsername();
     setIsAuthenticated(false);
   };
 
   return (
-      <AuthContext.Provider value={{ isAuthenticated, username: username || sessionUsername, login, logout }}>
+      <AuthContext.Provider value={{ isAuthenticated, username, login, logout }}>
         {children}
       </AuthContext.Provider>
   );

@@ -1,9 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import {Form, Input, Button} from "antd";
-import SubmitButton from "./disableSubmitButton";
 import {userApiInstance} from "@/utils/axiosConfig";
+import SubmitButton from "./disableSubmitButton";
 import {useRouter} from "next/router";
-import {useLocalStorage} from "usehooks-ts";
+import {useAuth} from "@/contexts/AuthContext";
 
 const {TextArea} = Input;
 type FieldType = {
@@ -12,10 +12,9 @@ type FieldType = {
 };
 const Upload: React.FC = () => {
     const [value, setValue] = useState("");
-    const [username] = useLocalStorage("username", "");
     const [form] = Form.useForm();
     const router = useRouter();
-
+    const {username} = useAuth();
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
     };
