@@ -37,11 +37,10 @@ const Login: React.FC = () => {
 
         try {
             const response = await userApiInstance.post("/auth/login", typeWithStringField,
-
             );
 
             if (response.status === 200) {
-                login(values.username, typeWithStringField.keepLogin);
+                login(values.username, typeWithStringField.keepLogin, response.data.token);
                 await router.push("../");
             }
         } catch {
