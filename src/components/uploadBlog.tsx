@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Form, Input, Button} from "antd";
+import {Form, Input, Button, message} from "antd";
 import {userApiInstance} from "@/utils/axiosConfig";
 import SubmitButton from "./disableSubmitButton";
 import {useRouter} from "next/router";
@@ -14,7 +14,7 @@ const Upload: React.FC = () => {
     const [value, setValue] = useState("");
     const [form] = Form.useForm();
     const router = useRouter();
-    const {username} = useAuth();
+    const {username, changeIsOpen} = useAuth();
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
     };
@@ -22,7 +22,8 @@ const Upload: React.FC = () => {
         try {
             const response = await userApiInstance.post("/post", values, {withCredentials: true});
             if (response.status === 200) {
-                alert("Post successfully!");
+                message.success("Post submitted successfully!");
+                changeIsOpen();
                 await router.push("../");
             }
         } catch {
@@ -30,13 +31,13 @@ const Upload: React.FC = () => {
         }
     };
     return (
-        <div className="flex-grow flex flex-wrap justify-center items-center mx-20 ">
+        <div className="flex-grow flex flex-wrap justify-center items-start mx-20 mt-5 ">
             <Form
                 form={form}
                 layout="vertical"
                 onFinish={onFinish}
                 autoComplete="off"
-                className="w-2/3 md:w-2/3 border rounded-lg border-black p-5 md:p-7 m-2 "
+                className=" w-2/3 md:w-2/3 border rounded-lg border-black p-5 md:p-7 m-2 shadow-xl shadow-blue-700"
             >
                 <Form.Item>
                     <h1 className="text-left text-2xl font-bold mb-4 w-full">{username}</h1>
@@ -69,7 +70,7 @@ const Upload: React.FC = () => {
                         <SubmitButton form={form}> Submit </SubmitButton>
                     </Form.Item>
                     <Form.Item className="flex-grow w-1/3 flex justify-end">
-                        <Button type="primary" danger className={'flex-grow w-full'}>
+                        <Button type="primary" danger className={'flex-grow w-full'} onClick={() => {changeIsOpen()}}>
                             Cancel
                         </Button>
                     </Form.Item>

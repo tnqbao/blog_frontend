@@ -3,16 +3,22 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import {Button, Layout} from 'antd';
 import nextI18NextConfig from '../../next-i18next.config.js';
 import Upload from '@/components/uploadBlog';
-import {useState} from "react";
+import {useAuth} from "@/contexts/AuthContext";
+
 
 const { Content } = Layout;
 
 const HomePage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const {isOpen, changeIsOpen} = useAuth();
   return (
     <Layout>
-      <Content className={"flex"}>
-        {isOpen &&  <Upload />  || <Button block className={"flex-grow w-1/3"} onClick={() => {setIsOpen(!isOpen)}}></Button>}
+      <Content className={"flex justify-center flex-grow h-[500px] w-full mt-5"}>
+        {isOpen &&  <Upload />  || <Button
+            className="w-1/4 text-sm"
+            onClick={() => { changeIsOpen() }}
+        >
+          Hôm nay bạn nghĩ gì?
+        </Button>}
       </Content>
     </Layout>
   );

@@ -19,9 +19,9 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
   return (
     <AuthProvider>
-    <Layout className='bg-black/90'>
+    <Layout className='bg-[#BFBFBF]'>
       <HeaderComp />
-      <Content className='mx-5 md:mx-20'>
+      <Content className='mx-5 md:mx-10'>
         <Component {...pageProps} />
       </Content>
       <FooterComp />
