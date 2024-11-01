@@ -40,6 +40,7 @@ const Login: React.FC = () => {
             );
 
             if (response.status === 200) {
+                alert(JSON.stringify(response.data));
                 login(values.username, typeWithStringField.keepLogin, response.data.token);
                 await router.push("../");
             }

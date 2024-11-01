@@ -13,15 +13,15 @@ const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({ fo
 
   React.useEffect(() => {
     form
-      .validateFields({ validateOnly: true })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false));
+        .validateFields({ validateOnly: true })
+        .then(() => setSubmittable(true))
+        .catch(() => setSubmittable(false));
   }, [form, values]);
 
   return (
-    <Button type="primary" htmlType="submit" disabled={!submittable} className={"w-1/2"}>
-      {children}
-    </Button>
+      <Button type="primary" htmlType="submit" disabled={!submittable} className={"w-full text-xl h-auto"}>
+        {children}
+      </Button>
   );
 };
 
