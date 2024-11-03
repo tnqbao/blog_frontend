@@ -13,5 +13,8 @@
     "have_account" :"Already have account? Login.",
     "fullname": "Fullname",
     "mail": "E-mail",
-    "date_of_birth" : "Date of birth"
+    "date_of_birth" : "Date of birth",
+
+    "welcome_user":"Welcome,"
+
 }

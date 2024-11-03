@@ -15,9 +15,19 @@ function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     setIsClient(true);
-    const browserLanguage = navigator.language || 'en';
-    if (i18n.language !== browserLanguage) {
-      i18n.changeLanguage(browserLanguage);
+
+    if (i18n.isInitialized) {
+      const browserLanguage = navigator.language || 'en';
+      if (i18n.language !== browserLanguage) {
+        i18n.changeLanguage(browserLanguage);
+      }
+    } else {
+      i18n.on('initialized', () => {
+        const browserLanguage = navigator.language || 'en';
+        if (i18n.language !== browserLanguage) {
+          i18n.changeLanguage(browserLanguage);
+        }
+      });
     }
   }, []);
 

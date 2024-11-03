@@ -3,7 +3,7 @@ import {GetServerSideProps} from "next";
 import {useRouter} from "next/router";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useTranslation} from "react-i18next";
-import {Button, Checkbox, Form, Input, Image, message} from "antd";
+import {Button, Checkbox, Form, Input, Image} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import {userApiInstance} from "@/utils/axiosConfig";
 import {useAuth} from "@/contexts/AuthContext";
@@ -16,14 +16,13 @@ type FieldType = {
 
 const Login: React.FC = () => {
     const [form] = Form.useForm();
-        const [loading, setLoading] = useState(false);
-    const jwt = localStorage.getItem("jwt") || sessionStorage.getItem("jwt");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const {t} = useTranslation("login");
-    const {login} = useAuth();
+    const {login, fullname} = useAuth();
 
     useEffect(() => {
-        if (jwt !== "" && jwt !== null) {
+        if (fullname !== "" && fullname !== null) {
             router.push("../");
         }
     }, [router]);
@@ -40,8 +39,7 @@ const Login: React.FC = () => {
             );
 
             if (response.status === 200) {
-                alert(JSON.stringify(response.data));
-                login(values.username, typeWithStringField.keepLogin, response.data.token);
+                login(response.data.user.fullname, typeWithStringField.keepLogin, response.data.token);
                 await router.push("../");
             }
         } catch {

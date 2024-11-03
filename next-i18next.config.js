@@ -10,6 +10,7 @@ const config = {
     order: ['cookie', 'header', 'querystring', 'localStorage', 'path', 'subdomain'],
     caches: ['cookie'],
   },
-  localePath: path.resolve('./public/locales'), 
+  localePath: path.resolve('./public/locales'),
+  react: { useSuspense: false },
 };
 module.exports = config;
