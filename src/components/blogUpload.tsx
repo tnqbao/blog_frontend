@@ -14,7 +14,7 @@ const Upload: React.FC = () => {
     const [value, setValue] = useState("");
     const [form] = Form.useForm();
     const router = useRouter();
-    const {username, changeIsOpen} = useAuth();
+    const {fullname, changeIsOpen} = useAuth();
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
     };
@@ -50,9 +50,9 @@ const Upload: React.FC = () => {
                                 size={50}
                                 style={{backgroundColor: "#f56a00", verticalAlign: "middle"}}
                             >
-                                {username?.toString().charAt(0).toUpperCase()}
+                                {fullname?.toString().charAt(0).toUpperCase()}
                             </Avatar>
-                            <span className="text-xl font-bold ml-3">{username?.toString().toUpperCase()}</span>
+                            <span className="text-xl font-bold ml-3">{fullname?.toString().toUpperCase()}</span>
                         </div>
                     </Form.Item>
                     <Divider/>

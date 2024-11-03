@@ -13,5 +13,7 @@
     "have_account" :"Bạn đã có tài khoản? Đăng nhập",
     "fullname": "Tên của bạn",
     "mail": "E-mail",
-    "date_of_birth" : "Ngày sinh"
+    "date_of_birth" : "Ngày sinh",
+
+    "welcome_user":"Xin chào, "
 }

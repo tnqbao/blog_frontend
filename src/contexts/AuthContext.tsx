@@ -2,9 +2,9 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  username: string | null;
+  fullname: string | null;
   isOpen : boolean;
-  login: (username: string, keepLogin: string, jwt : string) => void;
+  login: (fullname: string, keepLogin: string, jwt : string) => void;
   logout: () => void;
   changeIsOpen: () => void;
 }
@@ -13,38 +13,38 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("");
+  const [fullname, setFullname] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username") || sessionStorage.getItem("username") || "";
-    setUsername(storedUsername);
-    setIsAuthenticated(!!storedUsername);
+    const storedFullname = localStorage.getItem("fullname") || sessionStorage.getItem("fullname") || "";
+    setFullname(storedFullname);
+    setIsAuthenticated(!!storedFullname);
   }, []);
 
-  const login = (username: string, keepLogin: string, jwt : string) => {
+  const login = (fullname: string, keepLogin: string, jwt : string) => {
     if (keepLogin === "true") {
-      localStorage.setItem("username", username);
+      localStorage.setItem("fullname", fullname);
       localStorage.setItem("jwt", jwt);
     } else {
-      sessionStorage.setItem("username", username);
+      sessionStorage.setItem("fullname", fullname);
       sessionStorage.setItem("jwt", jwt);
     }
-    setUsername(username);
+    setFullname(fullname);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("username");
+    localStorage.removeItem("fullname");
     localStorage.removeItem("jwt");
-    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("fullname");
     sessionStorage.removeItem("jwt");
-    setUsername("");
+    setFullname("");
     setIsAuthenticated(false);
   };
 
   const changeIsOpen = () => { setIsOpen(!isOpen) };
   return (
-      <AuthContext.Provider value={{ isAuthenticated, username, login, logout, isOpen, changeIsOpen }}>
+      <AuthContext.Provider value={{ isAuthenticated, fullname, login, logout, isOpen, changeIsOpen }}>
         {children}
       </AuthContext.Provider>
   );

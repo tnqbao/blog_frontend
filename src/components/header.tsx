@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Layout, Input, Avatar} from "antd";
+import {Button, Layout, Input, Avatar, Badge} from "antd";
 import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
 import {useAuth} from "@/contexts/AuthContext";
@@ -8,7 +8,7 @@ import Searchbar from "@/components/searchbar";
 const HeaderComp: React.FC = () => {
     const router = useRouter();
     const {t} = useTranslation("common");
-    const {isAuthenticated, username} = useAuth();
+    const {isAuthenticated, fullname} = useAuth();
     const {Header} = Layout;
     const handleButtonClick = (page: string) => {
         router.push(`/auth/${page}`);
@@ -29,7 +29,7 @@ const HeaderComp: React.FC = () => {
             <div
                 className="flex items-center bg-[url('https://i.imgur.com/yzO7MiG.png')] sm:bg-[url('https://i.imgur.com/uGKflOp.png')] bg-cover bg-center h-10 w-full sm:h-16 sm:w-16  rounded-md"></div>
             <div className=" flex w-1/2 ">
-                <Searchbar />
+                <Searchbar/>
             </div>
             <div className="flex space-x-2 justify-center sm:justify-end  w-full sm:w-auto mt-2 sm:mt-0">
                 {isAuthenticated ? (
@@ -38,30 +38,29 @@ const HeaderComp: React.FC = () => {
                             size={30}
                             style={{backgroundColor: "#f56a00", verticalAlign: "middle"}}
                         >
-                            {username?.toString().charAt(0).toUpperCase()}
+                            {fullname?.toString().charAt(0).toUpperCase()}
                         </Avatar>
-                        <span className="text-black ml-2">{`${t("welcome_user")}, ${username}`}</span>
+                        <span className="text-black ml-2">{`${t("welcome_user")}${fullname}`}</span>
                     </div>
                 ) : (
-                    <>
+                    <div className={"flex"}>
                         <Button
-
-                            className="px-4 py-2 text-base w-full md:w-auto bg-[#05ffe9] font-modak"
+                            className="px-4 py-2 text-base align-text-top w-full md:w-auto font-semibold"
                             onClick={() => handleButtonClick("login")}
-                            color={"#05ffe9"}
+                            type={"text"}
                             suppressHydrationWarning={true}
                         >
                             {t("login")}
                         </Button>
                         <Button
-                            type="default"
+                            type="text"
                             className="px-4 py-2 text-base w-full md:w-auto"
                             onClick={() => handleButtonClick("register")}
                             suppressHydrationWarning={true}
                         >
                             {t("register")}
                         </Button>
-                    </>
+                    </div>
                 )}
             </div>
         </Header>
