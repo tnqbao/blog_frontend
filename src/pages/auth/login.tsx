@@ -7,6 +7,7 @@ import {Button, Checkbox, Form, Input, Image} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import {userApiInstance} from "@/utils/axiosConfig";
 import {useAuth} from "@/contexts/AuthContext";
+import axios from "axios";
 
 type FieldType = {
     username: string;

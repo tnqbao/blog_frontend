@@ -1,30 +1,22 @@
 import {Card, Space, Avatar} from 'antd';
 import React, {FC} from 'react';
-import {GetServerSideProps} from "next";
 import {Divider, Typography} from 'antd';
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-
 const {Title, Text} = Typography;
-
 type PostType = {
     title: string;
     body: string;
     upvote: number;
     downvote: number;
     createdAt: string;
+    user : {
+        fullname: string;
+    }
 };
 
 type BlogContentProps = {
     data: PostType;
 };
-export const getServerSideProps: GetServerSideProps = async ({locale}) => {
-    const currentLocale = locale || "en";
-    return {
-        props: {
-            ...(await serverSideTranslations(currentLocale, ["login", "common"])),
-        },
-    };
-};
+
 
 const BlogContent: FC<BlogContentProps> = ({data}) => {
     return (
@@ -36,7 +28,7 @@ const BlogContent: FC<BlogContentProps> = ({data}) => {
             <Divider/>
             <Space>
                 <Avatar size={64} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
-                <Text>Author: John Doe</Text> | <Text>{data.createdAt}</Text>
+                <Text>Author: {data.user.fullname}</Text> | <Text>{data.createdAt}</Text>
             </Space>
         </Card>
     );
