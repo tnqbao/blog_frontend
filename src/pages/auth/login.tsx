@@ -8,6 +8,7 @@ import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import {userApiInstance} from "@/utils/axiosConfig";
 import {useAuth} from "@/contexts/AuthContext";
 
+
 type FieldType = {
     username: string;
     password: string;
@@ -43,7 +44,16 @@ const Login: React.FC = () => {
                 await router.push("../");
             }
         } catch {
-            console.log("error");
+            form.setFields([
+                {
+                    name: "username",
+                    errors: [t("invalidInput")],
+                },
+                {
+                    name: "password",
+                    errors: [t("invalidInput")],
+                },
+            ]);
         } finally {
             setLoading(false);
         }

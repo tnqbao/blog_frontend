@@ -22,6 +22,11 @@ const HomePage = () => {
                     Hôm nay bạn nghĩ gì?
                 </Button>
             </Content>
+            <Button className={"bg-black"} onClick={
+                () => {
+                    router.push("/blog/1");
+                }
+            }>ABCD</Button>
         </Layout>
     );
 };

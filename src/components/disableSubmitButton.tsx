@@ -2,9 +2,9 @@ import React from 'react';
 import type { FormInstance } from 'antd';
 import { Button, Form } from 'antd';
 
-interface SubmitButtonProps {
+type SubmitButtonProps = {
   form: FormInstance;
-}
+};
 
 const SubmitButton: React.FC<React.PropsWithChildren<SubmitButtonProps>> = ({ form, children }) => {
   const [submittable, setSubmittable] = React.useState<boolean>(false);

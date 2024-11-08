@@ -31,9 +31,9 @@ const Upload: React.FC = () => {
         }
     };
     return (
-        <div className="flex-grow flex flex-wrap justify-center items-start mx-5 sm:mx-20">
+        <div className="flex-grow flex flex-wrap justify-center items-start sm:mx-20">
 
-            <div className={"w-2/3 md:w-full bg-white sm:p-5 rounded-2xl  shadow-lg shadow-blue-700 m-5"}>
+            <div className={"w-full sm:w-2/3 bg-white sm:p-5 sm: rounded-2xl  sm:shadow-lg sm:shadow-blue-700 sm:m-5"}>
 
                 <Form
                     form={form}
