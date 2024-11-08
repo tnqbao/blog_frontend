@@ -3,7 +3,7 @@ version: '3.8'
 services:
   blog_frontend:
     build:
-      context: ./blog_frontend
+      context: .
     volumes:
       - .:/home/node/blog_frontend
       - /home/node/blog_frontend/node_modules
