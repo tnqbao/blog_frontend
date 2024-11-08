@@ -19,6 +19,5 @@ RUN yarn build
 #COPY --from=builder /home/node/blog_frontend/package.json ./
 #COPY --from=builder /home/node/blog_frontend/yarn.lock ./
 #RUN yarn install --production --frozen-lockfile
-
 EXPOSE 3005
 CMD ["yarn", "start"]
