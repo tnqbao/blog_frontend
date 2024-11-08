@@ -3,10 +3,8 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 interface AuthContextType {
   isAuthenticated: boolean;
   fullname: string | null;
-  isOpen : boolean;
   login: (fullname: string, keepLogin: string, jwt : string) => void;
   logout: () => void;
-  changeIsOpen: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -14,7 +12,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [fullname, setFullname] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     const storedFullname = localStorage.getItem("fullname") || sessionStorage.getItem("fullname") || "";
     setFullname(storedFullname);
@@ -44,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const changeIsOpen = () => { setIsOpen(!isOpen) };
   return (
-      <AuthContext.Provider value={{ isAuthenticated, fullname, login, logout, isOpen, changeIsOpen }}>
+      <AuthContext.Provider value={{ isAuthenticated, fullname, login, logout }}>
         {children}
       </AuthContext.Provider>
   );

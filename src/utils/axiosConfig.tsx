@@ -1,4 +1,5 @@
-import axios, {AxiosInstance} from 'axios';
+import axios, { AxiosInstance } from 'axios';
+import { parse } from 'cookie';
 
 const createUserApiInstance = (): AxiosInstance => {
     const instance = axios.create({
@@ -18,13 +19,8 @@ const createUserApiInstance = (): AxiosInstance => {
             return config;
         });
     } else {
-        const {cookies} = require('next/headers');
         instance.interceptors.request.use((config) => {
-            const jwtCookie = cookies().get('jwt');
-            const jwt = jwtCookie ? jwtCookie.value : null;
-            if (jwt) {
-                config.headers.Authorization = `${jwt}`;
-            }
+
             return config;
         });
     }

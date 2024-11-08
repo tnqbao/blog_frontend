@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+.DS_Store
+.git
+.gitignore
+!package.json
+!yarn.lock
+!start.sh
