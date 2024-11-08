@@ -14,10 +14,10 @@ RUN yarn build
 # serve for deployment
 #FROM node:18-slim AS production
 #WORKDIR /home/node/blog_frontend
-#COPY --from=builder /home/node/blog_frontend/.next ./.next
-#COPY --from=builder /home/node/blog_frontend/public ./public
-#COPY --from=builder /home/node/blog_frontend/package.json ./
-#COPY --from=builder /home/node/blog_frontend/yarn.lock ./
+COPY /home/node/blog_frontend/.next ./.next
+COPY /home/node/blog_frontend/public ./public
+COPY /home/node/blog_frontend/package.json ./
+COPY /home/node/blog_frontend/yarn.lock ./
 #RUN yarn install --production --frozen-lockfile
 EXPOSE 3005
 CMD ["yarn", "start"]
