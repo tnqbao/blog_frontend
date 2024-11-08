@@ -11,9 +11,6 @@ RUN npm install --force --global ts-node
 RUN npm install --force --global typescipt
 RUN yarn install --check-file
 RUN yarn build
-
-RUN yarn install --frozen-lockfile
-RUN yarn build
 # serve for deployment
 #FROM node:18-slim AS production
 #WORKDIR /home/node/blog_frontend
