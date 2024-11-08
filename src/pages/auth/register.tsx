@@ -39,7 +39,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center min-h-screen bg-gray-100">
       <div className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full md:my-10">
         <div className="hidden md:flex flex-1 justify-center items-center">
           <Image
