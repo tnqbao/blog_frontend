@@ -39,7 +39,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
   };
 
-  const changeIsOpen = () => { setIsOpen(!isOpen) };
   return (
       <AuthContext.Provider value={{ isAuthenticated, fullname, login, logout }}>
         {children}
