@@ -8,10 +8,10 @@ import {Layout} from 'antd';
 import HeaderComp from '@/components/header';
 import FooterComp from '@/components/footer';
 
-import {AuthProvider} from "@/contexts/AuthContext";
+import {AuthProvider} from "@/providers/AuthContext";
 
 import {Provider} from 'react-redux';
-import {store} from '@/lib/index';
+import {store} from '@/utils/redux';
 
 import '@/styles/globals.css';
 

@@ -1,9 +1,9 @@
 import React from "react";
 import {Form, Input, Button, message, Divider, Avatar} from "antd";
-import {userApiInstance} from "@/utils/axiosConfig";
+import {userApiInstance} from "@/utils/axios.config";
 import SubmitButton from "./disableSubmitButton";
 import {useRouter} from "next/router";
-import {useAuth} from "@/contexts/AuthContext";
+import {useAuth} from "@/providers/AuthContext";
 
 const {TextArea} = Input;
 type FieldType = {

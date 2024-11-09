@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Layout, Input, Avatar, Badge} from "antd";
 import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
-import {useAuth} from "@/contexts/AuthContext";
+import {useAuth} from "@/providers/AuthContext";
 import Searchbar from "@/components/searchbar";
 
 const HeaderComp: React.FC = () => {

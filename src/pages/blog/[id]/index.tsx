@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import BlogContent from "@/components/blogContent";
-import { userApiInstance } from "@/utils/axiosConfig";
+import { userApiInstance } from "@/utils/axios.config";
 import Head from 'next/head';
 import { parse } from 'cookie';
 

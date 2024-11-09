@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { userApiInstance} from "@/utils/axiosConfig";
+import { userApiInstance} from "@/utils/axios.config";
 import { serialize } from 'cookie';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {

@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input, Image } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
-import { useAuth } from "@/contexts/AuthContext";
-import { setAuth } from "../../lib";
+import { useAuth } from "@/providers/AuthContext";
+import { setAuth } from "../../utils/redux";
 import { useDispatch } from "react-redux";
 
 type FieldType = {
@@ -138,7 +138,7 @@ const Login: React.FC = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-    const currentLocale = locale || "vi";
+    const currentLocale = locale || "en";
     return {
         props: {
             ...(await serverSideTranslations(currentLocale, ["login", "common"])),
