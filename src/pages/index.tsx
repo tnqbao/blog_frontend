@@ -3,12 +3,14 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import {Button, Layout} from 'antd';
 import nextI18NextConfig from '../../next-i18next.config.js';
 import {useRouter} from "next/router";
+import {useTranslation} from "next-i18next";
 
 const {Content} = Layout;
 
 
 const HomePage = () => {
     const  router = useRouter();
+    const { t } = useTranslation('common');
     return (
         <Layout className={""}>
             <Content
@@ -19,7 +21,7 @@ const HomePage = () => {
                         router.push("/blog/upload");
                     }}
                 >
-                    Hôm nay bạn nghĩ gì?
+                    {t('postButton')}
                 </Button>
             </Content>
             <Button className={"bg-black"} onClick={

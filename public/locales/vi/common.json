@@ -15,5 +15,6 @@
     "mail": "E-mail",
     "date_of_birth" : "Ngày sinh",
 
-    "welcome_user":"Xin chào, "
+    "welcome_user":"Xin chào, ",
+    "postButton" : "Bạn muốn chia sẻ điều gì hôm nay?"
 }

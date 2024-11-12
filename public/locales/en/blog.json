@@ -1,0 +1,9 @@
+{
+  "title": "New title",
+  "body": "Write content body",
+  "submit" : "Submit",
+  "cancel" : "Cancel",
+  "upvote" : "Upvote",
+  "downvote" : "Downvote",
+  "comment" : "Comment"
+}

@@ -4,6 +4,7 @@ import {userApiInstance} from "@/utils/axios.config";
 import SubmitButton from "./disableSubmitButton";
 import {useRouter} from "next/router";
 import {useAuth} from "@/providers/AuthContext";
+import {useTranslation} from "next-i18next";
 
 const {TextArea} = Input;
 type FieldType = {
@@ -15,7 +16,7 @@ const Upload: React.FC = () => {
     const [form] = Form.useForm();
     const router = useRouter();
     const {fullname} = useAuth();
-
+    const { t } = useTranslation('blog');
     const onFinish = async (values: FieldType) => {
         try {
             const response = await userApiInstance.post("/post", values, {withCredentials: true});
@@ -58,7 +59,7 @@ const Upload: React.FC = () => {
                         rules={[{required: true, message: "Please enter a title"}]}
                     >
                         <Input
-                            placeholder="New title"
+                            placeholder={t('title')}
                             size="large"
                             maxLength={100}
                             className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"
@@ -71,14 +72,14 @@ const Upload: React.FC = () => {
                     >
                         <TextArea
                             size="large"
-                            placeholder="Write content here"
+                            placeholder={t('body')}
                             autoSize={{minRows: 3, maxRows: 50}}
                             className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"
                         />
                     </Form.Item>
                     <div className="flex justify-between">
                         <Form.Item className="flex-grow w-1/3">
-                            <SubmitButton form={form}>Submit</SubmitButton>
+                            <SubmitButton form={form}>{t('submit')}</SubmitButton>
                         </Form.Item>
                         <Form.Item className="flex-grow w-1/3 flex justify-end">
                             <Button
@@ -87,7 +88,7 @@ const Upload: React.FC = () => {
                                 className="flex-grow w-full text-xl h-auto"
                                 onClick={() => { router.push("../")}}
                             >
-                                Cancel
+                                {t('cancel')}
                             </Button>
                         </Form.Item>
                     </div>

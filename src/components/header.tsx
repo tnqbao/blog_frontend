@@ -4,14 +4,16 @@ import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
 import {useAuth} from "@/providers/AuthContext";
 import Searchbar from "@/components/searchbar";
+import {GetServerSideProps} from "next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const HeaderComp: React.FC = () => {
     const router = useRouter();
     const {t} = useTranslation("common");
     const {isAuthenticated, fullname} = useAuth();
     const {Header} = Layout;
-    const handleButtonClick = (page: string) => {
-        router.push(`/auth/${page}`);
+    const handleButtonClick = async (page: string) => {
+       await router.push(`/auth/${page}`);
     };
 
     return (
@@ -56,5 +58,6 @@ const HeaderComp: React.FC = () => {
         </Header>
     );
 };
+
 
 export default HeaderComp;
