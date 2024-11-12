@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios';
-import { parse } from 'cookie';
 
 const createUserApiInstance = (): AxiosInstance => {
     const instance = axios.create({

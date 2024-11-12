@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input } from 'antd';
 import type { GetProps } from 'antd';
+import { useTranslation } from 'next-i18next';
 
 type SearchProps = GetProps<typeof Input.Search>;
 
@@ -8,8 +9,11 @@ const { Search } = Input;
 
 const onSearch: SearchProps['onSearch'] = (value, _e, info) => alert(`Update Soon!`);
 
-const Searchbar: React.FC = () => (
-        <Search placeholder="search topic" onSearch={onSearch} enterButton />
-);
+const Searchbar: React.FC = () => {
+    const { t } = useTranslation('search');
+    return (
+        <Search placeholder={t('search')} onSearch={onSearch} enterButton />
+    );
+};
 
 export default Searchbar;

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { userApiInstance} from "@/utils/axiosConfig";
+import { userApiInstance} from "@/utils/axios.config";
 import { serialize } from 'cookie';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
@@ -13,7 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const token = response.data.token;
                 res.setHeader('Set-Cookie', serialize('auth_token', token, {
                     httpOnly: true,
-                    // secure: process.env.NODE_ENV === 'production',
                     maxAge: keepLogin ? 30 * 24 * 60 * 60 : undefined,
                     path: '/',
                 }));

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Space, message } from 'antd';
-import {userApiInstance} from "@/utils/axiosConfig";
+import {userApiInstance} from "@/utils/axios.config";
 import {useRouter} from "next/router";
 
 const CommentUpload: React.FC = () => {

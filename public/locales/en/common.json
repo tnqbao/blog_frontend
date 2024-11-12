@@ -15,6 +15,6 @@
     "mail": "E-mail",
     "date_of_birth" : "Date of birth",
 
-    "welcome_user":"Welcome,"
-
+    "welcome_user":"Welcome,",
+    "postButton" : "What do you feel like sharing today?"
 }

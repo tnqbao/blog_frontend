@@ -22,20 +22,8 @@ jobs:
       - name: Set permissions for SSH key
         run: chmod 600 ~/.ssh/id_rsa
 
-      - name: SSH connect and pull latest config
+      - name: run start script
         env:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/teamproject/blog_frontend && git pull origin main"
-
-      - name: Stop All Docker services
-        env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/teamproject/blog_frontend && docker-compose down"
-
-      - name: Start All Docker services
-        env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/teamproject/blog_frontend && docker-compose up -d --build"
+        run: ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /home/debian/teamproject/blog_frontend && sudo chmod +x ./start.sh && ./start.sh"

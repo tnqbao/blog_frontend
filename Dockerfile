@@ -21,6 +21,11 @@ COPY --from=builder /home/node/blog_frontend/public ./public
 COPY --from=builder /home/node/blog_frontend/package.json ./
 COPY --from=builder /home/node/blog_frontend/yarn.lock ./
 COPY --from=builder /home/node/blog_frontend/next-i18next.config.js ./
+COPY --from=builder /home/node/blog_frontend/next.config.mjs ./
+COPY --from=builder /home/node/blog_frontend/tsconfig.json ./
+COPY --from=builder /home/node/blog_frontend/package.json ./
+COPY --from=builder /home/node/blog_frontend/i18n.ts ./
+
 RUN yarn install --production --frozen-lockfile
 COPY .env.production .env
 EXPOSE 3005
