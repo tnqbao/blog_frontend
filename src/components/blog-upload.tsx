@@ -71,13 +71,13 @@ const Upload: React.FC = () => {
                         name="body"
                         rules={[{required: true, message: "Please enter content"}]}
                     >
-                        {/*<TextArea*/}
-                        {/*    size="large"*/}
-                        {/*    placeholder={t('body')}*/}
-                        {/*    autoSize={{minRows: 3, maxRows: 50}}*/}
-                        {/*    className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"*/}
-                        {/*/>*/}
-                        <Editor></Editor>
+                        <TextArea
+                            size="large"
+                            placeholder={t('body')}
+                            autoSize={{minRows: 3, maxRows: 50}}
+                            className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"
+                        />
+                        {/*<Editor></Editor>*/}
                     </Form.Item>
                     <div className="flex justify-between">
                         <Form.Item className="flex-grow w-1/3">

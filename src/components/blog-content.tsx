@@ -134,13 +134,9 @@ const BlogContent: FC<BlogContentProps> = ({ blog }) => {
     };
 
     return (
-        <Card style={{ maxWidth: 600, margin: 'auto', marginTop: 20 }}>
+        <Card style={{ maxWidth: 600, margin: 'auto' }}>
             <Space className="flex justify-between">
                 <div className="flex-grow flex items-center">
-                    <Avatar
-                        size={64}
-                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    />
                     <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
                         {blog.user.fullname}
                     </Text>
