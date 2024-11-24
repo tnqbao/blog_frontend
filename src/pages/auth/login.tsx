@@ -5,10 +5,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input, Image } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-
-import { useAuth } from "@/providers/AuthContext";
-import { setAuth } from "../../utils/redux";
-import { useDispatch } from "react-redux";
+import {RootState} from "@/utils/redux/store";
+import {useDispatch, useSelector} from "react-redux";
+import {setAuth, setFullName} from "@/utils/redux/slices/auth";
 
 type FieldType = {
     username: string;
@@ -22,14 +21,10 @@ const Login: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { t } = useTranslation("login");
-    const { login, fullname } = useAuth();
-
-    useEffect(() => {
-        if (fullname) {
-            router.push("../");
-        }
-    }, [fullname, router]);
-
+    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+    if (isAuthenticated) {
+        router.push("../");
+    }
     const handleOnClicked = () => {
         alert("Try to remember it!!");
     };
@@ -52,8 +47,13 @@ const Login: React.FC = () => {
 
             if (response.status === 200) {
                 const data = await response.json();
-                login(data.user.fullname, requestData.keepLogin, data.token);
-                dispatch(setAuth({ token: data.token, user: data.user }));
+                dispatch(setAuth(true));
+                dispatch(setFullName(data.user.fullname));
+                if (values.keepLogin) {
+                    localStorage.setItem("token", data.token);
+                } else {
+                    sessionStorage.setItem("token", data.token);
+                }
                 router.push("../");
             } else {
                 console.error("Login failed with status:", response.status);

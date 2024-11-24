@@ -11,7 +11,7 @@ const createUserApiInstance = (): AxiosInstance => {
 
     if (typeof window !== 'undefined') {
         instance.interceptors.request.use((config) => {
-            const jwt = localStorage.getItem('jwt') || sessionStorage.getItem('jwt');
+            const jwt = localStorage.getItem('token') || sessionStorage.getItem('token');
             if (jwt) {
                 config.headers.Authorization = `${jwt}`;
             }

@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Button, Layout } from 'antd';
 import nextI18NextConfig from '../../../next-i18next.config.js';
-import CommentUpload from "@/components/commentUpload";
+import CommentUpload from "@/components/comment-upload";
 
 const { Content } = Layout;
 

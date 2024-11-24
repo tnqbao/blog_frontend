@@ -1,10 +1,11 @@
 import { GetServerSideProps } from 'next';
-import BlogContent from "@/components/blogContent";
+import BlogContent from "@/components/blog-content";
 import { userApiInstance } from "@/utils/axios.config";
 import Head from 'next/head';
 import { parse } from 'cookie';
 
 type BlogType = {
+    id: number;
     title: string;
     body: string;
     upvote: number;
@@ -60,6 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req }) => 
 
         const data = response.data;
         const blog: BlogType = {
+            id: data.id,
             title: data.title,
             body: data.body,
             upvote: data.upvote,

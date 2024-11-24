@@ -1,10 +1,11 @@
 import React from "react";
 import {Form, Input, Button, message, Divider, Avatar} from "antd";
 import {userApiInstance} from "@/utils/axios.config";
-import SubmitButton from "./disableSubmitButton";
+import SubmitButton from "./custom-submit-button";
 import {useRouter} from "next/router";
-import {useAuth} from "@/providers/AuthContext";
 import {useTranslation} from "next-i18next";
+import {Editor} from "@tinymce/tinymce-react";
+import {useSelector} from "react-redux";
 
 const {TextArea} = Input;
 type FieldType = {
@@ -15,8 +16,8 @@ type FieldType = {
 const Upload: React.FC = () => {
     const [form] = Form.useForm();
     const router = useRouter();
-    const {fullname} = useAuth();
     const { t } = useTranslation('blog');
+    const fullname = useSelector((state: any) => state.auth.fullname);
     const onFinish = async (values: FieldType) => {
         try {
             const response = await userApiInstance.post("/post", values, {withCredentials: true});
@@ -70,12 +71,13 @@ const Upload: React.FC = () => {
                         name="body"
                         rules={[{required: true, message: "Please enter content"}]}
                     >
-                        <TextArea
-                            size="large"
-                            placeholder={t('body')}
-                            autoSize={{minRows: 3, maxRows: 50}}
-                            className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"
-                        />
+                        {/*<TextArea*/}
+                        {/*    size="large"*/}
+                        {/*    placeholder={t('body')}*/}
+                        {/*    autoSize={{minRows: 3, maxRows: 50}}*/}
+                        {/*    className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"*/}
+                        {/*/>*/}
+                        <Editor></Editor>
                     </Form.Item>
                     <div className="flex justify-between">
                         <Form.Item className="flex-grow w-1/3">

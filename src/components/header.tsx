@@ -1,16 +1,14 @@
 import React from "react";
-import {Button, Layout, Input, Avatar, Badge} from "antd";
+import {Button, Layout, Avatar} from "antd";
 import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
-import {useAuth} from "@/providers/AuthContext";
-import Searchbar from "@/components/searchbar";
-import {GetServerSideProps} from "next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import SearchBar from "@/components/search-bar";
+import {useSelector} from "react-redux";
 
 const HeaderComp: React.FC = () => {
     const router = useRouter();
     const {t} = useTranslation("common");
-    const {isAuthenticated, fullname} = useAuth();
+    const { isAuthenticated, fullname } = useSelector((state: any) => state.auth);
     const {Header} = Layout;
     const handleButtonClick = async (page: string) => {
        await router.push(`/auth/${page}`);
@@ -21,7 +19,7 @@ const HeaderComp: React.FC = () => {
             <div
                 className="flex items-center bg-[url('https://i.imgur.com/yzO7MiG.png')] sm:bg-[url('https://i.imgur.com/uGKflOp.png')] bg-cover bg-center h-10 w-full sm:h-16 sm:w-16  rounded-md"></div>
             <div className=" flex w-1/2 ">
-                <Searchbar/>
+                <SearchBar/>
             </div>
             <div className="flex space-x-2 justify-center sm:justify-end  w-full sm:w-auto mt-2 sm:mt-0">
                 {isAuthenticated ? (
