@@ -9,11 +9,11 @@ const { Search } = Input;
 
 const onSearch: SearchProps['onSearch'] = (value, _e, info) => alert(`Update Soon!`);
 
-const Searchbar: React.FC = () => {
+const SearchBar: React.FC = () => {
     const { t } = useTranslation('search');
     return (
         <Search placeholder={t('search')} onSearch={onSearch} enterButton />
     );
 };
 
-export default Searchbar;
+export default SearchBar;

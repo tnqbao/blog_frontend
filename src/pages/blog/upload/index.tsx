@@ -1,4 +1,4 @@
-import Upload from "@/components/blogUpload";
+import Upload from "@/components/blog-upload";
 import {GetServerSideProps} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 

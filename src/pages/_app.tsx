@@ -7,13 +7,10 @@ import {Layout} from 'antd';
 
 import HeaderComp from '@/components/header';
 import FooterComp from '@/components/footer';
-
-import {AuthProvider} from "@/providers/AuthContext";
-
 import {Provider} from 'react-redux';
-import {store} from '@/utils/redux';
-
 import '@/styles/globals.css';
+import {PersistGate} from "redux-persist/integration/react";
+import {persistor , store} from "@/utils/redux/store";
 
 
 
@@ -41,8 +38,8 @@ function App({Component, pageProps}: AppProps) {
     }, []);
 
     return (
-        <Provider store={store}>
-            <AuthProvider>
+        < Provider store={store} >
+            <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
                 <Layout className='bg-[#05ffe9]/5'>
                     <HeaderComp/>
                     <Content className='w-full'>
@@ -50,7 +47,7 @@ function App({Component, pageProps}: AppProps) {
                     </Content>
                     <FooterComp/>
                 </Layout>
-            </AuthProvider>
+            </PersistGate>
         </Provider>
     );
 }
