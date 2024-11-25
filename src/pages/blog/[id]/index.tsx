@@ -3,18 +3,9 @@ import BlogContent from "@/components/blog-content";
 import { userApiInstance } from "@/utils/axios.config";
 import Head from 'next/head';
 import { parse } from 'cookie';
+import {BlogType} from "@/utils/types";
 
-type BlogType = {
-    id: number;
-    title: string;
-    body: string;
-    upvote: number;
-    downvote: number;
-    createdAt: string;
-    user: {
-        fullname: string;
-    };
-};
+
 
 type BlogPageProps = {
     blog: BlogType | null;
