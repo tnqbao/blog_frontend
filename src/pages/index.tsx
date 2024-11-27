@@ -12,24 +12,9 @@ const HomePage = () => {
     const  router = useRouter();
     const { t } = useTranslation('common');
     return (
-        <Layout className={""}>
-            <Content
-                className={"flex flex-wrap justify-center flex-grow h-[700px] mx-5 sm:mx-10 border border-x-blue-300 "}>
-                <Button
-                    className="w-1/4 text-sm mt-5"
-                    onClick={() => {
-                        router.push("/blog/upload");
-                    }}
-                >
-                    {t('postButton')}
-                </Button>
-            </Content>
-            <Button className={"bg-black"} onClick={
-                () => {
-                    router.push("/blog/1");
-                }
-            }>ABCD</Button>
-        </Layout>
+        <div>
+
+        </div>
     );
 };
 

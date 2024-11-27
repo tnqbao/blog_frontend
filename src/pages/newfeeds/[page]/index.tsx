@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({locale, req, query
         };
     }
     try {
-        const response = await userApiInstance.get(`/feed/allPost/${page}`, {
+        const response = await userApiInstance.get(`/feed/allPosts/${page}`, {
             headers: {
                 Authorization: `${token}`,
             },
@@ -40,6 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({locale, req, query
         });
 
         const data = response.data;
+        console.log(data);
         const Blogs: BlogType[] = data.map((blog: any) => {
             return {
                 id: blog.id,

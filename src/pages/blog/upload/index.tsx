@@ -2,7 +2,7 @@ import Upload from "@/components/blog-upload";
 import {GetServerSideProps} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
-const NewPost: React.FC = () => {
+const UpLoadPage: React.FC = () => {
     return (
         <div className={"bg-white w-full h-[550px]"}>
             <Upload></Upload>
@@ -20,4 +20,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 };
 
 
-export default NewPost;
+export default UpLoadPage;

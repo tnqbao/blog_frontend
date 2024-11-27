@@ -26,3 +26,11 @@ export interface BlogType {
         fullname: string;
     };
 }
+
+export interface User {
+    id: number;
+    username: string;
+    mail: string;
+    dateOfBirth: string;
+    fullname: string;
+}
