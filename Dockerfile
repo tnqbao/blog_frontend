@@ -27,7 +27,6 @@ COPY --from=builder /home/node/blog_frontend/package.json ./
 COPY --from=builder /home/node/blog_frontend/i18n.ts ./
 
 RUN yarn install --production --frozen-lockfile
-RUN yarn cache clear
 COPY .env.production .env
 EXPOSE 3005
 CMD ["yarn", "start"]
