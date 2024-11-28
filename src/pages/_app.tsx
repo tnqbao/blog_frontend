@@ -18,7 +18,7 @@ const {Content} = Layout;
 
 function App({Component, pageProps}: AppProps) {
     const [isClient, setIsClient] = useState(false);
-
+    const { isAuthenticated } = store.getState().auth;
     useEffect(() => {
         setIsClient(true);
 
