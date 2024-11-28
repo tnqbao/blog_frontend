@@ -8,7 +8,8 @@ import {useSelector} from "react-redux";
 const HeaderComp: React.FC = () => {
     const router = useRouter();
     const {t} = useTranslation("common");
-    const { isAuthenticated, user } = useSelector((state: any) => state.auth);
+    const { user } = useSelector((state: any) => state.auth);
+    const isAuthenticated = (localStorage.getItem("token")!=null || sessionStorage.getItem("token")!=null);
     const {Header} = Layout;
     const handleButtonClick = async (page: string) => {
        await router.push(`/auth/${page}`);
