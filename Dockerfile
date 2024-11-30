@@ -1,32 +1,20 @@
-#step1: build
-FROM node:18-slim AS builder
+FROM node:18-slim
 WORKDIR /home/node/blog_frontend
-COPY package*.json ./
-COPY tsconfig.json ./
-COPY yarn.lock ./
-COPY next-i18next.config.js ./
-COPY . .
+
+COPY package.json yarn.lock tsconfig.json next-i18next.config.js next.config.mjs ./
 COPY .env.production .env
-RUN npm install --force --global yarn
-RUN npm install --force --global ts-node
-RUN npm install --force --global typescript
-RUN yarn install --check-files
+COPY ./public ./public
+COPY ./pages ./pages
+COPY ./components ./components
+COPY ./styles ./styles
+
+RUN npm install --global yarn
+RUN yarn install --frozen-lockfile
+
 RUN yarn build
 
-#step2: production
-FROM node:18-slim AS production
-WORKDIR /home/node/blog_frontend
-COPY --from=builder /home/node/blog_frontend/.next ./.next
-COPY --from=builder /home/node/blog_frontend/public ./public
-COPY --from=builder /home/node/blog_frontend/package.json ./
-COPY --from=builder /home/node/blog_frontend/yarn.lock ./
-COPY --from=builder /home/node/blog_frontend/next-i18next.config.js ./
-COPY --from=builder /home/node/blog_frontend/next.config.mjs ./
-COPY --from=builder /home/node/blog_frontend/tsconfig.json ./
-COPY --from=builder /home/node/blog_frontend/package.json ./
-COPY --from=builder /home/node/blog_frontend/i18n.ts ./
-
 RUN yarn install --production --frozen-lockfile
-COPY .env.production .env
+
 EXPOSE 3005
+
 CMD ["yarn", "start"]
