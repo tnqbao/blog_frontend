@@ -1,10 +1,11 @@
 FROM node:18-slim
 WORKDIR /home/node/blog_frontend
 
-COPY package.json yarn.lock tsconfig.json next-i18next.config.js next.config.mjs ./
-COPY .env.production .env
-COPY ./public ./public
-COPY ./src ./src
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY yarn.lock ./
+COPY next-i18next.config.js ./
+COPY . .
 
 RUN yarn install --frozen-lockfile
 
