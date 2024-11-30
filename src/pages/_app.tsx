@@ -48,7 +48,7 @@ function App({Component, pageProps}: AppProps) {
                     <HeaderComp/>
                     <Layout>
                         <MenuBar />
-                        <Layout style={{padding: '0 24px 24px'}}>
+                        <Layout style={{}}>
                             <Content
                                 style={{
                                     padding: 0,

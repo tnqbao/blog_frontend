@@ -31,7 +31,7 @@ const MenuBar = () => {
 
     return (
         <Sider
-            breakpoint="lg"
+            breakpoint="md"
             collapsedWidth="0"
             onBreakpoint={(broken) => {
                 console.log(broken);
@@ -48,8 +48,8 @@ const MenuBar = () => {
                 defaultSelectedKeys={['1']}
             >
                 {items2.map((item) => (
-                    <Menu.Item key={item.key}  >
-                        <button onClick={() => {router.push(item.path)}}> { item.label} </button>
+                    <Menu.Item key={item.key} onClick={() => {router.push(item.path)}} >
+                        { item.label}
                     </Menu.Item>
                 ))}
             </Menu>

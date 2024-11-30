@@ -18,7 +18,7 @@ const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
     } = theme.useToken();
     return (
         <div className={"bg-white"}><Layout style={{minHeight: '100vh'}}>
-                <Layout style={{padding: '0 24px 24px'}}>
+                <Layout style={{padding: '0 0 24px'}}>
                     <Content
                         style={{
                             padding: 0,
