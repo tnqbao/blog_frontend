@@ -57,7 +57,7 @@ const Login : React.FC = () => {
                 } else {
                     sessionStorage.setItem("token", data.token);
                 }
-                router.push("../");
+                await router.push("../");
             } else {
                 console.error("Login failed with status:", response.status);
             }

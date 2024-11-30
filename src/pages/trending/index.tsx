@@ -5,6 +5,7 @@ import {userApiInstance} from "@/utils/axios.config";
 import {BlogType} from "@/utils/types";
 import {parse} from "cookie";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {withAuth} from "@/utils/authGuard";
 
 type TrendingPageProps = {
     Blogs: BlogType[] | null;
@@ -20,7 +21,7 @@ const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({locale, req}) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, req}) => {
     const currentLocale = locale || "en";
     const cookies = parse(req.headers.cookie || '');
     const token = cookies.auth_token;
@@ -72,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ({locale, req}) => {
             },
         };
     }
-};
+});
 
 
 export default TrendingPage;
