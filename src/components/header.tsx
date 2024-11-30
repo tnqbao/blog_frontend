@@ -54,7 +54,7 @@ const HeaderComp: React.FC = () => {
                     </div>
                 )}
             </div>
-            <Divider />
+            {/*<Divider />*/}
         </Header>
     );
 };
