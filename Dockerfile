@@ -4,9 +4,8 @@ WORKDIR /home/node/blog_frontend
 COPY package.json yarn.lock tsconfig.json next-i18next.config.js next.config.mjs ./
 COPY .env.production .env
 COPY ./public ./public
-COPY ./pages ./pages
-COPY ./components ./components
-COPY ./styles ./styles
+COPY ./src ./src
+
 
 RUN npm install --global yarn
 RUN yarn install --frozen-lockfile
