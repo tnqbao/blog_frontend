@@ -4,6 +4,7 @@ import {parse} from "cookie";
 import {userApiInstance} from "@/utils/axios.config";
 import {BlogType} from "@/utils/types";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {withAuth} from "@/utils/authGuard";
 
 type NewfeedsProps = {
     Blogs: BlogType[] | null;
@@ -18,7 +19,7 @@ const NewfeedPage: React.FC<NewfeedsProps> = ({Blogs}) => {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({locale, req, query}) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, req, query}) => {
     const currentLocale = locale || "en";
     const cookies = parse(req.headers.cookie || '');
     const token = cookies.auth_token;
@@ -71,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({locale, req, query
             },
         };
     }
-};
+});
 
 
 
