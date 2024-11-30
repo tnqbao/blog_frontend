@@ -6,8 +6,6 @@ COPY .env.production .env
 COPY ./public ./public
 COPY ./src ./src
 
-
-RUN npm install --global yarn
 RUN yarn install --frozen-lockfile
 
 RUN yarn build
