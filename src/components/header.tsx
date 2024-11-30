@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Layout, Avatar} from "antd";
+import {Button, Layout, Avatar, Divider} from "antd";
 import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
 import SearchBar from "@/components/search-bar";
@@ -54,6 +54,7 @@ const HeaderComp: React.FC = () => {
                     </div>
                 )}
             </div>
+            {/*<Divider />*/}
         </Header>
     );
 };

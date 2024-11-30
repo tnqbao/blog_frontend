@@ -1,24 +1,40 @@
+import React from 'react';
+import {Layout, Menu, theme} from 'antd';
 import NewFeeds from "@/components/newfeeds";
-import {GetServerSideProps} from "next";
+import {BlogType} from "@/utils/types";
+import {withAuth} from "@/utils/authGuard";
 import {parse} from "cookie";
 import {userApiInstance} from "@/utils/axios.config";
-import {BlogType} from "@/utils/types";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {withAuth} from "@/utils/authGuard";
+const {Content, Sider} = Layout;
 
-type NewfeedsProps = {
+type TrendingPageProps = {
     Blogs: BlogType[] | null;
-    error?: string;
 };
 
-const HomePage: React.FC<NewfeedsProps> = ({Blogs}) => {
+const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
+    const {
+        token: {colorBgContainer, borderRadiusLG},
+    } = theme.useToken();
     return (
-        <div>
-            <NewFeeds Blogs={Blogs} />
+        <div className={"bg-white"}><Layout style={{minHeight: '100vh'}}>
+                <Layout style={{padding: '0 24px 24px'}}>
+                    <Content
+                        style={{
+                            padding: 0,
+                            margin: 0,
+                            minHeight: 280,
+                            background: colorBgContainer,
+                            borderRadius: borderRadiusLG,
+                        }}
+                    >
+                        <NewFeeds Blogs={Blogs}/>
+                    </Content>
+                </Layout>
+            </Layout>
         </div>
     );
-}
-
+};
 export const getServerSideProps = withAuth(async ({locale, req, query}) => {
     const currentLocale = locale || "en";
     const cookies = parse(req.headers.cookie || '');
@@ -65,5 +81,5 @@ export const getServerSideProps = withAuth(async ({locale, req, query}) => {
 });
 
 
-
 export default HomePage;
+
