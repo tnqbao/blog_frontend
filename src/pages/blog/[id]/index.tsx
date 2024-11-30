@@ -4,6 +4,7 @@ import { userApiInstance } from "@/utils/axios.config";
 import Head from 'next/head';
 import { parse } from 'cookie';
 import {BlogType} from "@/utils/types";
+import {withAuth} from "@/utils/authGuard";
 
 
 
@@ -28,7 +29,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ blog, error }) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query, req }) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async ({ query, req }) => {
     const blogId = Number(query.id) || 1;
     const cookies = parse(req.headers.cookie || '');
     const token = cookies.auth_token;
@@ -78,6 +79,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req }) => 
             },
         };
     }
-};
+});
 
 export default BlogPage;

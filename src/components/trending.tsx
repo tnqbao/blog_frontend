@@ -10,7 +10,7 @@ const Trending : React.FC<TrendingPageProps> = ({ Blogs, error}) => {
 
     return (
         <div>
-            <div className={"bg-white h-500px h-auto flex flex-col gap-10"}>
+            <div className={"bg-white h-500px h-auto flex flex-col gap-2"}>
                 {Blogs && Blogs.map((blog) => (
                     <div>
                         <BlogContent blog={blog} key={blog.id}/>
