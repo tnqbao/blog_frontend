@@ -1,16 +1,12 @@
-import {BlogType} from "@/utils/types";
+import { ListBlogType} from "@/utils/types";
 import BlogContent from "@/components/blog-content";
 
-type TrendingPageProps = {
-    Blogs: BlogType[] | null;
-    error?: string;
-}
 
-const Trending : React.FC<TrendingPageProps> = ({ Blogs, error}) => {
+const ListBlog : React.FC<ListBlogType> = ({ Blogs, error}) => {
 
     return (
         <div>
-            <div className={"bg-white h-500px h-auto flex flex-col gap-2"}>
+            <div className={"bg-white h-500px h-auto flex flex-col p-4"}>
                 {Blogs && Blogs.map((blog) => (
                     <div>
                         <BlogContent blog={blog} key={blog.id}/>
@@ -21,4 +17,4 @@ const Trending : React.FC<TrendingPageProps> = ({ Blogs, error}) => {
     );
 }
 
-export default Trending;
+export default ListBlog;

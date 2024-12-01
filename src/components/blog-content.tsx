@@ -1,7 +1,6 @@
 import {Button, Card, Divider, Space, Typography} from 'antd';
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {format} from 'date-fns';
-import {useWebSocket} from '@/utils/hooks/useWebSocket';
 import VoteButton from "@/components/vote-button";
 
 const {Title, Text} = Typography;
@@ -28,7 +27,6 @@ function formatDateWithDateFns(isoDate: string): string {
 
 const BlogContent: FC<BlogContentProps> = ({blog}) => {
 
-
     return (
         <Card style={{maxWidth: 600, margin: 'auto'}}>
             <Space className="flex justify-between">
@@ -41,7 +39,9 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
             </Space>
             <Divider/>
             <Title level={3}>{blog.title}</Title>
-            <Text>{blog.body}</Text>
+            <Text>
+                <div dangerouslySetInnerHTML={{ __html: blog.body }} />
+            </Text>
             <Divider/>
             <Space style={{width: '100%'}}>
                 <VoteButton blog={blog} />

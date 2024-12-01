@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { userApiInstance} from "@/utils/axios.config";
-import { serialize } from 'cookie';
+import { serialize, SerializeOptions } from 'cookie';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         try {
@@ -11,6 +11,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             if (response.status === 200) {
                 const token = response.data.token;
+                const cookieOptions : SerializeOptions = {
+                    httpOnly: true,
+                    path: '/',
+                };
+
+                if (keepLogin === 'true') {
+                    cookieOptions['maxAge'] = 30 * 24 * 60 * 60;
+                }
                 const shouldKeepLogin = keepLogin === 'true';
                 res.setHeader('Set-Cookie', serialize('auth_token', token, {
                     httpOnly: true,

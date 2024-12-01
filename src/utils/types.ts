@@ -34,3 +34,8 @@ export interface User {
     dateOfBirth: string;
     fullname: string;
 }
+
+export interface ListBlogType {
+    Blogs: BlogType[] | null;
+    error?: string;
+}

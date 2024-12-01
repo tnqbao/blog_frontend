@@ -1,13 +1,14 @@
 import React from "react";
-import {Form, Input, Button, message, Divider, Avatar} from "antd";
-import {userApiInstance} from "@/utils/axios.config";
+import { Form, Input, Button, message, Divider, Avatar } from "antd";
+import { userApiInstance } from "@/utils/axios.config";
 import SubmitButton from "./custom-submit-button";
-import {useRouter} from "next/router";
-import {useTranslation} from "next-i18next";
-import {Editor} from "@tinymce/tinymce-react";
-import {useSelector} from "react-redux";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { useSelector } from "react-redux";
+import dynamic from "next/dynamic";
 
-const {TextArea} = Input;
+const ReactQuillNoSSR = dynamic(() => import("react-quill"), { ssr: false });
+
 type FieldType = {
     title?: string;
     body?: string;
@@ -16,11 +17,12 @@ type FieldType = {
 const Upload: React.FC = () => {
     const [form] = Form.useForm();
     const router = useRouter();
-    const { t } = useTranslation('blog');
+    const { t } = useTranslation("blog");
     const fullname = useSelector((state: any) => state.auth.fullname);
+
     const onFinish = async (values: FieldType) => {
         try {
-            const response = await userApiInstance.post("/post", values, {withCredentials: true});
+            const response = await userApiInstance.post("/post", values, { withCredentials: true });
             if (response.status === 200) {
                 message.success("Post submitted successfully!");
                 await router.push("../");
@@ -33,19 +35,19 @@ const Upload: React.FC = () => {
 
     return (
         <div className="flex-grow flex flex-wrap justify-center items-start sm:mx-20">
-            <div className="w-full sm:w-2/3 bg-white sm:p-5 rounded-2xl shadow-lg shadow-blue-700 sm:m-5">
+            <div className="w-full sm:w-2/3 bg-white sm:p-5 shadow-lg shadow-blue-700 sm:m-5">
                 <Form
                     form={form}
                     layout="vertical"
                     onFinish={onFinish}
                     autoComplete="off"
-                    className="rounded-lg p-5 md:p-7 m-2"
+                    className="md:p-7 m-2"
                 >
                     <Form.Item>
                         <div className="flex items-center flex-wrap gap-2">
                             <Avatar
                                 size={50}
-                                style={{backgroundColor: "#f56a00", verticalAlign: "middle"}}
+                                style={{ backgroundColor: "#f56a00", verticalAlign: "middle" }}
                             >
                                 {fullname ? fullname.charAt(0).toUpperCase() : "U"}
                             </Avatar>
@@ -57,40 +59,38 @@ const Upload: React.FC = () => {
                     <Divider />
                     <Form.Item
                         name="title"
-                        rules={[{required: true, message: "Please enter a title"}]}
+                        rules={[{ required: true, message: "Please enter a title" }]}
                     >
                         <Input
-                            placeholder={t('title')}
+                            placeholder={t("title")}
                             size="large"
                             maxLength={100}
-                            className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"
+                            className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50"
                         />
                     </Form.Item>
                     <Divider />
                     <Form.Item
                         name="body"
-                        rules={[{required: true, message: "Please enter content"}]}
+                        rules={[{ required: true, message: "Please enter content" }]}
                     >
-                        <TextArea
-                            size="large"
-                            placeholder={t('body')}
-                            autoSize={{minRows: 3, maxRows: 50}}
-                            className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 rounded-2xl"
+                        <ReactQuillNoSSR
+                            theme="snow"
+                            placeholder={t("body")}
+                            className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 "
                         />
-                        {/*<Editor></Editor>*/}
                     </Form.Item>
                     <div className="flex justify-between">
                         <Form.Item className="flex-grow w-1/3">
-                            <SubmitButton form={form}>{t('submit')}</SubmitButton>
+                            <SubmitButton form={form}>{t("submit")}</SubmitButton>
                         </Form.Item>
                         <Form.Item className="flex-grow w-1/3 flex justify-end">
                             <Button
                                 type="primary"
                                 danger
                                 className="flex-grow w-full text-xl h-auto"
-                                onClick={() => { router.push("../")}}
+                                onClick={() => { router.push("../") }}
                             >
-                                {t('cancel')}
+                                {t("cancel")}
                             </Button>
                         </Form.Item>
                     </div>
