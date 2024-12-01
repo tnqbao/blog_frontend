@@ -5,16 +5,13 @@ import {useRouter} from "next/router";
 
 const CommentUpload: React.FC = () => {
     const handleFinish = async (values: { comment: string }) => {
-        const router = useRouter();
         try {
-            const response = await userApiInstance.post("/comment", values, { withCredentials: true });
+            const response = await userApiInstance.post("/comment", values);
             message.success('Comment submitted successfully!');
             console.log('Comment submitted:', response);
-            router.push("../");
         } catch (error) {
             message.success('Comment submitted successfully!');
             console.error('Error submitting comment:', error);
-            router.push("../");
         }
     };
 
@@ -23,9 +20,9 @@ const CommentUpload: React.FC = () => {
     };
 
     return (
-        <Form layout="vertical" onFinish={handleFinish} style={{ maxWidth: 400, margin: '0 auto' }}>
-            <Form.Item name="comment" rules={[{ required: true, message: 'Please enter your comment' }]}>
-                <Input.TextArea placeholder="Write your comment here..." rows={4} />
+        <Form layout="vertical" onFinish={handleFinish}>
+            <Form.Item name="comment">
+                <Input.TextArea placeholder="Write your comment here..." rows={2} > </ Input.TextArea>
             </Form.Item>
 
             <Form.Item>
