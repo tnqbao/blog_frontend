@@ -24,8 +24,8 @@ const Login : React.FC = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-    if (isAuthenticated) {
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token") || null;
+    if (token) {
         router.push("../");
     }
     const handleOnClicked = () => {

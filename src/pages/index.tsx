@@ -1,11 +1,13 @@
 import React from 'react';
-import {Layout, Menu, theme} from 'antd';
-import NewFeeds from "@/components/newfeeds";
+import {Layout, theme} from 'antd';
 import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
 import {parse} from "cookie";
 import {userApiInstance} from "@/utils/axios.config";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import MenuBar from "@/components/menu-bar";
+import ListBlog from "@/components/list-blog";
+
 const {Content, Sider} = Layout;
 
 type TrendingPageProps = {
@@ -13,24 +15,14 @@ type TrendingPageProps = {
 };
 
 const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
-    const {
-        token: {colorBgContainer, borderRadiusLG},
-    } = theme.useToken();
     return (
-        <div className={"bg-white"}><Layout style={{minHeight: '100vh'}}>
-                <Layout style={{padding: '0 24px 24px'}}>
-                    <Content
-                        style={{
-                            padding: 0,
-                            margin: 0,
-                            minHeight: 280,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    >
-                        <NewFeeds Blogs={Blogs}/>
-                    </Content>
-                </Layout>
+        <div className={"bg-white"}>
+            <Layout style={{minHeight: '100vh'}}>
+                <MenuBar />
+                <Content >
+                    <ListBlog Blogs={Blogs}/>
+                </Content>
+                <Sider className={"hidden md:block"} />
             </Layout>
         </div>
     );
@@ -40,27 +32,28 @@ export const getServerSideProps = withAuth(async ({locale, req, query}) => {
     const cookies = parse(req.headers.cookie || '');
     const token = cookies.auth_token;
     try {
-        const response = await userApiInstance.get(`/feed/allPosts/0`, {
+        const response = await userApiInstance.get(`/feed/allPosts/1`, {
             headers: {
                 Authorization: `${token}`,
             },
-            withCredentials: true,
         });
 
         const data = response.data;
-        const Blogs: BlogType[] = data.map((blog: any) => {
-            return {
-                id: blog.id,
-                title: blog.title,
-                body: blog.body,
-                upvote: blog.upvote,
-                downvote: blog.downvote,
-                createdAt: blog.createdAt,
-                user: {
-                    fullname: blog.user.fullname,
-                },
-            };
-        });
+        const Blogs: BlogType[] = Array.isArray(data?.postInPage)
+            ? data.postInPage.map((blog: any) => {
+                return {
+                    id: blog.id,
+                    title: blog.title,
+                    body: blog.body,
+                    upvote: blog.upvote,
+                    downvote: blog.downvote,
+                    createdAt: blog.createdAt,
+                    user: {
+                        fullname: blog.user.fullname,
+                    },
+                };
+            })
+            : [];
 
         return {
             props: {

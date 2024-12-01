@@ -1,6 +1,5 @@
 import React from "react";
 import {Menu, theme} from "antd";
-import {LaptopOutlined, NotificationOutlined, UserOutlined} from "@ant-design/icons";
 import {Layout} from "antd";
 import {useRouter} from "next/router";
 
@@ -25,20 +24,14 @@ const MenuBar = () => {
         {
             key: '3',
             label: 'Newfeeds',
-            path: '../newfeeds/0',
+            path: '../newfeeds/1',
         },
     ];
 
     return (
         <Sider
-            breakpoint="lg"
+            breakpoint="md"
             collapsedWidth="0"
-            onBreakpoint={(broken) => {
-                console.log(broken);
-            }}
-            onCollapse={(collapsed, type) => {
-                console.log(collapsed, type);
-            }}
             style={{ background: colorBgContainer }}
         >
             <div className="demo-logo-vertical"/>
@@ -48,8 +41,8 @@ const MenuBar = () => {
                 defaultSelectedKeys={['1']}
             >
                 {items2.map((item) => (
-                    <Menu.Item key={item.key}  >
-                        <button onClick={() => {router.push(item.path)}}> { item.label} </button>
+                    <Menu.Item key={item.key} onClick={() => {router.push(item.path)}} className={"text-xl "} >
+                        { item.label}
                     </Menu.Item>
                 ))}
             </Menu>

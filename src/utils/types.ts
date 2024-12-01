@@ -1,10 +1,3 @@
-export interface user {
-  id: number;
-  username: string;
-  mail: string;
-  dateOfBirth: string;
-  fullname: string;
-}
 
 export interface post {
   id: number;
@@ -12,7 +5,7 @@ export interface post {
   body: string;
   upvote: number;
   downvote: number;
-  user: user | null;
+  user: UserType | null;
 }
 
 export interface BlogType {
@@ -27,10 +20,22 @@ export interface BlogType {
     };
 }
 
-export interface User {
+export interface UserType {
     id: number;
     username: string;
     mail: string;
     dateOfBirth: string;
     fullname: string;
+}
+
+export interface ListBlogType {
+    Blogs: BlogType[] | null;
+    error?: string;
+}
+
+export interface CommentType {
+    id: number;
+    body: string;
+    createdAt : string;
+    user: UserType;
 }

@@ -2,20 +2,24 @@ import NewFeeds from "@/components/newfeeds";
 import {GetServerSideProps} from "next";
 import {parse} from "cookie";
 import {userApiInstance} from "@/utils/axios.config";
-import {BlogType} from "@/utils/types";
+import {BlogType, ListBlogType} from "@/utils/types";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {withAuth} from "@/utils/authGuard";
+import Menubar from "@/components/menu-bar";
+import {Layout} from "antd";
+import ListBlog from "@/components/list-blog";
 
-type NewfeedsProps = {
-    Blogs: BlogType[] | null;
-    error?: string;
-};
+const {Sider, Content} = Layout;
+const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
 
-const NewfeedPage: React.FC<NewfeedsProps> = ({Blogs}) => {
     return (
-        <div>
-            <NewFeeds Blogs={Blogs} />
-        </div>
+        <Layout >
+            <Menubar/>
+            <Content >
+                <ListBlog Blogs={Blogs}/>
+            </Content>
+            <Sider className={"hidden md:block"} />
+        </Layout>
     );
 }
 
@@ -41,20 +45,21 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
         });
 
         const data = response.data;
-        console.log(data);
-        const Blogs: BlogType[] = data.map((blog: any) => {
-            return {
-                id: blog.id,
-                title: blog.title,
-                body: blog.body,
-                upvote: blog.upvote,
-                downvote: blog.downvote,
-                createdAt: blog.createdAt,
-                user: {
-                    fullname: blog.user.fullname,
-                },
-            };
-        });
+        const Blogs: BlogType[] = Array.isArray(data?.postInPage)
+            ? data.postInPage.map((blog: any) => {
+                return {
+                    id: blog.id,
+                    title: blog.title,
+                    body: blog.body,
+                    upvote: blog.upvote,
+                    downvote: blog.downvote,
+                    createdAt: blog.createdAt,
+                    user: {
+                        fullname: blog.user.fullname,
+                    },
+                };
+            })
+            : [];
 
         return {
             props: {
