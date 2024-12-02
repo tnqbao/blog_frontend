@@ -29,7 +29,7 @@ const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
                 }}>
                     <ListBlog Blogs={Blogs} error={error}/>
                 </Content>
-                <Sider className={"hidden sm:block"} />
+                <Sider className={"hidden md:block"} />
             </Layout>
         </div>
     )
