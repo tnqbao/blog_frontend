@@ -3,10 +3,14 @@ import { Form, Input, Button, Space, message } from 'antd';
 import {userApiInstance} from "@/utils/axios.config";
 import {useRouter} from "next/router";
 
-const CommentUpload: React.FC = () => {
+const CommentUpload: React.FC<{ postId: number }> = ({ postId }) => {
     const handleFinish = async (values: { comment: string }) => {
         try {
-            const response = await userApiInstance.post("/comment", values);
+            const response = await userApiInstance.post("/comment", {
+                body: values.comment,
+                attachment : "",
+                postID: postId,
+            });
             message.success('Comment submitted successfully!');
             console.log('Comment submitted:', response);
         } catch (error) {

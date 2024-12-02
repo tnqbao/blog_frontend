@@ -14,13 +14,14 @@ const Comment : React.FC<CommentType> = ({ body, createdAt, user}) => {
                 <div className={"flex flex-col gap-1"}>
                     <Space className="flex justify-between">
                         <div className="flex-grow flex items-center">
-                            <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+                            <Text style={{fontSize: 16, fontWeight: 'bold'}}>
                                 {user.fullname}
                             </Text>
                         </div>
-                        <Text>{formatDateWithDateFns(createdAt)}</Text>
+                        <Text style={{fontSize: 13}} className={"text-gray-400"}>{formatDateWithDateFns(createdAt)}</Text>
                     </Space>
-                    <Text style={{fontSize: 12}}>
+
+                    <Text style={{fontSize: 14}}>
                         {body}
                     </Text>
                     <Divider/>

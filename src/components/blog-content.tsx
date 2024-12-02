@@ -33,7 +33,7 @@ function formatDateWithDateFns(isoDate: string): string {
 const BlogContent: FC<BlogContentProps> = ({blog}) => {
     const [isCommentOpen, setCommentOpen] = useState(false);
     const [comments, setComments] = useState<CommentType[]>([]);
-    const [hideContent, setHideContent] = useState(false);
+    const [hideContent, setHideContent] = useState(true);
     return (
         <Card style={{maxWidth: 600, margin: 'auto'}}>
             <Space className="flex items-start flex-col" >
@@ -55,7 +55,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                     className="focus:outline-none text-blue-600 drop-shadow-2xl"
                     onClick={() => setHideContent(!hideContent)}
                 >
-                    {hideContent ? "Show more" : "Hire less"}
+                    {hideContent ? "Show more" : "Hide less"}
                 </button>
             }
             <Divider/>
@@ -71,7 +71,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                 <>
                     <Divider/>
                     <CommentList blogId={blog.id} comments={comments} setComments={setComments}/>
-                    <CommentUpload/>
+                    <CommentUpload postId={blog.id}/>
                 </>
             ) : null}
         </Card>
