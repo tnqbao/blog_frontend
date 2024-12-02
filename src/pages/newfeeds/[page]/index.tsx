@@ -1,4 +1,3 @@
-import NewFeeds from "@/components/newfeeds";
 import {GetServerSideProps} from "next";
 import {parse} from "cookie";
 import {userApiInstance} from "@/utils/axios.config";
