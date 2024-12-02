@@ -18,7 +18,7 @@ const Upload: React.FC = () => {
     const [form] = Form.useForm();
     const router = useRouter();
     const { t } = useTranslation("blog");
-    const fullname = useSelector((state: any) => state.auth.fullname);
+    const { user } = useSelector((state: any) => state.auth);
 
     const onFinish = async (values: FieldType) => {
         try {
@@ -34,7 +34,7 @@ const Upload: React.FC = () => {
     };
 
     return (
-        <div className="flex-grow flex flex-wrap justify-center items-start sm:mx-20">
+        <div className="flex-grow flex flex-wrap justify-center items-start">
             <div className="w-full sm:w-2/3 bg-white sm:p-5 shadow-lg shadow-blue-700 sm:m-5">
                 <Form
                     form={form}
@@ -49,10 +49,10 @@ const Upload: React.FC = () => {
                                 size={50}
                                 style={{ backgroundColor: "#f56a00", verticalAlign: "middle" }}
                             >
-                                {fullname ? fullname.charAt(0).toUpperCase() : "U"}
+                                {user.fullname ? user.fullname.charAt(0).toUpperCase() : "U"}
                             </Avatar>
                             <span className="text-xl font-bold ml-3">
-                                {fullname?.toUpperCase() || "Unknown User"}
+                                {user.fullname?.toUpperCase() || "Unknown User"}
                             </span>
                         </div>
                     </Form.Item>
