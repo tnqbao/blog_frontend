@@ -6,6 +6,7 @@ import {useTranslation} from "next-i18next";
 import SearchBar from "@/components/search-bar";
 import {useSelector} from "react-redux";
 import {LogoutOutlined, UserOutlined} from "@ant-design/icons";
+import {userApiInstance} from "@/utils/axios.config";
 
 const HeaderComp: React.FC = () => {
     const router = useRouter();
@@ -19,15 +20,18 @@ const HeaderComp: React.FC = () => {
     };
 
     const handleLogout = async () => {
-        localStorage.clear();
-        sessionStorage.clear();
+        const resp = await userApiInstance.post("/user/logout");
+        if (resp.status === 200) {
+            localStorage.clear();
+            sessionStorage.clear();
+        }
         await router.push("../")
     }
 
     const items: MenuProps['items'] = [
         {
             label: <div onClick={() => {
-                router.push("../")
+                router.push("../profile")
             }}>Profile</div>,
             key: '0',
             icon: React.createElement(UserOutlined)
