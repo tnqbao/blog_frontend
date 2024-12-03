@@ -17,7 +17,7 @@ const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
             <Content >
                 <ListBlog Blogs={Blogs}/>
             </Content>
-            <Sider className={"hidden md:block"} />
+            <Sider className={"hidden md:block bg-white"} />
         </Layout>
     );
 }
@@ -25,16 +25,8 @@ const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
 export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, req, query}) => {
     const currentLocale = locale || "en";
     const cookies = parse(req.headers.cookie || '');
-    const token = cookies.auth_token;
+    const token = cookies.jwt;
     const page = Number(query.page);
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/auth/login',
-                permanent: false,
-            },
-        };
-    }
     try {
         const response = await userApiInstance.get(`/feed/allPosts/${page}`, {
             headers: {

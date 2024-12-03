@@ -5,7 +5,7 @@ export const withAuth = (gssp: GetServerSideProps) => {
         const cookie = require('cookie');
         const { req } = context;
         const cookies = req.headers && req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
-        const token = cookies.auth_token;
+        const token = cookies.jwt;
 
         if (!token) {
             return {
