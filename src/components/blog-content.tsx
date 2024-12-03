@@ -35,7 +35,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
     const [comments, setComments] = useState<CommentType[]>([]);
     const [hideContent, setHideContent] = useState(true);
     return (
-        <Card style={{maxWidth: 600, margin: 'auto'}}>
+        <Card className={"flex flex-wrap mx-auto w-full"}>
             <Space className="flex items-start flex-col" >
                 <div className="flex-grow flex items-center">
                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>
@@ -59,7 +59,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                 </button>
             }
             <Divider/>
-            <Space style={{width: '100%'}}>
+            <Space style={{width: '100%', flexWrap : "wrap"}}>
                 <VoteButton blog={blog}/>
                 <Button style={{justifySelf: 'end'}} onClick={() => {
                     setCommentOpen(!isCommentOpen)

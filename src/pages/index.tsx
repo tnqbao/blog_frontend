@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout, theme} from 'antd';
+import {Layout} from 'antd';
 import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
 import {parse} from "cookie";
@@ -16,14 +16,10 @@ type TrendingPageProps = {
 
 const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
     return (
-        <div className={"bg-white"}>
-            <Layout style={{minHeight: '100vh'}}>
-                <MenuBar />
-                <Content >
-                    <ListBlog Blogs={Blogs}/>
-                </Content>
-                <Sider className={"hidden md:block bg-white"} />
-            </Layout>
+        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+            <MenuBar/>
+            <ListBlog Blogs={Blogs}/>
+            {/*<Sider className={"hidden md:block bg-white"} />*/}
         </div>
     );
 };
