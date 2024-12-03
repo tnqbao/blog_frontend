@@ -8,7 +8,7 @@ import {Layout} from "antd";
 import MenuBar from "@/components/menu-bar";
 import {withAuth} from "@/utils/authGuard";
 
-const {Content , Sider} = Layout;
+const {Content, Sider} = Layout;
 type TrendingPageProps = {
     Blogs: BlogType[] | null;
     error?: string;
@@ -17,20 +17,10 @@ type TrendingPageProps = {
 
 const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
     return (
-        <div className={"bg-white h-500px h-auto"}>
-            <Layout>
-                <MenuBar/>
-                <Content style={{
-                    padding: 0,
-                    margin: 0,
-                    minHeight: 280,
-                    background: '#f0f2f5',
-                    borderRadius: '10px',
-                }}>
-                    <ListBlog Blogs={Blogs} error={error}/>
-                </Content>
-                <Sider className={"hidden md:block bg-white"} />
-            </Layout>
+        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+            <MenuBar/>
+            <ListBlog Blogs={Blogs}/>
+            {/*<Sider className={"hidden md:block bg-white"} />*/}
         </div>
     )
 }
