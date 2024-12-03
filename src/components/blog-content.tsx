@@ -51,11 +51,11 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                     <div dangerouslySetInnerHTML={{__html: blog.body}}/>}
             </Text>)}
             {
-                blog.body.length > 300 && <button
+                blog.body.length > 400 && <button
                     className="focus:outline-none text-blue-600 drop-shadow-2xl"
                     onClick={() => setHideContent(!hideContent)}
                 >
-                    {hideContent ? "Show more" : "Hide less"}
+                    {hideContent ? "Show more" : "Show less"}
                 </button>
             }
             <Divider/>
