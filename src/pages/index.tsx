@@ -22,7 +22,7 @@ const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
                 <Content >
                     <ListBlog Blogs={Blogs}/>
                 </Content>
-                <Sider className={"hidden md:block"} />
+                <Sider className={"hidden md:block bg-white"} />
             </Layout>
         </div>
     );
@@ -30,12 +30,13 @@ const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
 export const getServerSideProps = withAuth(async ({locale, req, query}) => {
     const currentLocale = locale || "en";
     const cookies = parse(req.headers.cookie || '');
-    const token = cookies.auth_token;
+    const token = cookies.jwt;
     try {
         const response = await userApiInstance.get(`/feed/allPosts/1`, {
             headers: {
                 Authorization: `${token}`,
             },
+            withCredentials: true
         });
 
         const data = response.data;

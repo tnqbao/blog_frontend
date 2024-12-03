@@ -6,7 +6,6 @@ import {useTranslation} from "next-i18next";
 import SearchBar from "@/components/search-bar";
 import {useSelector} from "react-redux";
 import {LogoutOutlined, UserOutlined} from "@ant-design/icons";
-import {userApiInstance} from "@/utils/axios.config";
 
 const HeaderComp: React.FC = () => {
     const router = useRouter();
@@ -20,13 +19,24 @@ const HeaderComp: React.FC = () => {
     };
 
     const handleLogout = async () => {
-        const resp = await userApiInstance.post("/user/logout");
-        if (resp.status === 200) {
-            localStorage.clear();
-            sessionStorage.clear();
+        try {
+            const resp = await fetch("/api/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (resp.status === 200) {
+                localStorage.clear();
+                sessionStorage.clear();
+                await router.push("../auth/login");
+            } else {
+                console.error("Failed to logout");
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
         }
-        await router.push("../")
-    }
+    };
 
     const items: MenuProps['items'] = [
         {

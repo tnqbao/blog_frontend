@@ -19,7 +19,6 @@ const createUserApiInstance = (): AxiosInstance => {
         });
     } else {
         instance.interceptors.request.use((config) => {
-
             return config;
         });
     }

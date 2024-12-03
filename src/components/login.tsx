@@ -24,10 +24,6 @@ const Login : React.FC = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token") || null;
-    if (token) {
-        router.push("../");
-    }
     const handleOnClicked = () => {
         alert("Try to remember it!!");
     };

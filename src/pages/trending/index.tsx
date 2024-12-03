@@ -29,7 +29,7 @@ const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
                 }}>
                     <ListBlog Blogs={Blogs} error={error}/>
                 </Content>
-                <Sider className={"hidden md:block"} />
+                <Sider className={"hidden md:block bg-white"} />
             </Layout>
         </div>
     )
@@ -38,16 +38,7 @@ const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
 export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, req}) => {
     const currentLocale = locale || "en";
     const cookies = parse(req.headers.cookie || '');
-    const token = cookies.auth_token;
-
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/auth/login',
-                permanent: false,
-            },
-        };
-    }
+    const token = cookies.jwt;
     try {
         const response = await userApiInstance.get(`/feed/top30`, {
             headers: {
