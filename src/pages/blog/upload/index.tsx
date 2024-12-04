@@ -1,26 +1,20 @@
-import Upload from "@/components/blog-upload";
 import {GetServerSideProps} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {withAuth} from "@/utils/authGuard";
 import {Layout} from "antd";
 import MenuBar from "@/components/menu-bar";
+import Upload from "@/components/contents/blog-upload";
 
-const {Sider, Content} = Layout;
 const UpLoadPage: React.FC = () => {
     return (
-        <Layout className={"bg-white w-full h-[550px]"}>
-            <MenuBar/>
-            <Content style={{
-                padding: 0,
-                margin: 0,
-                minHeight: 280,
-                background: '#f0f2f5',
-                borderRadius: '10px',
-            }}>
-                <Upload/>
-            </Content>
-            <Sider className={"hidden sm:block"}/>
-        </Layout>
+        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+            <title>Upload</title>
+            <div className={"flex md:w-1/6"}>
+                <MenuBar isResponsive={false}/>
+            </div>
+            <Upload />
+
+        </div>
     );
 }
 

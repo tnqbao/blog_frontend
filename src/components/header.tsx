@@ -6,6 +6,7 @@ import {useTranslation} from "next-i18next";
 import SearchBar from "@/components/search-bar";
 import {useSelector} from "react-redux";
 import {LogoutOutlined, UserOutlined} from "@ant-design/icons";
+import MenuBar from "@/components/menu-bar";
 
 const HeaderComp: React.FC = () => {
     const router = useRouter();
@@ -60,6 +61,9 @@ const HeaderComp: React.FC = () => {
     return (
         <Header
             className={"bg-[#ffffff] bg-none flex flex-wrap shadow-sm items-center px-4 py-3 h-1/6 gap-2 justify-evenly"}>
+            <div className={"block md:hidden"}>
+                <MenuBar isResponsive={true}/>
+            </div>
             <div
                 className="flex items-center bg-[url('https://i.imgur.com/yzO7MiG.png')] sm:bg-[url('https://i.imgur.com/uGKflOp.png')] bg-cover bg-center h-10 w-full sm:h-16 sm:w-16  rounded-md"></div>
             <div className=" flex w-1/2 ">

@@ -4,21 +4,22 @@ import {userApiInstance} from "@/utils/axios.config";
 import {BlogType, ListBlogType} from "@/utils/types";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {withAuth} from "@/utils/authGuard";
-import Menubar from "@/components/menu-bar";
 import {Layout} from "antd";
-import ListBlog from "@/components/list-blog";
+import ListBlog from "@/components/contents/list-blog";
+import MenuBar from "@/components/menu-bar";
+import React from "react";
 
-const {Sider, Content} = Layout;
 const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
 
     return (
-        <Layout >
-            <Menubar/>
-            <Content >
-                <ListBlog Blogs={Blogs}/>
-            </Content>
-            <Sider className={"hidden md:block bg-white"} />
-        </Layout>
+        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+            <title>Newfeed</title>
+            <div className={"flex md:w-1/3"}>
+                <MenuBar isResponsive={false}/>
+            </div>
+            <ListBlog Blogs={Blogs}/>
+            {/*<Sider className={"hidden md:block bg-white"} />*/}
+        </div>
     );
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, message, Divider, Avatar } from "antd";
 import { userApiInstance } from "@/utils/axios.config";
-import SubmitButton from "./custom-submit-button";
+import SubmitButton from "../custom-submit-button";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useSelector } from "react-redux";
@@ -34,8 +34,8 @@ const Upload: React.FC = () => {
     };
 
     return (
-        <div className="flex-grow flex flex-wrap justify-center items-start">
-            <div className="w-full sm:w-2/3 bg-white sm:p-5 shadow-lg shadow-blue-700 sm:m-5">
+        <div className="flex w-full md:w-5/6 flex-wrap justify-center items-start">
+            <div className="w-full bg-white ">
                 <Form
                     form={form}
                     layout="vertical"

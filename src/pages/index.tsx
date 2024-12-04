@@ -1,14 +1,13 @@
 import React from 'react';
-import {Layout, theme} from 'antd';
+import {Layout} from 'antd';
 import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
 import {parse} from "cookie";
 import {userApiInstance} from "@/utils/axios.config";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import MenuBar from "@/components/menu-bar";
-import ListBlog from "@/components/list-blog";
+import ListBlog from "@/components/contents/list-blog";
 
-const {Content, Sider} = Layout;
 
 type TrendingPageProps = {
     Blogs: BlogType[] | null;
@@ -16,14 +15,13 @@ type TrendingPageProps = {
 
 const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
     return (
-        <div className={"bg-white"}>
-            <Layout style={{minHeight: '100vh'}}>
-                <MenuBar />
-                <Content >
-                    <ListBlog Blogs={Blogs}/>
-                </Content>
-                <Sider className={"hidden md:block bg-white"} />
-            </Layout>
+        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+            <title>Home</title>
+            <div className={"flex md:w-1/3"}>
+                <MenuBar isResponsive={false}/>
+            </div>
+            <ListBlog Blogs={Blogs}/>
+            <div className={"flex md:w-1/3"}></div>
         </div>
     );
 };
