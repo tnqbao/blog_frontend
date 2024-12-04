@@ -7,22 +7,18 @@ import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
 import MenuBar from "@/components/menu-bar";
 import ListBlog from "@/components/contents/list-blog";
+import React from "react";
 
 
 
-type BlogPageProps = {
-    blog: BlogType | null;
-    error?: string;
-};
-
-const BlogPage: React.FC<BlogPageProps> = ({ blog, error }) => {
+const BlogPage: React.FC<{blog : BlogType}> = ({ blog }) => {
     return (
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
             <div className={"flex md:w-1/3"}>
-                <MenuBar/>
+                <MenuBar isResponsive={false}/>
             </div>
             <BlogContent blog={blog}/>
-            {/*<Sider className={"hidden md:block bg-white"} />*/}
+            <div className={"flex md:w-1/3"}></div>
         </div>
     );
 };
