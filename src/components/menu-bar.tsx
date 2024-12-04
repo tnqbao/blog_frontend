@@ -79,6 +79,7 @@ const MenuBar = ({isResponsive} : {isResponsive : boolean}) => {
                         <Menu.Item key={item.key} onClick={() => {
                             router.push(item.path)
                             setOpen(false);
+
                         }} className={"text-md"}>
                             {item.icon} {item.label}
                         </Menu.Item>
