@@ -5,7 +5,8 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 const LoginPage: React.FC = () => {
     return (
         <>
-            <Login />
+            <title>Login</title>
+            <Login/>
         </>
     );
 };

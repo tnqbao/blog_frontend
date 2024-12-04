@@ -103,13 +103,13 @@ const Login : React.FC = () => {
                                 <Checkbox>{t("keepMeLoggedIn")}</Checkbox>
                             </Form.Item>
                             <Form.Item>
-                                <button onClick={handleOnClicked} className="text-primary">
+                                <a onClick={handleOnClicked} className="text-primary">
                                     {t("forgotPassword")}
-                                </button>
+                                </a>
                             </Form.Item>
                         </div>
 
-                        <Form.Item className="text-center">
+                        <Form.Item className="text-center hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 ">
                             <Button type="primary" size="large" htmlType="submit" loading={loading}>
                                 {t("submitButton")}
                             </Button>

@@ -1,14 +1,12 @@
-import ListBlog from "@/components/list-blog";
+import ListBlog from "@/components/contents/list-blog";
 import {GetServerSideProps} from "next";
 import {userApiInstance} from "@/utils/axios.config";
 import {BlogType} from "@/utils/types";
 import {parse} from "cookie";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {Layout} from "antd";
 import MenuBar from "@/components/menu-bar";
 import {withAuth} from "@/utils/authGuard";
 
-const {Content, Sider} = Layout;
 type TrendingPageProps = {
     Blogs: BlogType[] | null;
     error?: string;
@@ -18,7 +16,10 @@ type TrendingPageProps = {
 const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
     return (
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-            <MenuBar/>
+            <title>Trending</title>
+            <div className={"flex md:w-1/3"}>
+                <MenuBar isResponsive={false}/>
+            </div>
             <ListBlog Blogs={Blogs}/>
             {/*<Sider className={"hidden md:block bg-white"} />*/}
         </div>

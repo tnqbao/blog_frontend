@@ -1,10 +1,12 @@
 import { GetServerSideProps } from 'next';
-import BlogContent from "@/components/blog-content";
+import BlogContent from "@/components/contents/blog-content";
 import { userApiInstance } from "@/utils/axios.config";
 import Head from 'next/head';
 import { parse } from 'cookie';
 import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
+import MenuBar from "@/components/menu-bar";
+import ListBlog from "@/components/contents/list-blog";
 
 
 
@@ -15,21 +17,17 @@ type BlogPageProps = {
 
 const BlogPage: React.FC<BlogPageProps> = ({ blog, error }) => {
     return (
-        <div>
-            <Head>
-                <title>{blog ? blog.title : 'Post Not Found'}</title>
-                <meta
-                    name="description"
-                    content={blog ? blog.body.substring(0, 150) : 'Blog post not found'}
-                />
-            </Head>
-            {error && <p className="error">{error}</p>}
-            {blog ? <BlogContent blog={blog} /> : <p>Post not found</p>}
+        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+            <div className={"flex md:w-1/3"}>
+                <MenuBar/>
+            </div>
+            <BlogContent blog={blog}/>
+            {/*<Sider className={"hidden md:block bg-white"} />*/}
         </div>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = withAuth(async ({ query, req }) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req}) => {
     const blogId = Number(query.id) || 1;
     const cookies = parse(req.headers.cookie || '');
     const token = cookies.auth_token;

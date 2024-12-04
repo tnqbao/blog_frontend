@@ -6,9 +6,8 @@ import {parse} from "cookie";
 import {userApiInstance} from "@/utils/axios.config";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import MenuBar from "@/components/menu-bar";
-import ListBlog from "@/components/list-blog";
+import ListBlog from "@/components/contents/list-blog";
 
-const {Content, Sider} = Layout;
 
 type TrendingPageProps = {
     Blogs: BlogType[] | null;
@@ -17,9 +16,12 @@ type TrendingPageProps = {
 const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
     return (
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-            <MenuBar/>
+            <title>Home</title>
+            <div className={"flex md:w-1/3"}>
+                <MenuBar isResponsive={false}/>
+            </div>
             <ListBlog Blogs={Blogs}/>
-            {/*<Sider className={"hidden md:block bg-white"} />*/}
+            <div className={"flex md:w-1/3"}></div>
         </div>
     );
 };

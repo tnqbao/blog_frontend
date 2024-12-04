@@ -3,7 +3,7 @@ import {Button, Drawer, DrawerProps, Layout, Menu, theme} from "antd";
 import {useRouter} from "next/router";
 import {FireOutlined, HomeOutlined, MenuOutlined, PlusCircleOutlined, TrophyOutlined} from "@ant-design/icons";
 
-const MenuBar = () => {
+const MenuBar = ({isResponsive} : {isResponsive : boolean}) => {
     const [open, setOpen] = useState(false);
     const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
 
@@ -15,11 +15,7 @@ const MenuBar = () => {
         setOpen(false);
     };
 
-    const {Sider} = Layout;
     const router = useRouter();
-    const {
-        token: {colorBgContainer},
-    } = theme.useToken();
     const items2 = [
         {
             key: '1',
@@ -48,20 +44,21 @@ const MenuBar = () => {
     ];
 
     return (
-        <div className={"bg-white"}>
-            <Button type="primary" onClick={showDrawer} className={"flex justify-center md:hidden"}>
-                <MenuOutlined/>
-            </Button>
+        <div className={"bg-white w-full py-4"}>
+            {isResponsive === true ?
+                <Button type="primary" onClick={showDrawer} className={"flex justify-center md:hidden"}>
+                    <MenuOutlined/>
+                </Button> : null}
             <Menu
                 theme="light"
                 mode="inline"
                 defaultSelectedKeys={['1']}
-                className={"hidden md:block"}
+                className={"hidden md:flex flex-col"}
             >
                 {items2.map((item) => (
                     <Menu.Item key={item.key} onClick={() => {
                         router.push(item.path)
-                    }} className={"text-md"}>
+                    }} className={"text-md hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105"}>
                         {item.icon} {item.label}
                     </Menu.Item>
                 ))}
@@ -81,6 +78,7 @@ const MenuBar = () => {
                     {items2.map((item) => (
                         <Menu.Item key={item.key} onClick={() => {
                             router.push(item.path)
+                            setOpen(false);
                         }} className={"text-md"}>
                             {item.icon} {item.label}
                         </Menu.Item>

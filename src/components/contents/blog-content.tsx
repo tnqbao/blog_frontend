@@ -2,8 +2,8 @@ import {Button, Card, Divider, Space, Typography} from 'antd';
 import React, {FC, useState} from 'react';
 import {format} from 'date-fns';
 import VoteButton from "@/components/vote-button";
-import CommentUpload from "@/components/comment-upload";
-import CommentList from "@/components/comment-list";
+import CommentUpload from "@/components/contents/comment-upload";
+import CommentList from "@/components/contents/comment-list";
 import {CommentType} from "@/utils/types";
 
 const {Title, Text} = Typography;
@@ -47,7 +47,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
             <Divider/>
             <Title level={3}>{blog.title}</Title>
             {(<Text>
-                {hideContent ? <div dangerouslySetInnerHTML={{__html: blog.body.slice(0, 300)}}/> :
+                {hideContent ? <div dangerouslySetInnerHTML={{__html: blog.body.slice(0, 400)}}/> :
                     <div dangerouslySetInnerHTML={{__html: blog.body}}/>}
             </Text>)}
             {

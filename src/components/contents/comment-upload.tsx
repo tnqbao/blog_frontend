@@ -31,10 +31,10 @@ const CommentUpload: React.FC<{ postId: number }> = ({ postId }) => {
 
             <Form.Item>
                 <Space>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" className={"hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105  "}>
                         Submit
                     </Button>
-                    <Button htmlType="button" onClick={handleCancel}>
+                    <Button htmlType="button" onClick={handleCancel} className={"hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 "}>
                         Cancel
                     </Button>
                 </Space>

@@ -7,7 +7,8 @@ type SearchProps = GetProps<typeof Input.Search>;
 
 const { Search } = Input;
 
-const onSearch: SearchProps['onSearch'] = (value, _e, info) => alert(`Update Soon!`);
+const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
+};
 
 const SearchBar: React.FC = () => {
     const { t } = useTranslation('search');

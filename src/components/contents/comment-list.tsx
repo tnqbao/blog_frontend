@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { userApiInstance } from "@/utils/axios.config";
-import Comment from "@/components/comment";
+import Comment from "@/components/contents/comment";
 import { CommentType } from "@/utils/types";
 
 const CommentList: React.FC<{ blogId: number; comments: CommentType[]; setComments: React.Dispatch<React.SetStateAction<CommentType[]>> }> = ({ blogId, comments, setComments }) => {
