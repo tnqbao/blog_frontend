@@ -14,7 +14,7 @@ const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
             <title>Newfeed</title>
             <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false}/>
+                <MenuBar isResponsive={false} defaultSelected={'3'}/>
             </div>
             <ListBlog Blogs={Blogs}/>
             <div className={"flex md:w-1/3"}></div>

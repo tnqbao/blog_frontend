@@ -19,7 +19,7 @@ const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
             <title>Trending</title>
             <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false}/>
+                <MenuBar isResponsive={false} defaultSelected={'2'}/>
             </div>
             <ListBlog Blogs={Blogs}/>
             <div className={"flex md:w-1/3"}></div>

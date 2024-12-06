@@ -2,12 +2,10 @@ import {Button, Checkbox, Form, Image, Input} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 
 import React, {useState} from "react";
-
-import {RootState} from "@/utils/redux/store";
 import {setAuth, setUser} from "@/utils/redux/slices/auth";
 
 import {useTranslation} from "next-i18next";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useRouter} from "next/router";
 
 
@@ -18,9 +16,9 @@ type FieldType = {
 };
 
 
-const Login : React.FC = () => {
+const Login: React.FC = () => {
     const [form] = Form.useForm();
-    const { t } = useTranslation("login");
+    const {t} = useTranslation("login");
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -47,7 +45,13 @@ const Login : React.FC = () => {
             if (response.status === 200) {
                 const data = await response.json();
                 dispatch(setAuth(true));
-                dispatch(setUser({ id: data.user.id, username: data.user.username, mail: data.user.mail, fullname: data.user.fullname, dateOfBirth: data.user.dateOfBirth }));
+                dispatch(setUser({
+                    id: data.user.id,
+                    username: data.user.username,
+                    mail: data.user.mail,
+                    fullname: data.user.fullname,
+                    dateOfBirth: data.user.dateOfBirth
+                }));
                 if (values.keepLogin) {
                     localStorage.setItem("token", data.token);
                 } else {
@@ -56,11 +60,15 @@ const Login : React.FC = () => {
                 await router.push("../");
             } else {
                 console.error("Login failed with status:", response.status);
+                form.setFields([
+                    {name: "username", errors: [t("invalidInput")]},
+                    {name: "password", errors: [t("invalidInput")]},
+                ]);
             }
         } catch (error) {
             form.setFields([
-                { name: "username", errors: [t("invalidInput")] },
-                { name: "password", errors: [t("invalidInput")] },
+                {name: "username", errors: [t("invalidInput")]},
+                {name: "password", errors: [t("invalidInput")]},
             ]);
         } finally {
             setLoading(false);
@@ -109,7 +117,8 @@ const Login : React.FC = () => {
                             </Form.Item>
                         </div>
 
-                        <Form.Item className="text-center hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 ">
+                        <Form.Item
+                            className="text-center hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 ">
                             <Button type="primary" size="large" htmlType="submit" loading={loading}>
                                 {t("submitButton")}
                             </Button>
