@@ -1,5 +1,4 @@
 import React from 'react';
-import {Layout} from 'antd';
 import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
 import {parse} from "cookie";
@@ -18,7 +17,7 @@ const HomePage: React.FC<TrendingPageProps> = ({Blogs}) => {
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
             <title>Home</title>
             <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false}/>
+                <MenuBar isResponsive={false} defaultSelected={'1'}/>
             </div>
             <ListBlog Blogs={Blogs}/>
             <div className={"flex md:w-1/3"}></div>

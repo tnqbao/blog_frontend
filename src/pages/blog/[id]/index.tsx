@@ -15,7 +15,7 @@ const BlogPage: React.FC<{blog : BlogType}> = ({ blog }) => {
     return (
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
             <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false}/>
+                <MenuBar isResponsive={false} defaultSelected={'1'}/>
             </div>
             <BlogContent blog={blog}/>
             <div className={"flex md:w-1/3"}></div>

@@ -10,7 +10,7 @@ const UpLoadPage: React.FC = () => {
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
             <title>Upload</title>
             <div className={"flex md:w-1/6"}>
-                <MenuBar isResponsive={false}/>
+                <MenuBar isResponsive={false} defaultSelected={'4'}/>
             </div>
             <Upload />
 

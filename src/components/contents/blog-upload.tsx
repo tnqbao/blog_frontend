@@ -76,7 +76,7 @@ const Upload: React.FC = () => {
                         <ReactQuillNoSSR
                             theme="snow"
                             placeholder={t("body")}
-                            className="hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 border border-black/50 "
+                            className="hover:backdrop-brightness-200 border border-black/50 "
                         />
                     </Form.Item>
                     <div className="flex justify-between">
