@@ -12,5 +12,7 @@
     "pleaseInputPassword": "Please input your password!",
     "pleaseInputFullname" : "Please input your name",
     "notValidEmail" : "The input is not valid E-mail!",
-    "notValidPhone" : "The input is not valid Phone!"
+    "notValidPhone" : "The input is not valid Phone!",
+    "invalidUsername" : "Username already exited!",
+    "invalidInput" : "Invalid input!"
 }

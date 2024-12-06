@@ -19,6 +19,7 @@ type FieldType = {
 const Register: React.FC = () => {
   const router = useRouter();
   const { t } = useTranslation("register");
+  const [form] = Form.useForm();
 
   const onFinish = async (values: FieldType) => {
     const formattedValues = {
@@ -31,10 +32,17 @@ const Register: React.FC = () => {
       const response = await userApiInstance.post("/auth/register", formattedValues);
       if (response.status==200) {
         await router.push("../auth/login");
+        form.setFields([
+          {name: "username", errors: [t("invalidUsername")]},
+          {name: "password", errors: [t("invalidInput")]},
+        ]);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Register failed, please try again.");
+      form.setFields([
+        {name: "username", errors: [t("invalidUsername")]},
+        {name: "password", errors: [t("invalidInput")]},
+      ]);
     }
   };
 
@@ -60,6 +68,7 @@ const Register: React.FC = () => {
                 labelCol={{span: 24}}
                 onFinish={onFinish}
                 autoComplete="off"
+                form={form}
                 className="flex flex-col w-full h-full"
             >
               <Form.Item
