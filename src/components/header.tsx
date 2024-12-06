@@ -1,6 +1,5 @@
 import React from "react";
-import {Dropdown, MenuProps, Space} from 'antd';
-import {Avatar, Button, Layout} from "antd";
+import {Avatar, Button, Dropdown, Layout, MenuProps, Space} from 'antd';
 import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
 import SearchBar from "@/components/search-bar";
@@ -30,6 +29,7 @@ const HeaderComp: React.FC = () => {
             if (resp.status === 200) {
                 localStorage.clear();
                 sessionStorage.clear();
+
                 await router.push("../auth/login");
             } else {
                 console.error("Failed to logout");
@@ -60,16 +60,19 @@ const HeaderComp: React.FC = () => {
 
     return (
         <Header
-            className={"bg-[#ffffff] bg-none flex flex-wrap shadow-sm items-center px-4 py-3 h-1/6 gap-2 justify-evenly"}>
+            className={"bg-[#ffffff] bg-none flex flex-wrap shadow-sm items-center px-4 py-3 h-1/6 gap-2 justify-evenly flex-col-reverse sm:flex-row"}>
             <div className={"block md:hidden"}>
-                <MenuBar isResponsive={true}/>
+                <MenuBar isResponsive={true} defaultSelected={"1"}/>
             </div>
             <div
-                className="flex items-center bg-[url('https://i.imgur.com/yzO7MiG.png')] sm:bg-[url('https://i.imgur.com/uGKflOp.png')] bg-cover bg-center h-10 w-full sm:h-16 sm:w-16  rounded-md"></div>
+                className="flex items-center bg-[url('https://i.imgur.com/yzO7MiG.png')] sm:bg-[url('https://i.imgur.com/uGKflOp.png')] bg-cover bg-center h-10 w-full sm:h-16 sm:w-16  rounded-md hover:cursor-pointer"
+                onClick={() => {
+                    router.push("../")
+                }}></div>
             <div className=" flex w-1/2 ">
                 <SearchBar/>
             </div>
-            <div className="flex space-x-2 justify-center sm:justify-end  w-full sm:w-auto mt-2 sm:mt-0">
+            <div className="flex space-x-2 justify-center sm:justify-end  w-full sm:w-auto mt-2 sm:mt-0 hover:cursor-pointer">
                 {isAuthenticated ? (
                     <Dropdown menu={{items}} trigger={['click']}>
                         <Space>

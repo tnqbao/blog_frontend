@@ -6,6 +6,7 @@ import {parse} from "cookie";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import MenuBar from "@/components/menu-bar";
 import {withAuth} from "@/utils/authGuard";
+import React from "react";
 
 type TrendingPageProps = {
     Blogs: BlogType[] | null;
@@ -18,10 +19,10 @@ const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
         <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
             <title>Trending</title>
             <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false}/>
+                <MenuBar isResponsive={false} defaultSelected={'2'}/>
             </div>
             <ListBlog Blogs={Blogs}/>
-            {/*<Sider className={"hidden md:block bg-white"} />*/}
+            <div className={"flex md:w-1/3"}></div>
         </div>
     )
 }

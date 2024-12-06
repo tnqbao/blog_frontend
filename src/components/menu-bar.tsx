@@ -3,7 +3,7 @@ import {Button, Drawer, DrawerProps, Layout, Menu, theme} from "antd";
 import {useRouter} from "next/router";
 import {FireOutlined, HomeOutlined, MenuOutlined, PlusCircleOutlined, TrophyOutlined} from "@ant-design/icons";
 
-const MenuBar = ({isResponsive} : {isResponsive : boolean}) => {
+const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defaultSelected: string}) => {
     const [open, setOpen] = useState(false);
     const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
 
@@ -52,7 +52,7 @@ const MenuBar = ({isResponsive} : {isResponsive : boolean}) => {
             <Menu
                 theme="light"
                 mode="inline"
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={[defaultSelected]}
                 className={"hidden md:flex flex-col"}
             >
                 {items2.map((item) => (
@@ -73,12 +73,13 @@ const MenuBar = ({isResponsive} : {isResponsive : boolean}) => {
                 <Menu
                     theme="light"
                     mode="inline"
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={[defaultSelected]}
                 >
                     {items2.map((item) => (
                         <Menu.Item key={item.key} onClick={() => {
                             router.push(item.path)
                             setOpen(false);
+
                         }} className={"text-md"}>
                             {item.icon} {item.label}
                         </Menu.Item>
