@@ -4,9 +4,11 @@ import {withAuth} from "@/utils/authGuard";
 
 const ProfilePage : React.FC = () => {
     return (
-        <div>
-            <ProfilePage />
-        </div>
+        <>
+            <div>
+                <ProfilePage/>
+            </div>
+        </>
     );
 }
 

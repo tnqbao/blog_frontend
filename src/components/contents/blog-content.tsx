@@ -50,17 +50,18 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
             </Space>
             <Divider/>
             <Title level={3}>{blog.title}</Title>
-            {(<Text>
+            {(<Text onDoubleClick={() => setHideContent(!hideContent)}>
                 {hideContent ? <div dangerouslySetInnerHTML={{__html: blog.body.slice(0, 400)}}/> :
                     <div dangerouslySetInnerHTML={{__html: blog.body}}/>}
             </Text>)}
             {
-                blog.body.length > 400 && <button
+                blog.body.length > 400 && <Button
                     className="focus:outline-none text-blue-600 drop-shadow-2xl"
                     onClick={() => setHideContent(!hideContent)}
+                    type={"text"}
                 >
                     {hideContent ? "Show more" : "Show less"}
-                </button>
+                </Button>
             }
             <Divider/>
             <Space style={{width: '100%', flexWrap : "wrap"}}>
