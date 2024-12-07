@@ -7,18 +7,28 @@ import {withAuth} from "@/utils/authGuard";
 import ListBlog from "@/components/contents/list-blog";
 import MenuBar from "@/components/menu-bar";
 import React from "react";
-
+import Head from "next/head";
+import {Typography} from "antd";
+const {Title} = Typography;
 const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
 
     return (
-        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-            <title>Newfeed</title>
-            <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false} defaultSelected={'3'}/>
+        <>
+            <Head>
+                <Title> {"Trending in BlogMindScape" } </Title>
+                <meta
+                    name="description"
+                    content={"Những bài viết thú vị nhất từ BlogMindScape"}
+                />
+            </Head>
+            <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+                <div className={"flex md:w-1/3"}>
+                    <MenuBar isResponsive={false} defaultSelected={'3'}/>
+                </div>
+                <ListBlog Blogs={Blogs}/>
+                <div className={"flex md:w-1/3"}></div>
             </div>
-            <ListBlog Blogs={Blogs}/>
-            <div className={"flex md:w-1/3"}></div>
-        </div>
+        </>
     );
 }
 
@@ -69,7 +79,6 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
         };
     }
 });
-
 
 
 export default NewfeedPage;

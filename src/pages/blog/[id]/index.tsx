@@ -1,32 +1,40 @@
-import { GetServerSideProps } from 'next';
+import {GetServerSideProps} from 'next';
 import BlogContent from "@/components/contents/blog-content";
-import { userApiInstance } from "@/utils/axios.config";
-import Head from 'next/head';
-import { parse } from 'cookie';
+import {userApiInstance} from "@/utils/axios.config";
+import {parse} from 'cookie';
 import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
 import MenuBar from "@/components/menu-bar";
-import ListBlog from "@/components/contents/list-blog";
 import React from "react";
+import Head from "next/head";
+import { Typography } from "antd";
+const {Title} = Typography
 
-
-
-const BlogPage: React.FC<{blog : BlogType}> = ({ blog }) => {
+const BlogPage: React.FC<{ blog: BlogType }> = ({blog}) => {
     return (
-        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-            <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false} defaultSelected={'1'}/>
+        <>
+            <Head>
+                <Title> {blog.title}</Title>
+                <meta
+                    name="description"
+                    content={(blog.body.length > 100) ? blog.body.slice(100) : blog.body}
+                />
+            </Head>
+            <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+                <div className={"flex md:w-1/3"}>
+                    <MenuBar isResponsive={false} defaultSelected={'1'}/>
+                </div>
+                <BlogContent blog={blog}/>
+                <div className={"flex md:w-1/3"}></div>
             </div>
-            <BlogContent blog={blog}/>
-            <div className={"flex md:w-1/3"}></div>
-        </div>
+        </>
     );
 };
 
 export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req}) => {
     const blogId = Number(query.id) || 1;
     const cookies = parse(req.headers.cookie || '');
-    const token = cookies.auth_token;
+    const token = cookies.jwt;
 
     if (!token) {
         return {
