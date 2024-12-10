@@ -13,6 +13,8 @@ RUN npm install --force --global yarn
 RUN npm install --force --global ts-node
 RUN npm install --force --global typescript
 RUN yarn install --check-files
+
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN yarn build
 
 #step2: production
@@ -25,11 +27,9 @@ COPY --from=builder /home/node/blog_frontend/yarn.lock ./
 COPY --from=builder /home/node/blog_frontend/next-i18next.config.js ./
 COPY --from=builder /home/node/blog_frontend/next.config.mjs ./
 COPY --from=builder /home/node/blog_frontend/tsconfig.json ./
-COPY --from=builder /home/node/blog_frontend/package.json ./
 COPY --from=builder /home/node/blog_frontend/i18n.ts ./
 
-RUN yarn install --production --frozen-lockfile
-COPY .env.production .env
+RUN npm ci --productionCOPY .env.production .env
 
 EXPOSE 3005
 CMD ["yarn", "start"]
