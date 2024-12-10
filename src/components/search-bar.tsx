@@ -13,7 +13,7 @@ const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
 const SearchBar: React.FC = () => {
     const { t } = useTranslation('search');
     return (
-        <Search placeholder={t('search')} onSearch={onSearch} enterButton />
+        <Search placeholder={t('search')} onSearch={onSearch} enterButton size={"large"} className={"rounded-lg"}/>
     );
 };
 
