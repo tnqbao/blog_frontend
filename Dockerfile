@@ -29,7 +29,9 @@ COPY --from=builder /home/node/blog_frontend/next.config.mjs ./
 COPY --from=builder /home/node/blog_frontend/tsconfig.json ./
 COPY --from=builder /home/node/blog_frontend/i18n.ts ./
 
-RUN npm ci --productionCOPY .env.production .env
+RUN yarn install --production --frozen-lockfile
+COPY .env.production .env
+
 
 EXPOSE 3005
 CMD ["yarn", "start"]
