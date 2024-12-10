@@ -1,27 +1,40 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {BlogType} from "@/utils/types";
-import {withAuth} from "@/utils/authGuard";
-import {parse} from "cookie";
-import {userApiInstance} from "@/utils/axios.config";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import React, { useCallback, useEffect, useState } from 'react';
+import { BlogType } from "@/utils/types";
+import { withAuth } from "@/utils/authGuard";
+import { parse } from "cookie";
+import { userApiInstance } from "@/utils/axios.config";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import MenuBar from "@/components/menu-bar";
 import ListBlog from "@/components/contents/list-blog";
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import ScrollToTopButton from "@/components/scroll-to-top-button";
-import {Skeleton} from "antd";
+import { Skeleton } from "antd";
 
 type TrendingPageProps = {
     initialBlogs: BlogType[] | null;
     currentPage: number;
 };
 
-const HomePage: React.FC<TrendingPageProps> = ({initialBlogs, currentPage}) => {
+const HomePage: React.FC<TrendingPageProps> = ({ initialBlogs, currentPage }) => {
     const [blogs, setBlogs] = useState<BlogType[]>(initialBlogs || []);
     const [loading, setLoading] = useState<boolean>(false);
     const [hasMore, setHasMore] = useState<boolean>(true);
-    // const [isOpen, changeIsOpen] = useState<boolean>(false);
     const [showScrollTopButton, setShowScrollTopButton] = useState<boolean>(false);
     const router = useRouter();
+
+    useEffect(() => {
+        if (router.query.page) {
+            const { page, ...restQuery } = router.query;
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: restQuery,
+                },
+                undefined,
+                { shallow: true }
+            );
+        }
+    }, [router.query]);
 
     const fetchMoreBlogs = useCallback(async () => {
         if (loading || !hasMore) return;
@@ -52,10 +65,10 @@ const HomePage: React.FC<TrendingPageProps> = ({initialBlogs, currentPage}) => {
                 router.push(
                     {
                         pathname: router.pathname,
-                        query: {...router.query, page: nextPage},
+                        query: { ...router.query, page: nextPage },
                     },
                     undefined,
-                    {scroll: false}
+                    { scroll: false }
                 );
             }
         } catch (error) {
@@ -94,18 +107,8 @@ const HomePage: React.FC<TrendingPageProps> = ({initialBlogs, currentPage}) => {
                 <MenuBar isResponsive={false} defaultSelected={'1'}/>
             </div>
             <div className={"flex flex-col md:w-3/5 gap-4 justify-center items-center"}>
-                {/*<div >{*/}
-                {/*    isOpen ? <BlogUpload /> : <Button*/}
-                {/*        className="w-1/4 text-sm mt-5"*/}
-                {/*        onClick={() => {*/}
-                {/*            changeIsOpen(true);*/}
-                {/*        }}*/}
-                {/*    >*/}
-                {/*        Hôm nay bạn nghĩ gì?*/}
-                {/*    </Button>*/}
-                {/*}</div>*/}
                 <ListBlog Blogs={blogs}/>
-                {loading && <Skeleton active/>}
+                {loading && <Skeleton active className={"md: px-12"}/>}
                 {loading && <Skeleton active/>}
                 {!hasMore && <p className={"items-center align-middle text-center "}> No more blogs to load.</p>}
             </div>
@@ -151,7 +154,7 @@ export const getServerSideProps = withAuth(async ({locale, req, query}) => {
         return {
             props: {
                 ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
-                blogs,
+                initialBlogs : blogs,
                 currentPage: page,
             },
         };
@@ -160,7 +163,7 @@ export const getServerSideProps = withAuth(async ({locale, req, query}) => {
 
         return {
             props: {
-                blogs: [],
+                initialBlogs: [],
                 error: 'Could not fetch the posts. Please try again later.',
             },
         };

@@ -1,26 +1,26 @@
-import React, { useRef, useCallback } from "react";
+import React, {useCallback, useRef} from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill, { ReactQuillProps } from "react-quill";
+import ReactQuill, {ReactQuillProps} from "react-quill";
 
 interface ReactQuillWrapperProps extends ReactQuillProps {
     forwardedRef: React.Ref<ReactQuill>;
 }
 
 const ReactQuillWrapper = dynamic(async () => {
-    const { default: RQ } = await import("react-quill");
-    const Component = ({ forwardedRef, ...props }: ReactQuillWrapperProps) => {
+    const {default: RQ} = await import("react-quill");
+    const Component = ({forwardedRef, ...props}: ReactQuillWrapperProps) => {
         return <RQ ref={forwardedRef} {...props} />;
     };
     return Component;
-}, { ssr: false });
+}, {ssr: false});
 
 interface QuillEditorProps {
     value: string;
     setValue: (value: string) => void;
 }
 
-const QuillEditor: React.FC<QuillEditorProps> = ({ value, setValue }) => {
+const QuillEditor: React.FC<QuillEditorProps> = ({value, setValue}) => {
     const editorRef = useRef<ReactQuill | null>(null);
 
     const handleImageUpload = useCallback(() => {
@@ -41,8 +41,8 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, setValue }) => {
                 try {
                     const response = await fetch("/api/image/upload", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ file: base64, fileName }),
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({file: base64, fileName}),
                     });
 
                     const data = await response.json();
@@ -50,8 +50,8 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, setValue }) => {
                         const quill = editorRef.current?.getEditor();
                         if (quill) {
                             const range = quill.getSelection();
-                            quill.insertEmbed(range ? range.index : 0, "image", data.url);
-                            quill.setSelection({ index: (range?.index || 0) + 1, length: 0 });
+                            const imageHTML = `<div class="flex justify-center"><img src="${data.url}" alt="${fileName}" class="max-w-full h-auto" /></div>`;
+                            quill.clipboard.dangerouslyPasteHTML(range ? range.index : 0, imageHTML);
                         } else {
                             console.error("Editor reference is not set");
                         }
@@ -66,6 +66,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, setValue }) => {
             reader.readAsDataURL(file);
         };
     }, []);
+
 
     const formats = [
         "header",
@@ -82,6 +83,8 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, setValue }) => {
         "link",
         "image",
         "color",
+        "align",
+        "font",
     ];
 
     const modules = {
@@ -90,14 +93,14 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, setValue }) => {
                 ["bold", "italic", "underline", "strike"],
                 ["blockquote", "code-block"],
                 ["image"],
-                [{ header: 1 }, { header: 2 }],
-                [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-                [{ indent: "-1" }, { indent: "+1" }],
-                [{ size: ["small", false, "large", "huge"] }],
-                [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                [{ color: [] }],
-                [{ font: [] }],
-                [{ align: [] }],
+                [{header: 1}, {header: 2}],
+                [{list: "ordered"}, {list: "bullet"}, {list: "check"}],
+                [{indent: "-1"}, {indent: "+1"}],
+                [{size: ["small", false, "large", "huge"]}],
+                [{header: [1, 2, 3, 4, 5, 6, false]}],
+                [{color: []}],
+                [{font: []}],
+                [{align: []}],
             ],
             handlers: {
                 image: handleImageUpload,
@@ -114,7 +117,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ value, setValue }) => {
             modules={modules}
             className="hover:backdrop-brightness-200 border border-black/50"
             formats={formats}
-            style={{ flex: 1 }}
+            style={{flex: 1}}
         />
     );
 };
