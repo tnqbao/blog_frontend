@@ -1,7 +1,14 @@
 import React, {useState} from "react";
-import {Button, Drawer, DrawerProps, Layout, Menu, theme} from "antd";
+import {Button, Divider, Drawer, DrawerProps, Menu} from "antd";
 import {useRouter} from "next/router";
-import {FireOutlined, HomeOutlined, MenuOutlined, PlusCircleOutlined, TrophyOutlined} from "@ant-design/icons";
+import {
+    FireOutlined,
+    HomeOutlined,
+    MenuOutlined,
+    PlusCircleOutlined,
+    TrophyOutlined,
+    UserOutlined
+} from "@ant-design/icons";
 
 const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defaultSelected: string}) => {
     const [open, setOpen] = useState(false);
@@ -40,13 +47,19 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
             label: 'Upload',
             path: '../blog/upload',
             icon: React.createElement(PlusCircleOutlined)
+        },
+        {
+            key: '5',
+            label: 'Me',
+            path: '../me',
+            icon: React.createElement(UserOutlined)
         }
     ];
 
     return (
-        <div className={"w-full py-4"}>
+        <div className={"w-full py-4 md:bg-white md:border-r-2 pr-2" }>
             {isResponsive === true ?
-                <Button type="primary" onClick={showDrawer} className={"flex justify-center md:hidden"}>
+                <Button type="primary" onClick={showDrawer} className={"flex justify-center md:hidden bg-black/95"}>
                     <MenuOutlined/>
                 </Button> : null}
             <Menu
@@ -54,6 +67,7 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
                 mode="inline"
                 defaultSelectedKeys={[defaultSelected]}
                 className={"hidden md:flex flex-col px-4"}
+
             >
                 {items2.map((item) => (
                     <Menu.Item key={item.key} onClick={() => {
@@ -63,6 +77,7 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
                     </Menu.Item>
                 ))}
             </Menu>
+            <Divider />
             <Drawer
                 placement={placement}
                 closable={false}

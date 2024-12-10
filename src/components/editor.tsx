@@ -92,7 +92,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({value, setValue}) => {
             container: [
                 ["bold", "italic", "underline", "strike"],
                 ["blockquote", "code-block"],
-                ["image"],
+                ["image", "link"],
                 [{header: 1}, {header: 2}],
                 [{list: "ordered"}, {list: "bullet"}, {list: "check"}],
                 [{indent: "-1"}, {indent: "+1"}],

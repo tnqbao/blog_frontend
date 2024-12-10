@@ -28,6 +28,10 @@ export interface UserType {
     fullname: string;
 }
 
+export interface UserTypeProps {
+    user: UserType;
+}
+
 export interface ListBlogType {
     Blogs: BlogType[] | null;
     error?: string;

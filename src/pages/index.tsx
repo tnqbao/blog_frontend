@@ -101,12 +101,12 @@ const HomePage: React.FC<TrendingPageProps> = ({ initialBlogs, currentPage }) =>
     }, [fetchMoreBlogs, loading, hasMore]);
 
     return (
-        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+        <div className={" flex flex-wrap md:flex-nowrap bg-white"}>
             <title>Home</title>
             <div className={"flex md:w-1/5"}>
                 <MenuBar isResponsive={false} defaultSelected={'1'}/>
             </div>
-            <div className={"flex flex-col md:w-3/5 gap-4 justify-center items-center"}>
+            <div className={"flex flex-col md:w-3/5 gap-4 justify-center items-center px-5"}>
                 <ListBlog Blogs={blogs}/>
                 {loading && <Skeleton active className={"md: px-12"}/>}
                 {loading && <Skeleton active/>}

@@ -5,9 +5,9 @@ import BlogContent from "@/components/contents/blog-content";
 const ListBlog : React.FC<ListBlogType> = ({ Blogs, error}) => {
 
     return (
-            <div className={"bg-white min-h-screen h-auto flex flex-col py-4 gap-2 w-full md:px-20"}>
+            <div className={"bg-white min-h-screen h-auto flex flex-col py-4 gap-2 w-full md:px-10"}>
                 {Blogs && Blogs.map((blog) => (
-                    <div>
+                    <div className={""}>
                         <BlogContent blog={blog} key={blog.id}/>
                     </div>
                 ))}

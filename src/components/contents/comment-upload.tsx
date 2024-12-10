@@ -19,10 +19,6 @@ const CommentUpload: React.FC<{ postId: number }> = ({ postId }) => {
         }
     };
 
-    const handleCancel = () => {
-        console.log('Comment cancelled');
-    };
-
     return (
         <Form layout="vertical" onFinish={handleFinish}>
             <Form.Item name="comment">
@@ -30,12 +26,9 @@ const CommentUpload: React.FC<{ postId: number }> = ({ postId }) => {
             </Form.Item>
 
             <Form.Item>
-                <Space>
+                <Space className={"justify-end w-full"}>
                     <Button type="primary" htmlType="submit" className={"hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105  "}>
                         Submit
-                    </Button>
-                    <Button htmlType="button" onClick={handleCancel} className={"hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 "}>
-                        Cancel
                     </Button>
                 </Space>
             </Form.Item>
