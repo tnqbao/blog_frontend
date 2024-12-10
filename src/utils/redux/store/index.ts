@@ -3,15 +3,17 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from '../slices/auth';
+import paginationReducer from '../slices/pagination';
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    pagination: paginationReducer,
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth', 'player'],
+    whitelist: ['auth','pagination'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

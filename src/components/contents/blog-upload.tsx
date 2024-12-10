@@ -38,7 +38,7 @@ const Upload: React.FC = () => {
     };
 
     return (
-        <div className="flex w-full md:w-5/6 flex-wrap justify-center items-start min-h-screen">
+        <div className="flex w-full md:w-5/6 flex-wrap justify-center items-start ">
             <div className="w-full bg-white">
                 <Form
                     form={form}

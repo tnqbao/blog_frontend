@@ -17,7 +17,7 @@ const UpLoadPage: React.FC = () => {
                     content={"Hôm nay bạn nghĩ gì??"}
                 />
             </Head>
-            <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+            <div className={"bg-white flex flex-wrap md:flex-nowrap min-h-screen"}>
                 <div className={"flex md:w-1/6"}>
                     <MenuBar isResponsive={false} defaultSelected={'4'}/>
                 </div>

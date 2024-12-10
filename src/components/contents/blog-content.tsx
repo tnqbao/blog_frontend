@@ -6,7 +6,7 @@ import CommentUpload from "@/components/contents/comment-upload";
 import CommentList from "@/components/contents/comment-list";
 import {CommentType} from "@/utils/types";
 import {CommentOutlined} from "@ant-design/icons";
-import ChatPage from "@/components/chat-bot";
+import ChatPage from "@/components/contents/chat-bot";
 
 const {Title, Text} = Typography;
 

@@ -9,9 +9,10 @@ import MenuBar from "@/components/menu-bar";
 import React from "react";
 import Head from "next/head";
 import {Typography} from "antd";
+import PaginationComponent from "@/components/pagination";
 const {Title} = Typography;
-const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
 
+const NewfeedPage: React.FC<ListBlogType & { totalPage: number }> = ({Blogs, totalPage}) => {
     return (
         <>
             <Head>
@@ -25,9 +26,10 @@ const NewfeedPage: React.FC<ListBlogType> = ({Blogs}) => {
                 <div className={"flex md:w-1/3"}>
                     <MenuBar isResponsive={false} defaultSelected={'3'}/>
                 </div>
-                <ListBlog Blogs={Blogs}/>
+                <ListBlog Blogs={Blogs} />
                 <div className={"flex md:w-1/3"}></div>
             </div>
+            <PaginationComponent totalPage={totalPage} />
         </>
     );
 }
@@ -61,11 +63,12 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
                 };
             })
             : [];
-
+        const totalPage: number = data.totalPage || 0;
         return {
             props: {
                 ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
                 Blogs,
+                totalPage,
             },
         };
     } catch (error) {
@@ -74,11 +77,11 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
         return {
             props: {
                 Blogs: null,
+                totalPage: 0,
                 error: 'Could not fetch the post. Please try again later.',
             },
         };
     }
 });
-
 
 export default NewfeedPage;
