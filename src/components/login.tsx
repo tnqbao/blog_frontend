@@ -7,6 +7,7 @@ import {setAuth, setUser} from "@/utils/redux/slices/auth";
 import {useTranslation} from "next-i18next";
 import {useDispatch} from "react-redux";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 
 type FieldType = {
@@ -75,73 +76,75 @@ const Login: React.FC = () => {
         }
     };
     return (
-        <div className="flex justify-center min-h-screen bg-gray-100">
-            <div
-                className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full md:my-10">
-                <div className="flex flex-wrap flex-1 p-4 items-center justify-center">
-                    <h1 className="text-center text-2xl font-bold mb-6 w-full">
-                        {t("title")}
-                    </h1>
-                    <Form
-                        form={form}
-                        name="basic"
-                        initialValues={{remember: false}}
-                        onFinish={onFinish}
-                        autoComplete="off"
-                        labelCol={{span: 24}}
-                        className="flex flex-col justify-evenly w-full h-full"
-                    >
-                        <Form.Item
-                            name="username"
-                            label={t("username")}
-                            rules={[{required: true, message: t("pleaseInputUsername")}]}
+        <>
+            <div className="flex justify-center min-h-screen bg-gray-100">
+                <div
+                    className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full md:my-10">
+                    <div className="flex flex-wrap flex-1 p-4 items-center justify-center">
+                        <h1 className="text-center text-2xl font-bold mb-6 w-full">
+                            {t("title")}
+                        </h1>
+                        <Form
+                            form={form}
+                            name="basic"
+                            initialValues={{remember: false}}
+                            onFinish={onFinish}
+                            autoComplete="off"
+                            labelCol={{span: 24}}
+                            className="flex flex-col justify-evenly w-full h-full"
                         >
-                            <Input prefix={<UserOutlined/>} placeholder={t("username")}/>
-                        </Form.Item>
-                        <Form.Item
-                            name="password"
-                            label={t("password")}
-                            rules={[{required: true, message: t("pleaseInputPassword")}]}
-                        >
-                            <Input.Password prefix={<LockOutlined/>} type="password" placeholder={t("password")}/>
-                        </Form.Item>
-
-                        <div className="flex justify-between items-center">
-                            <Form.Item name="keepLogin" valuePropName="checked">
-                                <Checkbox>{t("keepMeLoggedIn")}</Checkbox>
+                            <Form.Item
+                                name="username"
+                                label={t("username")}
+                                rules={[{required: true, message: t("pleaseInputUsername")}]}
+                            >
+                                <Input prefix={<UserOutlined/>} placeholder={t("username")}/>
                             </Form.Item>
-                            <Form.Item>
-                                <a onClick={handleOnClicked} className="text-primary">
-                                    {t("forgotPassword")}
-                                </a>
+                            <Form.Item
+                                name="password"
+                                label={t("password")}
+                                rules={[{required: true, message: t("pleaseInputPassword")}]}
+                            >
+                                <Input.Password prefix={<LockOutlined/>} type="password" placeholder={t("password")}/>
                             </Form.Item>
-                        </div>
 
-                        <Form.Item
-                            className="text-center hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 ">
-                            <Button type="primary" size="large" htmlType="submit" loading={loading}>
-                                {t("submitButton")}
-                            </Button>
-                        </Form.Item>
+                            <div className="flex justify-between items-center">
+                                <Form.Item name="keepLogin" valuePropName="checked">
+                                    <Checkbox>{t("keepMeLoggedIn")}</Checkbox>
+                                </Form.Item>
+                                <Form.Item>
+                                    <a onClick={handleOnClicked} className="text-primary">
+                                        {t("forgotPassword")}
+                                    </a>
+                                </Form.Item>
+                            </div>
 
-                        <Form.Item className="text-right">
-                            <a href="../auth/register">{t("notRegistered")}</a>
-                        </Form.Item>
-                    </Form>
-                </div>
+                            <Form.Item
+                                className="text-center hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 ">
+                                <Button type="primary" size="large" htmlType="submit" loading={loading}>
+                                    {t("submitButton")}
+                                </Button>
+                            </Form.Item>
 
-                <div className="hidden md:block border-l mx-2"></div>
+                            <Form.Item className="text-right">
+                                <a href="../auth/register">{t("notRegistered")}</a>
+                            </Form.Item>
+                        </Form>
+                    </div>
 
-                <div className="hidden md:flex flex-1 justify-center items-center">
-                    <Image
-                        className="max-w-full h-auto"
-                        src="https://i.imgur.com/I9Qjk2t.png"
-                        alt="Login illustration"
-                        preview={false}
-                    />
+                    <div className="hidden md:block border-l mx-2"></div>
+
+                    <div className="hidden md:flex flex-1 justify-center items-center">
+                        <Image
+                            className="max-w-full h-auto"
+                            src="https://i.imgur.com/I9Qjk2t.png"
+                            alt="Login illustration"
+                            preview={false}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -7,7 +7,8 @@ import {withAuth} from "@/utils/authGuard";
 import MenuBar from "@/components/menu-bar";
 import React from "react";
 import Head from "next/head";
-import { Typography } from "antd";
+import {Typography} from "antd";
+
 const {Title} = Typography
 
 const BlogPage: React.FC<{ blog: BlogType }> = ({blog}) => {
@@ -20,11 +21,13 @@ const BlogPage: React.FC<{ blog: BlogType }> = ({blog}) => {
                     content={(blog.body.length > 100) ? blog.body.slice(100) : blog.body}
                 />
             </Head>
-            <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-                <div className={"flex md:w-1/3"}>
+            <div className={"bg-white flex flex-wrap md:flex-nowrap min-h-screen"}>
+                <div className={"flex md:w-1/5"}>
                     <MenuBar isResponsive={false} defaultSelected={'1'}/>
                 </div>
-                <BlogContent blog={blog}/>
+                <div className={"flex md:w-3/5"}>
+                    <BlogContent blog={blog}/>
+                </div>
                 <div className={"flex md:w-1/3"}></div>
             </div>
         </>

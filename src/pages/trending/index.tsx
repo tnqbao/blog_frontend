@@ -9,6 +9,7 @@ import {withAuth} from "@/utils/authGuard";
 import React from "react";
 import Head from "next/head";
 import {Typography} from "antd";
+
 const {Title} = Typography;
 
 
@@ -33,7 +34,9 @@ const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
                 <div className={"flex md:w-1/3"}>
                     <MenuBar isResponsive={false} defaultSelected={'2'}/>
                 </div>
-                <ListBlog Blogs={Blogs}/>
+                <div className={"flex md:w-3/5"}>
+                    <ListBlog Blogs={Blogs}/>
+                </div>
                 <div className={"flex md:w-1/3"}></div>
             </div>
         </>

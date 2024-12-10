@@ -14,5 +14,6 @@
     "notValidEmail" : "The input is not valid E-mail!",
     "notValidPhone" : "The input is not valid Phone!",
     "invalidUsername" : "Username already exited!",
-    "invalidInput" : "Invalid input!"
+    "invalidInput" : "Invalid input!",
+    "description": "Join BlogMindScape and explore cool stuff!"
 }

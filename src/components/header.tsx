@@ -42,7 +42,7 @@ const HeaderComp: React.FC = () => {
     const items: MenuProps['items'] = [
         {
             label: <div onClick={() => {
-                router.push("../profile")
+                router.push("../me")
             }}>Profile</div>,
             key: '0',
             icon: React.createElement(UserOutlined)
