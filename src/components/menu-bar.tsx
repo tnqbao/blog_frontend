@@ -44,21 +44,21 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
     ];
 
     return (
-        <div className={"bg-white w-full py-4"}>
+        <div className={"w-full py-4"}>
             {isResponsive === true ?
                 <Button type="primary" onClick={showDrawer} className={"flex justify-center md:hidden"}>
                     <MenuOutlined/>
                 </Button> : null}
             <Menu
-                theme="light"
+                theme={"light"}
                 mode="inline"
                 defaultSelectedKeys={[defaultSelected]}
-                className={"hidden md:flex flex-col"}
+                className={"hidden md:flex flex-col px-4"}
             >
                 {items2.map((item) => (
                     <Menu.Item key={item.key} onClick={() => {
                         router.push(item.path)
-                    }} className={"text-md hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105"}>
+                    }} className={"text-md hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 "}>
                         {item.icon} {item.label}
                     </Menu.Item>
                 ))}
