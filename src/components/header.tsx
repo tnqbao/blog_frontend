@@ -4,11 +4,12 @@ import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
 import SearchBar from "@/components/search-bar";
 import {useSelector} from "react-redux";
-import { PoweroffOutlined, UserOutlined} from "@ant-design/icons";
+import {PoweroffOutlined, SearchOutlined, UserOutlined} from "@ant-design/icons";
 import MenuBar from "@/components/menu-bar";
 
 const HeaderComp: React.FC = () => {
     const router = useRouter();
+    const [searchOpen, setSearchOpen] = React.useState(false);
     const {t} = useTranslation("common");
     const {user} = useSelector((state: any) => state.auth);
     const isAuthenticated = (localStorage.getItem("token") != null || sessionStorage.getItem("token") != null) || false;
@@ -60,19 +61,18 @@ const HeaderComp: React.FC = () => {
 
     return (
         <Header
-            className={"bg-[#000000]/95 bg-none flex flex-wrap shadow-sm items-center px-4 py-3 h-1/6 gap-2 justify-evenly flex-col-reverse sm:flex-row"}>
-            <div className={"block md:hidden"}>
-                <MenuBar isResponsive={true} defaultSelected={"1"}/>
-            </div>
+            className={"bg-[#000000]/95 bg-none flex flex-wrap shadow-sm items-center px-4 py-3 h-1/6 gap-2 justify-evenly flex-col md:flex-row"}>
             <div
                 className="flex items-center bg-[url('https://i.imgur.com/yzO7MiG.png')] sm:bg-[url('https://i.imgur.com/uGKflOp.png')] bg-cover bg-center h-10 w-full sm:h-16 sm:w-16  rounded-md hover:cursor-pointer duration-300 transition-transform transform hover:scale-150"
                 onClick={() => {
                     router.push("../")
-                }}></div>
-            <div className=" flex w-1/2 ">
+                }}/>
+            <div className=" md:flex w-1/2 hidden justify-center items-center">
                 <SearchBar/>
             </div>
-            <div className="flex space-x-2 justify-center sm:justify-end  w-full sm:w-auto mt-2 sm:mt-0 hover:cursor-pointer">
+
+            <div
+                className="flex space-x-2 justify-center sm:justify-end  w-full sm:w-auto mt-2 sm:mt-0 hover:cursor-pointer">
                 {isAuthenticated ? (
                     <Dropdown menu={{items}} trigger={['click']}>
                         <Space>
@@ -107,9 +107,22 @@ const HeaderComp: React.FC = () => {
                     </div>
                 )}
             </div>
-            {/*<Divider />*/}
+            <div className={"flex gap-4 items-center justify-between md:hidden"}>
+                <MenuBar isResponsive={true} defaultSelected={"0"}/>
+                <button className={"flex text-white text-lg"} onClick={() => setSearchOpen(!searchOpen)}>
+                    <SearchOutlined/>
+                </button>
+            </div>
+
+            {
+                searchOpen ?
+                    <div className={`w-2/3 md:hidden`}>
+                        <SearchBar/>
+                    </div> : null
+            }
         </Header>
-    );
+    )
+        ;
 };
 
 export default HeaderComp;

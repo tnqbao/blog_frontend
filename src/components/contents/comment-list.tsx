@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { userApiInstance } from "@/utils/axios.config";
 import Comment from "@/components/contents/comment";
 import { CommentType } from "@/utils/types";
+import {useSelector} from "react-redux";
+import {RootState} from "@/utils/redux/store";
 
 const CommentList: React.FC<{ blogId: number; comments: CommentType[]; setComments: React.Dispatch<React.SetStateAction<CommentType[]>> }> = ({ blogId, comments, setComments }) => {
     const [isLoading, setIsLoading] = useState(true);
-
+    const { user } = useSelector((state: RootState) => state.auth);
     useEffect(() => {
         const fetchComments = async () => {
             try {
@@ -30,11 +32,8 @@ const CommentList: React.FC<{ blogId: number; comments: CommentType[]; setCommen
             {Array.isArray(comments) && comments.length > 0 ? (
                 comments.map((comment) => (
                     <Comment
-                        key={comment.id}
-                        id={comment.id}
-                        body={comment.body}
-                        createdAt={comment.createdAt}
-                        user={comment.user}
+                        comment={comment}
+                        userId={user.id}
                     />
                 ))
             ) : (
