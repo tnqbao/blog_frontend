@@ -77,6 +77,13 @@ const Login: React.FC = () => {
     };
     return (
         <>
+            <Head>
+                <title> {t("title")}</title>
+                <meta
+                    name="description"
+                    content={t("description")}
+                />
+            </Head>
             <div className="flex justify-center min-h-screen bg-gray-100">
                 <div
                     className="flex flex-col md:flex-row bg-white p-2 border rounded-lg shadow-lg max-w-4xl w-full md:my-10">

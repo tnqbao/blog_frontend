@@ -6,16 +6,8 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 
 const LoginPage: React.FC = () => {
-    const {t} = useTranslation("login");
     return (
         <>
-            <Head>
-                <title> {t("title")}</title>
-                <meta
-                    name="description"
-                    content={t("description")}
-                />
-            </Head>
             <Login/>
         </>
     );

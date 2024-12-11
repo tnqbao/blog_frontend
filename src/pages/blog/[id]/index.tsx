@@ -21,7 +21,7 @@ const BlogPage: React.FC<{ blog: BlogType }> = ({blog}) => {
                     content={(blog.body.length > 100) ? blog.body.slice(100) : blog.body}
                 />
             </Head>
-            <div className={"bg-white flex flex-wrap md:flex-nowrap min-h-screen"}>
+            <div className={"bg-none flex flex-wrap md:flex-nowrap min-h-screen"}>
                 <div className={"flex md:w-1/5"}>
                     <MenuBar isResponsive={false} defaultSelected={'1'}/>
                 </div>
@@ -65,6 +65,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({query, re
             downvote: data.downvote,
             createdAt: data.createdAt,
             user: {
+                id: data.user.id,
                 fullname: data.user.fullname,
             },
         };

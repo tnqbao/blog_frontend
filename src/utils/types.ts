@@ -16,6 +16,7 @@ export interface BlogType {
     downvote: number;
     createdAt: string;
     user: {
+        id: number;
         fullname: string;
     };
 }

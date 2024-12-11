@@ -65,6 +65,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
                 downvote: blog.downvote,
                 createdAt: blog.createdAt,
                 user: {
+                    id : blog.user.id,
                     fullname: blog.user.fullname,
                 },
             };

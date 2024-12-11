@@ -23,7 +23,7 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
     };
 
     const router = useRouter();
-    const items2 = [
+    const items = [
         {
             key: '1',
             label: 'Home',
@@ -69,7 +69,7 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
                 className={"hidden md:flex flex-col px-4"}
 
             >
-                {items2.map((item) => (
+                {items.map((item) => (
                     <Menu.Item key={item.key} onClick={() => {
                         router.push(item.path)
                     }} className={"text-md hover:backdrop-brightness-200 transition-transform duration-300 transform hover:scale-105 "}>
@@ -90,7 +90,7 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
                     mode="inline"
                     defaultSelectedKeys={[defaultSelected]}
                 >
-                    {items2.map((item) => (
+                    {items.map((item) => (
                         <Menu.Item key={item.key} onClick={() => {
                             router.push(item.path)
                             setOpen(false);
