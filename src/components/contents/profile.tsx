@@ -16,7 +16,7 @@ const Profile: React.FC<UserTypeProps> = ({user}) => {
         : "N/A";
 
     return (
-        <Card className={"min-w-full min-h-screen flex flex-col items-center "}>
+        <Card className={"min-h-fit flex flex-col items-center" }>
             {/*<Meta avatar={<Image alt={"avatar"} className={"items-center"} preview={false}/>}*/}
             {/*      title={""}*/}
             {/*      className={"items-center"}>*/}
