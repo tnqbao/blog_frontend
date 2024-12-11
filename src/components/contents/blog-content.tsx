@@ -36,8 +36,11 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
     const userId = user.id;
 
     return (
-        <Card className={"flex flex-wrap mx-auto w-full"}>
-            <Space className="flex w-full justify-between">
+        <div className="flex flex-wrap mx-auto w-full">
+            <Card
+                style={{width: '100%', minWidth: '300px', maxWidth: '900px', margin: '0 auto'}}>
+                <Space
+                className="flex min-w-full justify-between">
                 <Space className={"flex items-baseline flex-col"}>
                     <Text style={{fontSize: 20, fontWeight: 'bold'}}>
                         {blog.user.fullname}
@@ -48,41 +51,42 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                 </Space>
                 <BlogMenu blogId={blog.id} autherId={blog.user.id} userId={userId}/>
             </Space>
-            <Divider/>
-            <Title level={3}>{blog.title}</Title>
-            {(<Text onDoubleClick={() => setHideContent(!hideContent)}>
-                {hideContent ? <div dangerouslySetInnerHTML={{__html: blog.body.slice(0, 400)}}/> :
-                    <div dangerouslySetInnerHTML={{__html: blog.body}}/>}
-            </Text>)}
-            {
-                blog.body.length > 400 && <Button
-                    className="focus:outline-none text-blue-600 drop-shadow-2xl"
-                    onClick={() => setHideContent(!hideContent)}
-                    type={"text"}
-                >
-                    {hideContent ? "Show more" : "Show less"}
-                </Button>
-            }
-            <Divider/>
-            <Space style={{width: '100%', flexWrap: "wrap"}}>
-                <VoteButton blog={blog}/>
-                <Button style={{justifySelf: 'end'}} onClick={() => {
-                    setCommentOpen(!isCommentOpen)
-                }}>
-                    <CommentOutlined/>
-                    <Text>Comments</Text>
-                </Button>
+                <Divider/>
+                <Title level={3}>{blog.title}</Title>
+                {(<Text onDoubleClick={() => setHideContent(!hideContent)}>
+                    {hideContent ? <div dangerouslySetInnerHTML={{__html: blog.body.slice(0, 400)}}/> :
+                        <div dangerouslySetInnerHTML={{__html: blog.body}}/>}
+                </Text>)}
+                {
+                    blog.body.length > 400 && <Button
+                        className="focus:outline-none text-blue-600 drop-shadow-2xl"
+                        onClick={() => setHideContent(!hideContent)}
+                        type={"text"}
+                    >
+                        {hideContent ? "Show more" : "Show less"}
+                    </Button>
+                }
+                <Divider/>
+                <Space style={{width: '100%', flexWrap: "wrap"}}>
+                    <VoteButton blog={blog}/>
+                    <Button style={{justifySelf: 'end'}} onClick={() => {
+                        setCommentOpen(!isCommentOpen)
+                    }}>
+                        <CommentOutlined/>
+                        <Text>Comments</Text>
+                    </Button>
 
-                <Share blogId={blog.id}/>
-            </Space>
-            {isCommentOpen ? (
-                <>
-                    <Divider/>
-                    <CommentList blogId={blog.id} comments={comments} setComments={setComments}/>
-                    <CommentUpload postId={blog.id}/>
-                </>
-            ) : null}
-        </Card>
+                    <Share blogId={blog.id}/>
+                </Space>
+                {isCommentOpen ? (
+                    <>
+                        <Divider/>
+                        <CommentList blogId={blog.id} comments={comments} setComments={setComments}/>
+                        <CommentUpload postId={blog.id}/>
+                    </>
+                ) : null}
+            </Card>
+        </div>
     );
 };
 

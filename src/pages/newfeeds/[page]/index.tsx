@@ -10,6 +10,7 @@ import React from "react";
 import Head from "next/head";
 import {Typography} from "antd";
 import PaginationComponent from "@/components/pagination";
+import History from "@/components/contents/history";
 const {Title} = Typography;
 
 const NewfeedPage: React.FC<ListBlogType & { totalPage: number }> = ({Blogs, totalPage}) => {
@@ -23,11 +24,15 @@ const NewfeedPage: React.FC<ListBlogType & { totalPage: number }> = ({Blogs, tot
                 />
             </Head>
             <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-                <div className={"flex md:w-1/3"}>
+                <div className={"flex md:w-1/5"}>
                     <MenuBar isResponsive={false} defaultSelected={'3'}/>
                 </div>
-                <ListBlog Blogs={Blogs} />
-                <div className={"flex md:w-1/3"}></div>
+                <div className={"flex md:w-3/5 md:px-5"}>
+                    <ListBlog Blogs={Blogs} />
+                </div>
+                <div className={"flex md:w-1/5"}>
+                    <History />
+                </div>
             </div>
             <PaginationComponent totalPage={totalPage} />
         </>

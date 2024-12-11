@@ -9,6 +9,8 @@ import ListBlog from "@/components/contents/list-blog";
 import { useRouter } from 'next/router';
 import ScrollToTopButton from "@/components/scroll-to-top-button";
 import { Skeleton } from "antd";
+import BriefBlogContent from "@/components/contents/brief-blog-content";
+import History from "@/components/contents/history";
 
 type TrendingPageProps = {
     initialBlogs: BlogType[] | null;
@@ -107,13 +109,13 @@ const HomePage: React.FC<TrendingPageProps> = ({ initialBlogs, currentPage }) =>
             <div className={"flex md:w-1/5"}>
                 <MenuBar isResponsive={false} defaultSelected={'1'}/>
             </div>
-            <div className={"flex flex-col md:w-3/5 gap-4 justify-center items-center px-5"}>
+            <div className={"flex flex-col md:w-3/5 gap-4 justify-center items-center md:px-5"}>
                 <ListBlog Blogs={blogs}/>
                 {loading && <Skeleton active className={"px-12"}/>}
                 {loading && <Skeleton active  className={"px-12"}/>}
                 {!hasMore && <p className={"items-center align-middle text-center "}> No more blogs to load.</p>}
             </div>
-            <div className={"flex md:w-1/5"}></div>
+            <div className={"flex md:w-1/5"}><History /> </div>
 
             {showScrollTopButton && (
                 <ScrollToTopButton/>
