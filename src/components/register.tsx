@@ -6,6 +6,7 @@ import {userApiInstance} from "@/utils/axios.config";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import React from "react";
 import {UserType} from "@/utils/types";
+import Head from "next/head";
 
 const Register: React.FC = () => {
     const router = useRouter();
@@ -38,6 +39,13 @@ const Register: React.FC = () => {
     };
     return (
         <>
+            <Head>
+                <title> {t("title")}</title>
+                <meta
+                    name="description"
+                    content={t("description")}
+                />
+            </Head>
             <div className="flex justify-center min-h-screen bg-gray-100">
                 <title>Register</title>
                 <div

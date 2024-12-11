@@ -54,6 +54,7 @@ const HomePage: React.FC<TrendingPageProps> = ({ initialBlogs, currentPage }) =>
                 downvote: blog.downvote,
                 createdAt: blog.createdAt,
                 user: {
+                    id: blog.user.id,
                     fullname: blog.user.fullname,
                 },
             }));
@@ -146,6 +147,7 @@ export const getServerSideProps = withAuth(async ({locale, req, query}) => {
                 downvote: blog.downvote,
                 createdAt: blog.createdAt,
                 user: {
+                    id: blog.user.id,
                     fullname: blog.user.fullname,
                 },
             }))
