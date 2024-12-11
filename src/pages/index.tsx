@@ -109,8 +109,8 @@ const HomePage: React.FC<TrendingPageProps> = ({ initialBlogs, currentPage }) =>
             </div>
             <div className={"flex flex-col md:w-3/5 gap-4 justify-center items-center px-5"}>
                 <ListBlog Blogs={blogs}/>
-                {loading && <Skeleton active className={"md: px-12"}/>}
-                {loading && <Skeleton active/>}
+                {loading && <Skeleton active className={"px-12"}/>}
+                {loading && <Skeleton active  className={"px-12"}/>}
                 {!hasMore && <p className={"items-center align-middle text-center "}> No more blogs to load.</p>}
             </div>
             <div className={"flex md:w-1/5"}></div>
