@@ -3,8 +3,9 @@ import ChatBotButton from "@/components/chat-bot-button";
 import React, { useState } from "react";
 import { MoreOutlined } from "@ant-design/icons";
 import {useRouter} from "next/router";
+import PredictEmotionButton from "@/components/contents/predict-emotion-button";
 
-const BlogMenu: React.FC<{ autherId: number, userId: number, blogId: number }> = ({ autherId, userId, blogId }) => {
+const BlogMenu: React.FC<{ autherId: number, userId: number, blogId: number, blogContent : string }> = ({ autherId, userId, blogId, blogContent }) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const handlerConfirm = async () => {
@@ -39,9 +40,9 @@ const BlogMenu: React.FC<{ autherId: number, userId: number, blogId: number }> =
     }
 
     const content = (
-        <div className={"flex flex-col w-full gap-2"}>
+        <div className={"flex flex-col w-full gap-2 text-start"}>
             <ChatBotButton blogId={blogId} />
-            <Button className={"text-md"}>MindScape</Button>
+            <PredictEmotionButton  content={blogContent} />
             {autherId === userId && (
                 <>
                     <Popconfirm

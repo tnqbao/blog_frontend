@@ -25,14 +25,14 @@ const Profile: React.FC<UserTypeProps> = ({user}) => {
                 <Text className={"text-3xl font-bold flex"}>
                     {user.fullname}
                 </Text>
-                <Text>
+                <Text type={"secondary"} >
                     ({user.username})
                 </Text>
             </Space>
             <Divider/>
             <Space className={"justify-between"}>
                 <Text strong><MailOutlined /> Email :</Text>
-                <Text>
+                <Text >
                     {user.mail}
                 </Text>
             </Space>

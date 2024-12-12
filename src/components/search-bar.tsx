@@ -1,77 +1,122 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Input, List, Spin} from 'antd';
-import {useTranslation} from 'next-i18next';
-
-const {Search} = Input;
+import React, { useEffect, useRef, useState } from 'react';
+import { Input, Spin, Button, Dropdown, Menu } from 'antd';
+import { useTranslation } from 'next-i18next';
+import {useRouter} from "next/router";
 
 const SearchBar: React.FC = () => {
-    const {t} = useTranslation('search');
+    const { t } = useTranslation('search');
     const [suggestions, setSuggestions] = useState<string[]>([]);
+    const [history, setHistory] = useState<{ query: string; limit: number }[]>([]);
     const [loading, setLoading] = useState(false);
-    const wsRef = useRef<WebSocket | null>(null);
     const [inputValue, setInputValue] = useState("");
-    const ai_api = localStorage.getItem("ai_domain");
-    useEffect(() => {
+    const wsRef = useRef<WebSocket | null>(null);
+    const apiDomain = localStorage.getItem("ai_domain");
+    const router = useRouter();
+    const limit = 5;
 
-        wsRef.current = new WebSocket(`${ai_api}/ws/suggest`);
+    useEffect(() => {
+        wsRef.current = new WebSocket(`${apiDomain}/ws/suggest`);
+        wsRef.current.onopen = () => {
+            if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+                wsRef.current.send(JSON.stringify({ type: 'get_history' }));
+            }
+        };
+
+        wsRef.current.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+
+            if (data.type === 'history') {
+                setHistory(data.history);
+            } else {
+                setSuggestions(data.slice(0, limit));
+            }
+            setLoading(false);
+        };
+
         return () => {
             if (wsRef.current) {
                 wsRef.current.close();
             }
         };
-    }, []);
+    }, [apiDomain, limit]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        setInputValue(value);
-        if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
-        setLoading(true);
-        wsRef.current.send(JSON.stringify({
-            query: value,
-            top_k: 5
-        }));
+        setInputValue(event.target.value);
+
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({ query: event.target.value, limit }));
+        }
     };
 
-    useEffect(() => {
-        if (!wsRef.current) return;
-        wsRef.current.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log(data)
-            setSuggestions(data.slice(0, 5));
-            setLoading(false);
-        };
+    const handleSearch = async () => {
+        if (!inputValue) return;
 
-        wsRef.current.onerror = () => {
-            setLoading(false);
-        };
-    }, []);
+        const newHistory = [{ query: inputValue, limit }, ...history.filter(item => item.query !== inputValue)];
+        setHistory(newHistory);
+
+        await router.push(`/search?keyword=${inputValue}`);
+        // if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        //     wsRef.current.send(JSON.stringify({ query: inputValue, limit }));
+        // }
+    };
+
+    // const handleHistoryClick = async (item: { query: string; limit: number }) => {
+    //     setInputValue(item.query);
+    //     setLoading(true);
+    //     try {
+    //         const response = await fetch(`${apiDomain}/search`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ query: item.query, limit: item.limit }),
+    //         });
+    //
+    //         const result = await response.json();
+    //         setSuggestions(result.data || []);
+    //     } catch (error) {
+    //         console.error('Error fetching search results:', error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const menu = (
+    //     <Menu className={"relative"}>
+    //         {suggestions.length > 0 &&
+    //             suggestions.map((suggestion, index) => (
+    //                 <Menu.Item key={index} onClick={() => setInputValue(suggestion)}>
+    //                     {suggestion}
+    //                 </Menu.Item>
+    //             ))}
+    //     </Menu>
+    // );
+
     return (
-        <div style={{position: 'relative', width: '100%'}}>
-            <Search
-                placeholder={t('search')}
-                value={inputValue}
-                onChange={handleInputChange}
-                enterButton
-                size="large"
-                className="rounded-lg"
-            />
-            {loading && <Spin style={{position: 'absolute', top: '45px', right: '15px'}}/>}
-            {suggestions.length > 0 && (
-                <List
-                    style={{
-                        position: 'absolute',
-                        zIndex: 1000,
-                        width: '100%',
-                        background: 'white',
-                        border: '1px solid #d9d9d9',
-                        borderRadius: '4px',
-                        marginTop: '8px'
-                    }}
-                    size="small"
-                    dataSource={suggestions}
-                    renderItem={(item) => <List.Item>{item}</List.Item>}
+        <div style={{ position: 'relative', width: '100%' }}>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                <Input
+                    placeholder={t('search')}
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    size="large"
+                    style={{ flex: 2 }}
                 />
-            )}
+                <Button type="primary" size="large" onClick={handleSearch}>
+                    {t('search')}
+                </Button>
+            </div>
+
+            {/*{loading && <Spin style={{ position: 'absolute', top: '45px', right: '15px' }} />}*/}
+
+            {/*<Dropdown*/}
+            {/*    overlay={menu}*/}
+            {/*    visible={suggestions.length > 0}*/}
+            {/*    trigger={['click']}*/}
+            {/*    className={"w-full"}*/}
+            {/*>*/}
+            {/*    <div></div>*/}
+            {/*</Dropdown>*/}
         </div>
     );
 };

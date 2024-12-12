@@ -86,7 +86,7 @@ const BlogContent: FC<BlogContentProps> = ({ blog }) => {
                             router.push(`../blog/${blog.id}`)
                         }}>{formatDateWithDateFns(blog.createdAt)}</Text>
                     </Space>
-                    <BlogMenu blogId={blog.id} autherId={blog.user.id} userId={userId} />
+                    <BlogMenu blogId={blog.id} autherId={blog.user.id} userId={userId} blogContent={blog.body} />
                 </Space>
                 <Divider />
                 <Title level={3}>{blog.title}</Title>
