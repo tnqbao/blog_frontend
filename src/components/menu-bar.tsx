@@ -57,7 +57,7 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
     ];
 
     return (
-        <div className={"flex w-full pt-4 md:bg-white md:border-r-2 pr-2" }>
+        <div className={"flex md:block w-full pt-4 md:bg-white md:border-r-2 pr-2" }>
             {isResponsive === true ?
                 <Button type="primary" onClick={showDrawer} className={"flex justify-center md:hidden bg-black/95"}>
                     <MenuOutlined/>

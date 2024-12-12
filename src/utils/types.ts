@@ -44,3 +44,9 @@ export interface CommentType {
     createdAt : string;
     user: UserType;
 }
+
+export interface MindmapDataTypes {
+    title: string;
+    similarity: number;
+    content: string;
+}

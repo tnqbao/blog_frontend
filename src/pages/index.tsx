@@ -4,13 +4,17 @@ import { withAuth } from "@/utils/authGuard";
 import { parse } from "cookie";
 import { userApiInstance } from "@/utils/axios.config";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import MenuBar from "@/components/menu-bar";
-import ListBlog from "@/components/contents/list-blog";
+
+
 import { useRouter } from 'next/router';
-import ScrollToTopButton from "@/components/scroll-to-top-button";
+
 import { Skeleton } from "antd";
-import BriefBlogContent from "@/components/contents/brief-blog-content";
+
 import History from "@/components/contents/history";
+import ListBlog from "@/components/contents/list-blog";
+import ScrollToTopButton from "@/components/scroll-to-top-button";
+import MenuBar from "@/components/menu-bar";
+
 
 type TrendingPageProps = {
     initialBlogs: BlogType[] | null;
@@ -104,7 +108,7 @@ const HomePage: React.FC<TrendingPageProps> = ({ initialBlogs, currentPage }) =>
     }, [fetchMoreBlogs, loading, hasMore]);
 
     return (
-        <div className={" flex flex-wrap md:flex-nowrap bg-white"}>
+        <div className={"flex flex-wrap md:flex-nowrap bg-white"}>
             <title>Home</title>
             <div className={"flex md:w-1/5"}>
                 <MenuBar isResponsive={false} defaultSelected={'1'}/>

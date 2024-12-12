@@ -91,6 +91,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18",
+    "react-flow-renderer": "^10.3.17",
     "react-i18next": "^15.0.2",
     "react-lite-youtube-embed": "^2.4.0",
     "react-player": "^2.16.0",
