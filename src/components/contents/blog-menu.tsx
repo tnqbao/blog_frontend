@@ -55,7 +55,7 @@ const BlogMenu: React.FC<{ autherId: number, userId: number, blogId: number, blo
                     >
                         <Button danger loading={loading}>Delete</Button>
                     </Popconfirm>
-                    <Button onClick={() => router.push(`/blog/edit/${blogId}`)}>Edit</Button>
+                    <Button onClick={() => router.push(`/blog/edit?id=${blogId}`)}>Edit</Button>
                 </>
             )}
         </div>

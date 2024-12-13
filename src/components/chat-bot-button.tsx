@@ -19,7 +19,7 @@ const ChatBotButton: React.FC<ShareButtonProps> = ({blogId}) => {
                 <CommentOutlined/>
                 <Text>Ask Chatbot?</Text>
             </Button>
-            <ChatPage modalOpen={modalOpen} setModalOpen={setModalOpen}/>
+            <ChatPage modalOpen={modalOpen} setModalOpen={setModalOpen} blogId={blogId}/>
         </>
     );
 };

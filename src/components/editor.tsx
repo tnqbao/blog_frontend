@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill, {ReactQuillProps} from "react-quill";
 
+
 interface ReactQuillWrapperProps extends ReactQuillProps {
     forwardedRef: React.Ref<ReactQuill>;
 }
@@ -50,7 +51,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({value, setValue}) => {
                         const quill = editorRef.current?.getEditor();
                         if (quill) {
                             const range = quill.getSelection();
-                            const imageHTML = `<div class="flex justify-center"><img src="${data.url}" alt="${fileName}" class="max-w-full h-auto" /></div>`;
+                            const imageHTML = `<div class="flex justify-center"><Image src="${data.url}" alt="${fileName}" class="max-w-full h-auto" /></div>`;
                             quill.clipboard.dangerouslyPasteHTML(range ? range.index : 0, imageHTML);
                         } else {
                             console.error("Editor reference is not set");

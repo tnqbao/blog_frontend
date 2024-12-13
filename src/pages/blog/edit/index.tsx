@@ -1,38 +1,38 @@
-import {GetServerSideProps} from 'next';
-import BlogContent from "@/components/contents/blog-content";
-import {userApiInstance} from "@/utils/axios.config";
-import {parse} from 'cookie';
-import {BlogType} from "@/utils/types";
+import {GetServerSideProps} from "next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {withAuth} from "@/utils/authGuard";
 import MenuBar from "@/components/menu-bar";
-import React from "react";
 import Head from "next/head";
 import {Typography} from "antd";
+import {parse} from "cookie";
+import {userApiInstance} from "@/utils/axios.config";
+import {BlogType} from "@/utils/types";
+import React from "react";
+import UploadEdit from "@/components/contents/blog-edit";
 
-const {Title} = Typography
+const {Title} = Typography;
 
-const BlogPage: React.FC<{ blog: BlogType }> = ({blog}) => {
+
+const BlogEditPage: React.FC<{ blog: BlogType }> = ({blog}) => {
     return (
         <>
             <Head>
-                <Title> {blog.title}</Title>
+                <Title> Upload </Title>
                 <meta
                     name="description"
-                    content={(blog.body.length > 100) ? blog.body.slice(100) : blog.body}
+                    content={"Chỉnh sửa nội dung"}
                 />
             </Head>
-            <div className={"bg-none flex flex-wrap md:flex-nowrap min-h-screen"}>
+            <div className={"bg-white flex flex-wrap md:flex-nowrap min-h-screen"}>
                 <div className={"flex md:w-1/5"}>
-                    <MenuBar isResponsive={false} defaultSelected={'1'}/>
+                    <MenuBar isResponsive={false} defaultSelected={'4'}/>
                 </div>
-                <div className={"flex md:w-3/5"}>
-                    <BlogContent blog={blog}/>
-                </div>
+                <UploadEdit id={blog.id} body={blog.body} title={blog.title}/>
                 <div className={"flex md:w-1/3"}></div>
             </div>
         </>
     );
-};
+}
 
 export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req}) => {
     const blogId = Number(query.id) || 1;
@@ -79,4 +79,5 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({query, re
     }
 });
 
-export default BlogPage;
+
+export default BlogEditPage;
