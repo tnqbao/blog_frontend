@@ -2,6 +2,7 @@ import { Button, Modal, Spin } from "antd";
 import { LoadingOutlined, SmileOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { userApiInstance } from "@/utils/axios.config";
+import {useTranslation} from "react-i18next";
 
 type PredictEmotion = {
     sentence: string;
@@ -11,7 +12,7 @@ type PredictEmotion = {
 const PredictEmotionButton: React.FC<{ content: string }> = ({ content }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [emotion, setEmotion] = useState("");
-
+    const { t } = useTranslation("menu");
     const handlerOnClick = async () => {
         const aiDomain = localStorage.getItem("ai_domain");
         if (!aiDomain) {
@@ -43,7 +44,7 @@ const PredictEmotionButton: React.FC<{ content: string }> = ({ content }) => {
     return (
         <>
             <Button onClick={() => handlerOnClick()}>
-                <SmileOutlined /> Predict Emotion
+                <SmileOutlined /> {t('predict_emotion')}
             </Button>
             <Modal title={<h3 className={"flex justify-center text-center"}> Predict Emotion </h3>} centered open={isModalOpen} onOk={() => setIsModalOpen(false)} onCancel={() => setIsModalOpen(false)}>
                 <div className={"flex justify-center my-5 items-center"}>

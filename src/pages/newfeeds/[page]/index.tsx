@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
         const totalPage: number = data.totalPage || 0;
         return {
             props: {
-                ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+                ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 Blogs,
                 totalPage,
             },

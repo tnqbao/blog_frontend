@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Input, Spin, Button, Dropdown, Menu } from 'antd';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from "next/router";
+import {SearchOutlined} from "@ant-design/icons";
 
 interface Suggestion {
     text: string;
@@ -93,7 +94,7 @@ const SearchBar: React.FC = () => {
                     style={{ flex: 2 }}
                 />
                 <Button type="primary" size="large" onClick={handleSearch}>
-                    {t('search')}
+                    <SearchOutlined />
                 </Button>
             </div>
 

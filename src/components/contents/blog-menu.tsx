@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import { MoreOutlined } from "@ant-design/icons";
 import {useRouter} from "next/router";
 import PredictEmotionButton from "@/components/contents/predict-emotion-button";
+import {useTranslation} from "react-i18next";
 
 const BlogMenu: React.FC<{ autherId: number, userId: number, blogId: number, blogContent : string }> = ({ autherId, userId, blogId, blogContent }) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const { t } = useTranslation("menu");
     const handlerConfirm = async () => {
         try {
             setLoading(true);
@@ -53,7 +55,7 @@ const BlogMenu: React.FC<{ autherId: number, userId: number, blogId: number, blo
                         okText="Sure"
                         cancelText="No"
                     >
-                        <Button danger loading={loading}>Delete</Button>
+                        <Button danger loading={loading}> {t('delete')}</Button>
                     </Popconfirm>
                     <Button onClick={() => router.push(`/blog/edit?id=${blogId}`)}>Edit</Button>
                 </>

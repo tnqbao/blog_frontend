@@ -9,11 +9,12 @@ import {
     TrophyOutlined,
     UserOutlined
 } from "@ant-design/icons";
+import {useTranslation} from "react-i18next";
 
 const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defaultSelected: string}) => {
     const [open, setOpen] = useState(false);
     const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
-
+    const { t } = useTranslation("menu");
     const showDrawer = () => {
         setOpen(true);
     };
@@ -26,31 +27,31 @@ const MenuBar = ({isResponsive, defaultSelected} : {isResponsive : boolean, defa
     const items = [
         {
             key: '1',
-            label: 'Home',
+            label: t('home'),
             path: '../',
             icon: React.createElement(HomeOutlined)
         },
         {
             key: '2',
-            label: 'Trending',
+            label: t('trending'),
             path: '../trending',
             icon: React.createElement(TrophyOutlined)
         },
         {
             key: '3',
-            label: 'Newfeeds',
+            label: t('newfeed'),
             path: '../newfeeds/1',
             icon: React.createElement(FireOutlined)
         },
         {
             key: '4',
-            label: 'Upload',
+            label: t('upload'),
             path: '../blog/upload',
             icon: React.createElement(PlusCircleOutlined)
         },
         {
             key: '5',
-            label: 'Me',
+            label: t('profile'),
             path: '../me',
             icon: React.createElement(UserOutlined)
         }

@@ -5,6 +5,7 @@ COPY package*.json ./
 COPY tsconfig.json ./
 COPY yarn.lock ./
 COPY next-i18next.config.js ./
+COPY next.config.mjs ./
 COPY . .
 
 COPY .env.production .env

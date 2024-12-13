@@ -30,7 +30,6 @@ const HeaderComp: React.FC = () => {
             if (resp.status === 200) {
                 localStorage.clear();
                 sessionStorage.clear();
-
                 await router.push("../auth/login");
             } else {
                 console.error("Failed to logout");
