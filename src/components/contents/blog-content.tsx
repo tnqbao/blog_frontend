@@ -64,12 +64,12 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                     <Divider/>
                     <Space style={{width: '100%', flexWrap: "wrap"}}>
                         <VoteButton blog={blog}/>
-                        <button style={{justifySelf: 'end'}} onClick={() => {
+                        <Button style={{justifySelf: 'end'}} onClick={() => {
                             setCommentOpen(!isCommentOpen)
                         }}>
                             <CommentOutlined/>
                             <Text>Comments</Text>
-                        </button>
+                        </Button>
 
                         <Share blogId={blog.id}/>
                     </Space>
