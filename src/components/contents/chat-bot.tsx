@@ -24,9 +24,9 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen, blogId }) 
     const chatContainerRef = useRef<HTMLDivElement | null>(null);
     const { user } = useSelector((state: RootState) => state.auth);
     const username = user?.username || "";
-
     useEffect(() => {
-        ws.current = new WebSocket("ws://localhost:8080/ws");
+        const chatbotDomain = localStorage.getItem("chatbot_domain");
+        ws.current = new WebSocket(`${chatbotDomain}/ws`);
 
         ws.current.onmessage = (event) => {
             const message: Message = JSON.parse(event.data);
@@ -61,8 +61,9 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen, blogId }) 
         }
     };
 
-    const onFormFinish = (values: { link: string }) => {
+    const onFormFinish = (values: { link: string, link2 : string }) => {
         localStorage.setItem("ai_domain", values.link);
+        localStorage.setItem("chatbot_domain", values.link2)
         setIsLinkModalOpen(false);
     };
 
@@ -77,6 +78,12 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen, blogId }) 
             <Form onFinish={onFormFinish}>
                 <Form.Item
                     name="link"
+                    rules={[{ required: true, message: "Link is required" }]}
+                >
+                    <Input placeholder="Link" />
+                </Form.Item>
+                <Form.Item
+                    name="link2"
                     rules={[{ required: true, message: "Link is required" }]}
                 >
                     <Input placeholder="Link" />
