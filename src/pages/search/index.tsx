@@ -12,6 +12,7 @@ const SearchPage = () => {
     const router = useRouter();
     const keyword = router.query.keyword;
 
+
     React.useEffect(() => {
         const fetchData = async () => {
             try {

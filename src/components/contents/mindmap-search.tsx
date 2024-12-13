@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactFlow, { MiniMap, Controls, Background } from 'react-flow-renderer';
+import ReactFlow from 'react-flow-renderer';
 import { MindmapDataTypes } from "@/utils/types";
 
 interface Node {
@@ -17,6 +17,7 @@ interface Edge {
     id: string;
     source: string;
     target: string;
+    type: string;
 }
 
 interface MindmapProps {
@@ -38,53 +39,44 @@ const buildBinaryTree = (data: MindmapDataTypes[], rootKeyword: string) => {
     const rootNode = createNode(0, rootKeyword, 0, 0);
     nodes.push(rootNode);
 
-    let currentParentIndex = 0; // Chỉ số cha hiện tại
-    let currentLevelNodes = 0; // Số node đã xử lý trong hàng hiện tại
-    let maxNodesInCurrentLevel = 2; // Số lượng tối đa node trong hàng tiếp theo
-    let currentLevelStartX = -nodeSpacingX; // Vị trí X bắt đầu hàng hiện tại
+    let currentParentIndex = 0;
+    let currentLevelNodes = 0;
+    let maxNodesInCurrentLevel = 2;
+    let currentLevelStartX = -nodeSpacingX;
     if (!Array.isArray(data)){
         return { nodes, edges };
     }
     for (let i = 0; i < data.length; i++) {
         const parentNode = nodes[currentParentIndex];
 
-        // Tính vị trí của node mới
         const x = currentLevelStartX + currentLevelNodes * nodeSpacingX;
         const y = Math.floor(Math.log2(i + 2)) * levelSpacingY;
 
         const newNode = createNode(i + 1, data[i].title, x, y);
         nodes.push(newNode);
 
-        // Kết nối node mới với node cha
         edges.push({
             id: `edge-${parentNode.id}-${newNode.id}`,
             source: parentNode.id,
             target: newNode.id,
+            type: 'straight'
         });
 
         currentLevelNodes++;
 
-        // Nếu cha đã có 2 con, chuyển sang cha tiếp theo
         if (currentLevelNodes === 2) {
             currentParentIndex++;
             currentLevelNodes = 0;
         }
 
-        // Nếu kết thúc hàng, cập nhật vị trí X cho hàng mới
         if (i + 1 === maxNodesInCurrentLevel) {
-            maxNodesInCurrentLevel *= 2; // Gấp đôi số node cho hàng tiếp theo
-            currentLevelStartX = -(maxNodesInCurrentLevel / 2) * nodeSpacingX; // Tính lại vị trí bắt đầu hàng
+            maxNodesInCurrentLevel *= 2;
+            currentLevelStartX = -(maxNodesInCurrentLevel / 2) * nodeSpacingX;
         }
     }
 
     return { nodes, edges };
 };
-
-
-
-
-
-
 
 const Mindmap: React.FC<MindmapProps> = ({ data, rootKeyword }) => {
     const { nodes, edges } = buildBinaryTree(data, rootKeyword);

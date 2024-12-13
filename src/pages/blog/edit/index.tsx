@@ -34,11 +34,11 @@ const BlogEditPage: React.FC<{ blog: BlogType }> = ({blog}) => {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req}) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req, locale}) => {
     const blogId = Number(query.id) || 1;
     const cookies = parse(req.headers.cookie || '');
     const token = cookies.jwt;
-
+    const currentLocale = locale || "en";
 
     try {
         const response = await userApiInstance.get(`/post/${blogId}`, {
@@ -64,6 +64,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({query, re
 
         return {
             props: {
+                ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 blog,
             },
         };

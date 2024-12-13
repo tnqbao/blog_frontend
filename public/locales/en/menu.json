@@ -1,0 +1,14 @@
+{
+  "home": "Home",
+  "trending": "Trending",
+  "newfeed": "New Feed",
+  "profile": "Profile",
+  "logout": "Logout",
+  "upload": "Upload",
+  "ask": "Ask Chatbot?",
+  "delete": "Delete",
+  "edit": "Edit",
+  "predict_emotion": "Predict Emotion",
+  "share": "Share",
+  "comment": "Comment"
+}

@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
 
         return {
             props: {
-                ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+                ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 Blogs,
             },
         };

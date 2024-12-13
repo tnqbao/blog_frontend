@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale}) 
     const currentLocale = locale || "en";
     return {
         props: {
-            ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+            ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
         },
     };
 });

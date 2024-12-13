@@ -8,6 +8,8 @@ import MenuBar from "@/components/menu-bar";
 import React from "react";
 import Head from "next/head";
 import {Typography} from "antd";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import History from "@/components/contents/history";
 
 const {Title} = Typography
 
@@ -28,17 +30,19 @@ const BlogPage: React.FC<{ blog: BlogType }> = ({blog}) => {
                 <div className={"flex md:w-3/5"}>
                     <BlogContent blog={blog}/>
                 </div>
-                <div className={"flex md:w-1/3"}></div>
+                <div className={"flex md:w-1/3"}>
+                    <History />
+                </div>
             </div>
         </>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req}) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req, locale}) => {
     const blogId = Number(query.id) || 1;
     const cookies = parse(req.headers.cookie || '');
     const token = cookies.jwt;
-
+    const currentLocale = locale || "en";
 
     try {
         const response = await userApiInstance.get(`/post/${blogId}`, {
@@ -64,6 +68,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({query, re
 
         return {
             props: {
+                ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 blog,
             },
         };

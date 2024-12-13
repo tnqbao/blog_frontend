@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
                 props: {
                     user: {},
                     blogs: [],
-                    ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+                    ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 },
             };
         }
@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
                 props: {
                     user: user,
                     blogs: [],
-                    ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+                    ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 },
             };
         }
@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
             props: {
                 user: user,
                 blogs: responseBlog.data,
-                ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+                ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
             },
         };
     } catch (error) {
@@ -89,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
         props: {
             user: {},
             blogs: [],
-            ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+            ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
         },
     };
 });
