@@ -1,10 +1,9 @@
 import React from 'react';
 import Mindmap from "@/components/contents/mindmap-search";
-import { BlogType, ListBlogType, MindmapDataTypes } from "@/utils/types";
+import { BlogType, MindmapDataTypes } from "@/utils/types";
 import MenuBar from "@/components/menu-bar";
 import History from "@/components/contents/history";
 import ListBlog from "@/components/contents/list-blog";
-import { userApiInstance } from "@/utils/axios.config";
 import { useRouter } from "next/router";
 
 const SearchPage = () => {
@@ -16,11 +15,16 @@ const SearchPage = () => {
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await userApiInstance.post(`${aiDomain}/search`, {
-                    keyword: keyword,
+                const response = await fetch(`${aiDomain}/search`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ content : keyword , limit : 5 }),
                 });
                 if (response.status === 200) {
-                    setMindMapData(response.data.result);
+                    const data = await response.json();
+                    setMindMapData(data.results);
                 }
             } catch (e) {
                 console.error(e);
@@ -30,25 +34,7 @@ const SearchPage = () => {
         fetchData();
     }, [aiDomain, keyword]);
 
-    const listBlog: MindmapDataTypes[] = [
-        {
-            title: "canh dep dem khuya",
-            similarity: 0.35241783,
-            content: "đứaad ",
-        },
-        {
-            title: "CHUYỆN KỂ CỦA NGƯỜI GẶP MA RỪNG !",
-            similarity: 0.32552302,
-            content: "Mà ít ra ông ta cũng 50 năm ở và lượn lờ qua cái bãi rừng Đá Đụn này rồi chứ...",
-        },
-        {
-            title: "Vết Cắt Không Lành",
-            similarity: 0.30465505,
-            content: "Tôi không nghĩ rằng chia tay lại đau đến thế. Mỗi lần nghe thấy tên em, trái tim tôi...",
-        },
-    ];
-
-    const listBlogPara: BlogType[] = listBlog.map((blog, index) => ({
+    const listBlogPara: BlogType[] = mindMapData.map((blog, index) => ({
         id: index,
         title: blog.title,
         body: blog.content,
@@ -61,7 +47,7 @@ const SearchPage = () => {
         },
     }));
 
-    const rootKeyword = "Cảnh đẹp";
+    const rootKeyword = keyword as string;
 
     return (
         <div className={"flex flex-wrap md:flex-nowrap bg-white min-h-screen"}>
@@ -71,7 +57,7 @@ const SearchPage = () => {
             </div>
             <div className={"flex flex-col md:w-3/5 gap-4 items-center md:px-5"}>
                 <h1>Search: {rootKeyword}</h1>
-                <Mindmap data={listBlog} rootKeyword={rootKeyword} />
+                <Mindmap data={mindMapData} rootKeyword={rootKeyword} />
                 <ListBlog Blogs={listBlogPara} />
             </div>
             <div className={"flex md:w-1/5"}>

@@ -7,18 +7,21 @@ interface Message {
     role: string;
     username: string;
     content: string;
+    blogId: number;
 }
 
 interface ChatPageProps {
     modalOpen: boolean;
     setModalOpen: (open: boolean) => void;
+    blogId: number;
 }
 
-const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen }) => {
+const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen, blogId }) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [content, setContent] = useState("");
     const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
     const ws = useRef<WebSocket | null>(null);
+    const chatContainerRef = useRef<HTMLDivElement | null>(null);
     const { user } = useSelector((state: RootState) => state.auth);
     const username = user?.username || "";
 
@@ -28,6 +31,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen }) => {
         ws.current.onmessage = (event) => {
             const message: Message = JSON.parse(event.data);
             setMessages((prev) => [...prev, message]);
+            console.log("WebSocket message:", message);
         };
 
         ws.current.onerror = (error) => {
@@ -43,9 +47,15 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen }) => {
         };
     }, []);
 
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = 0;
+        }
+    }, [messages]);
+
     const sendMessage = () => {
         if (username.trim() && content.trim() && ws.current?.readyState === WebSocket.OPEN) {
-            const message: Message = { role: "user", username, content };
+            const message: Message = { role: "user", username, content, blogId };
             ws.current.send(JSON.stringify(message));
             setContent("");
         }
@@ -80,13 +90,6 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen }) => {
         </Modal>
     );
 
-    const MessageItem: React.FC<Message> = ({ role, username, content }) => (
-        <div className="mb-2">
-            <span className="font-bold text-blue-600">{username || "Mindmap"}: </span>
-            <span>{content}</span>
-        </div>
-    );
-
     return (
         <>
             <ChatLinkModal />
@@ -103,10 +106,17 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen }) => {
                 onCancel={() => setModalOpen(false)}
                 footer={null}
             >
-                <div className="h-80 overflow-y-auto p-4 bg-gray-100">
-                    {messages.map((msg, index) => (
-                        <MessageItem key={index} {...msg} />
-                    ))}
+                <div
+                    ref={chatContainerRef}
+                    className="h-80 overflow-y-auto p-4 bg-gray-100"
+                >
+                    {messages
+                        .slice()
+                        .map((msg, index) => (
+                            <div key={index}>
+                                <strong>{msg.username}:</strong> {msg.content}
+                            </div>
+                        ))}
                 </div>
                 <div className="flex items-center p-2 border-t">
                     <input
@@ -117,9 +127,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ modalOpen, setModalOpen }) => {
                         onChange={(e) => setContent(e.target.value)}
                     />
                     <button
-                        className={`bg-blue-500 text-white px-4 py-2 rounded ${
-                            !content.trim() && "opacity-50 cursor-not-allowed"
-                        }`}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
                         onClick={sendMessage}
                         disabled={!content.trim()}
                     >

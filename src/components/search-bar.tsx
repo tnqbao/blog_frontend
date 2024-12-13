@@ -1,36 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Input, Spin, Button, Dropdown, Menu } from 'antd';
 import { useTranslation } from 'next-i18next';
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
+
+interface Suggestion {
+    text: string;
+    similarity: number;
+}
 
 const SearchBar: React.FC = () => {
     const { t } = useTranslation('search');
-    const [suggestions, setSuggestions] = useState<string[]>([]);
-    const [history, setHistory] = useState<{ query: string; limit: number }[]>([]);
+    const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
     const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const wsRef = useRef<WebSocket | null>(null);
-    const apiDomain = localStorage.getItem("ai_domain");
+    const apiDomain = typeof window !== 'undefined' ? localStorage.getItem("ai_domain") : null; // Kiểm tra để tránh lỗi SSR
     const router = useRouter();
     const limit = 5;
 
     useEffect(() => {
+        if (!apiDomain) return;
+
         wsRef.current = new WebSocket(`${apiDomain}/ws/suggest`);
         wsRef.current.onopen = () => {
-            if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-                wsRef.current.send(JSON.stringify({ type: 'get_history' }));
-            }
+            console.log("WebSocket connection opened");
         };
 
         wsRef.current.onmessage = (event) => {
             const data = JSON.parse(event.data);
-
-            if (data.type === 'history') {
-                setHistory(data.history);
-            } else {
-                setSuggestions(data.slice(0, limit));
-            }
+            console.log("WebSocket message received:", data);
+            setSuggestions(data.suggestions.slice(0, limit));
             setLoading(false);
+        };
+
+        wsRef.current.onerror = (error) => {
+            console.error("WebSocket error:", error);
         };
 
         return () => {
@@ -41,56 +45,42 @@ const SearchBar: React.FC = () => {
     }, [apiDomain, limit]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value);
+        const value = event.target.value;
+        setInputValue(value);
 
         if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify({ query: event.target.value, limit }));
+            wsRef.current.send(JSON.stringify({ query: value, limit: limit }));
         }
     };
 
     const handleSearch = async () => {
         if (!inputValue) return;
 
-        const newHistory = [{ query: inputValue, limit }, ...history.filter(item => item.query !== inputValue)];
-        setHistory(newHistory);
-
         await router.push(`/search?keyword=${inputValue}`);
-        // if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-        //     wsRef.current.send(JSON.stringify({ query: inputValue, limit }));
-        // }
     };
 
-    // const handleHistoryClick = async (item: { query: string; limit: number }) => {
-    //     setInputValue(item.query);
-    //     setLoading(true);
-    //     try {
-    //         const response = await fetch(`${apiDomain}/search`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ query: item.query, limit: item.limit }),
-    //         });
-    //
-    //         const result = await response.json();
-    //         setSuggestions(result.data || []);
-    //     } catch (error) {
-    //         console.error('Error fetching search results:', error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
+    const handleSuggestionClick = (suggestion: Suggestion) => {
+        setInputValue(suggestion.text);
+        handleSearch();
+    };
 
-    // const menu = (
-    //     <Menu className={"relative"}>
-    //         {suggestions.length > 0 &&
-    //             suggestions.map((suggestion, index) => (
-    //                 <Menu.Item key={index} onClick={() => setInputValue(suggestion)}>
-    //                     {suggestion}
-    //                 </Menu.Item>
-    //             ))}
-    //     </Menu>
-    // );
+    const menu = (
+        <Menu>
+            {suggestions.length > 0 ? (
+                suggestions.map((suggestion, index) => (
+                    console.log(suggestion.text),
+                        <Menu.Item key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                            <div className={"flex w-full justify-between"}>
+                                <p className={"flex"}> {suggestion.text} </p>
+                                <p className={"flex"}> {(suggestion.similarity*100).toFixed(2) + "%"}</p>
+                            </div>
+                        </Menu.Item>
+                ))
+            ) : (
+                <Menu.Item disabled>{t('no_suggestions')}</Menu.Item>
+            )}
+        </Menu>
+    );
 
     return (
         <div style={{ position: 'relative', width: '100%' }}>
@@ -107,16 +97,13 @@ const SearchBar: React.FC = () => {
                 </Button>
             </div>
 
-            {/*{loading && <Spin style={{ position: 'absolute', top: '45px', right: '15px' }} />}*/}
+            {loading && <Spin style={{ position: 'absolute', top: '45px', right: '15px' }} />}
 
-            {/*<Dropdown*/}
-            {/*    overlay={menu}*/}
-            {/*    visible={suggestions.length > 0}*/}
-            {/*    trigger={['click']}*/}
-            {/*    className={"w-full"}*/}
-            {/*>*/}
-            {/*    <div></div>*/}
-            {/*</Dropdown>*/}
+            {inputValue && suggestions.length > 0 && (
+                <Dropdown overlay={menu} visible trigger={['click']} className="w-full">
+                    <div></div>
+                </Dropdown>
+            )}
         </div>
     );
 };
