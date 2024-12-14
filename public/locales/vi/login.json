@@ -8,5 +8,6 @@
     "pleaseInputUsername": "Vui lòng nhập tên đăng nhập!",
     "pleaseInputPassword": "Vui lòng nhập mật khẩu!",
     "invalidInput" : "Tên đăng nhập hoặc mật khẩu không hợp lệ!",
-    "forgotPassword" : "Quên mật khẩu"
+    "forgotPassword" : "Quên mật khẩu",
+    "description": "Đăng nhập để xem những điều hay ho!"
 }

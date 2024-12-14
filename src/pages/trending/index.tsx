@@ -7,6 +7,12 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import MenuBar from "@/components/menu-bar";
 import {withAuth} from "@/utils/authGuard";
 import React from "react";
+import Head from "next/head";
+import {Typography} from "antd";
+import History from "@/components/contents/history";
+
+const {Title} = Typography;
+
 
 type TrendingPageProps = {
     Blogs: BlogType[] | null;
@@ -16,14 +22,27 @@ type TrendingPageProps = {
 
 const TrendingPage: React.FC<TrendingPageProps> = ({Blogs, error}) => {
     return (
-        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-            <title>Trending</title>
-            <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false} defaultSelected={'2'}/>
+        <>
+            <Head>
+                <Title> {"Treding in MindScape"}</Title>
+                <meta
+                    name="description"
+                    content={"Nhung bai viet duoc yeu thich nhat tren BlogMindScape"}
+                />
+            </Head>
+            <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
+                <title>Trending</title>
+                <div className={"flex md:w-1/5"}>
+                    <MenuBar isResponsive={false} defaultSelected={'2'}/>
+                </div>
+                <div className={"flex md:w-3/5 md:px-5"}>
+                    <ListBlog Blogs={Blogs}/>
+                </div>
+                <div className={"flex md:w-1/5"}>
+                    <History />
+                </div>
             </div>
-            <ListBlog Blogs={Blogs}/>
-            <div className={"flex md:w-1/3"}></div>
-        </div>
+        </>
     )
 }
 
@@ -49,6 +68,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
                 downvote: blog.downvote,
                 createdAt: blog.createdAt,
                 user: {
+                    id : blog.user.id,
                     fullname: blog.user.fullname,
                 },
             };
@@ -56,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({locale, r
 
         return {
             props: {
-                ...(await serverSideTranslations(currentLocale, ["blog", "common"])),
+                ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 Blogs,
             },
         };

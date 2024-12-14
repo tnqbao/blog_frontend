@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, message, Divider, Avatar } from "antd";
 import { userApiInstance } from "@/utils/axios.config";
 import SubmitButton from "../custom-submit-button";
@@ -6,8 +6,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
-
-const ReactQuillNoSSR = dynamic(() => import("react-quill"), { ssr: false });
+const QuillEditor = dynamic(() => import("../editor"), { ssr: false });
 
 type FieldType = {
     title?: string;
@@ -19,10 +18,15 @@ const Upload: React.FC = () => {
     const router = useRouter();
     const { t } = useTranslation("blog");
     const { user } = useSelector((state: any) => state.auth);
+    const [body, setBody] = useState<string>("");
 
     const onFinish = async (values: FieldType) => {
         try {
-            const response = await userApiInstance.post("/post", values, { withCredentials: true });
+            const response = await userApiInstance.post(
+                "/post",
+                { ...values, body },
+                { withCredentials: true }
+            );
             if (response.status === 200) {
                 message.success("Post submitted successfully!");
                 await router.push("../");
@@ -34,8 +38,8 @@ const Upload: React.FC = () => {
     };
 
     return (
-        <div className="flex w-full md:w-5/6 flex-wrap justify-center items-start">
-            <div className="w-full bg-white ">
+        <div className="flex w-full md:w-5/6 flex-wrap justify-center items-start ">
+            <div className="w-full bg-white">
                 <Form
                     form={form}
                     layout="vertical"
@@ -69,15 +73,8 @@ const Upload: React.FC = () => {
                         />
                     </Form.Item>
                     <Divider />
-                    <Form.Item
-                        name="body"
-                        rules={[{ required: true, message: "Please enter content" }]}
-                    >
-                        <ReactQuillNoSSR
-                            theme="snow"
-                            placeholder={t("body")}
-                            className="hover:backdrop-brightness-200 border border-black/50 "
-                        />
+                    <Form.Item rules={[{ required: true, message: "Please enter content" }]}>
+                        <QuillEditor value={body} setValue={setBody} />
                     </Form.Item>
                     <div className="flex justify-between">
                         <Form.Item className="flex-grow w-1/3">
@@ -88,7 +85,9 @@ const Upload: React.FC = () => {
                                 type="primary"
                                 danger
                                 className="flex-grow w-full text-xl h-auto"
-                                onClick={() => { router.push("../") }}
+                                onClick={() => {
+                                    router.push("../");
+                                }}
                             >
                                 {t("cancel")}
                             </Button>

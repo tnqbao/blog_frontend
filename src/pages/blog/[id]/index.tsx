@@ -1,41 +1,48 @@
-import { GetServerSideProps } from 'next';
+import {GetServerSideProps} from 'next';
 import BlogContent from "@/components/contents/blog-content";
-import { userApiInstance } from "@/utils/axios.config";
-import Head from 'next/head';
-import { parse } from 'cookie';
+import {userApiInstance} from "@/utils/axios.config";
+import {parse} from 'cookie';
 import {BlogType} from "@/utils/types";
 import {withAuth} from "@/utils/authGuard";
 import MenuBar from "@/components/menu-bar";
-import ListBlog from "@/components/contents/list-blog";
 import React from "react";
+import Head from "next/head";
+import {Typography} from "antd";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import History from "@/components/contents/history";
 
+const {Title} = Typography
 
-
-const BlogPage: React.FC<{blog : BlogType}> = ({ blog }) => {
+const BlogPage: React.FC<{ blog: BlogType }> = ({blog}) => {
     return (
-        <div className={"bg-white flex flex-wrap md:flex-nowrap"}>
-            <div className={"flex md:w-1/3"}>
-                <MenuBar isResponsive={false} defaultSelected={'1'}/>
+        <>
+            <Head>
+                <Title> {blog.title}</Title>
+                <meta
+                    name="description"
+                    content={(blog.body.length > 100) ? blog.body.slice(100) : blog.body}
+                />
+            </Head>
+            <div className={"bg-none flex flex-wrap md:flex-nowrap min-h-screen"}>
+                <div className={"flex md:w-1/5"}>
+                    <MenuBar isResponsive={false} defaultSelected={'1'}/>
+                </div>
+                <div className={"flex md:w-3/5"}>
+                    <BlogContent blog={blog}/>
+                </div>
+                <div className={"flex md:w-1/3"}>
+                    <History />
+                </div>
             </div>
-            <BlogContent blog={blog}/>
-            <div className={"flex md:w-1/3"}></div>
-        </div>
+        </>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req}) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async ({query, req, locale}) => {
     const blogId = Number(query.id) || 1;
     const cookies = parse(req.headers.cookie || '');
-    const token = cookies.auth_token;
-
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/auth/login',
-                permanent: false,
-            },
-        };
-    }
+    const token = cookies.jwt;
+    const currentLocale = locale || "en";
 
     try {
         const response = await userApiInstance.get(`/post/${blogId}`, {
@@ -54,12 +61,14 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ({query, re
             downvote: data.downvote,
             createdAt: data.createdAt,
             user: {
+                id: data.user.id,
                 fullname: data.user.fullname,
             },
         };
 
         return {
             props: {
+                ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
                 blog,
             },
         };

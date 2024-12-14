@@ -12,6 +12,9 @@
     "pleaseInputPassword": "Xin mời nhập mật khẩu của bạn!",
     "pleaseInputFullname": "Xin mời nhập tên của bạn!",
     "notValidEmail": "E-mail của bạn không hợp lệ!",
-    "notValidPhone": "Số điện thoại không chính xác!"
+    "notValidPhone": "Số điện thoại không chính xác!",
+    "invalidUsername": "Tên đăng nhập đã tồn tại!",
+    "invalidInput": "Dữ liệu không hợp lệ!",
+    "description": "Gia nập BlogMindScape và khám phá những điều thú vị!"
   }
   

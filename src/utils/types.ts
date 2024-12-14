@@ -16,6 +16,7 @@ export interface BlogType {
     downvote: number;
     createdAt: string;
     user: {
+        id: number;
         fullname: string;
     };
 }
@@ -28,6 +29,10 @@ export interface UserType {
     fullname: string;
 }
 
+export interface UserTypeProps {
+    user: UserType;
+}
+
 export interface ListBlogType {
     Blogs: BlogType[] | null;
     error?: string;
@@ -38,4 +43,11 @@ export interface CommentType {
     body: string;
     createdAt : string;
     user: UserType;
+}
+
+export interface MindmapDataTypes {
+    id : number;
+    title: string;
+    similarity: number;
+    content: string;
 }

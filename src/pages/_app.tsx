@@ -14,8 +14,6 @@ import {persistor, store} from "@/utils/redux/store";
 import FooterComp from "@/components/footer";
 
 
-const {Content, Sider} = Layout;
-
 function App({Component, pageProps}: AppProps) {
     const [isClient, setIsClient] = useState(false);
     useEffect(() => {
