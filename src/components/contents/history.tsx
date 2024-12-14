@@ -1,10 +1,11 @@
 import { BlogType } from "@/utils/types";
 import BriefBlogContent from "@/components/contents/brief-blog-content";
 import React, { useEffect, useState } from "react";
+import {useTranslation} from "react-i18next";
 
 const History: React.FC = () => {
     const [blogs, setBlogs] = useState<BlogType[]>([]);
-
+    const { t } = useTranslation('menu');
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
@@ -27,7 +28,7 @@ const History: React.FC = () => {
     return (
         <div className={"bg-white min-h-screen h-auto flex flex-col py-4 gap-2 w-full mb-2 bg-blue-400/20 px-2"}>
             <div >
-                <h1 className={"text-xl font-bold text-black/70"}>Recent Votes</h1>
+                <h1 className={"text-xl font-bold text-black/70"}>{t('menu')}</h1>
             </div>
             {blogs && blogs.map((blog: BlogType) => (
                 <BriefBlogContent key={blog.id} blog={blog} />

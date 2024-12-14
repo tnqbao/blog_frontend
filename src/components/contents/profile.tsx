@@ -3,7 +3,6 @@ import {UserTypeProps} from "@/utils/types";
 import {Card, Divider, Space, Typography } from "antd";
 import {CalendarOutlined, MailOutlined} from "@ant-design/icons";
 
-const {Meta} = Card;
 const {Text, Paragraph} = Typography;
 
 function formatDateWithDateFns(isoDate: string): string {

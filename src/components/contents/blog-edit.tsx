@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Input, Button, message, Divider, Avatar } from "antd";
+import React, { useState, useEffect } from "react";
+import { Form, Input, Button, message, Divider, Avatar, Modal } from "antd";
 import { userApiInstance } from "@/utils/axios.config";
 import SubmitButton from "../custom-submit-button";
 import { useRouter } from "next/router";
@@ -9,37 +9,42 @@ import dynamic from "next/dynamic";
 const QuillEditor = dynamic(() => import("../editor"), { ssr: false });
 
 type FieldType = {
-    id : number;
+    id: number;
     title?: string;
     body?: string;
 };
 
-const UploadEdit: React.FC<FieldType> = ({id ,title ,body}) => {
+const UploadEdit: React.FC<FieldType> = ({ id, title, body }) => {
     const [form] = Form.useForm();
     const router = useRouter();
     const { t } = useTranslation("blog");
     const { user } = useSelector((state: any) => state.auth);
-    const [bodyEdit, setBody] = useState<string>(body || "");
+    const [editedBody, setEditedBody] = useState<string>(body || "");
+
+    useEffect(() => {
+        form.setFieldsValue({ title, body });
+    }, [title, body]);
 
     const onFinish = async (values: FieldType) => {
         try {
             const response = await userApiInstance.put(
                 "/post",
-                { ...values, body : bodyEdit, id: id },
+                { ...values, body: editedBody, id },
                 { withCredentials: true }
             );
             if (response.status === 200) {
                 message.success("Post submitted successfully!");
                 await router.push("../");
             }
-        } catch (error) {
-            message.error("Error submitting post. Please try again.");
+        } catch (error: any) {
+            const errMessage = error.response?.data?.message || "Error submitting post. Please try again.";
+            message.error(errMessage);
             console.error("Error submit post:", error);
         }
     };
 
     return (
-        <div className="flex w-full md:w-5/6 flex-wrap justify-center items-start ">
+        <div className="flex w-full md:w-5/6 flex-wrap justify-center items-start">
             <div className="w-full bg-white">
                 <Form
                     form={form}
@@ -74,8 +79,8 @@ const UploadEdit: React.FC<FieldType> = ({id ,title ,body}) => {
                         />
                     </Form.Item>
                     <Divider />
-                    <Form.Item rules={[{ required: true, message: "Please enter content" }]}>
-                        <QuillEditor value={bodyEdit} setValue={setBody} />
+                    <Form.Item name="body" rules={[{ required: true, message: "Please enter content" }]}>
+                        <QuillEditor value={editedBody} setValue={setEditedBody} />
                     </Form.Item>
                     <div className="flex justify-between">
                         <Form.Item className="flex-grow w-1/3">
@@ -87,7 +92,15 @@ const UploadEdit: React.FC<FieldType> = ({id ,title ,body}) => {
                                 danger
                                 className="flex-grow w-full text-xl h-auto"
                                 onClick={() => {
-                                    router.push("../");
+                                    if (form.isFieldsTouched()) {
+                                        Modal.confirm({
+                                            title: "Are you sure you want to cancel?",
+                                            content: "Your changes will not be saved.",
+                                            onOk: () => router.push("../"),
+                                        });
+                                    } else {
+                                        router.push("../");
+                                    }
                                 }}
                             >
                                 {t("cancel")}

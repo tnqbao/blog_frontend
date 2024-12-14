@@ -60,12 +60,8 @@ const HeaderComp: React.FC = () => {
 
     return (
         <Header
-            style={{
-                position: 'sticky',
-                top: 0,
-                zIndex: 1
-            }}
-            className={"bg-[#000000]/95 bg-none flex flex-wrap shadow-sm items-center px-4 py-3 h-1/6 gap-2 justify-evenly flex-col md:flex-row"}>
+            className="md:sticky md:top-0 md:z-10 bg-[#000000]/95 flex flex-wrap shadow-sm items-center px-4 py-3 h-1/6 gap-2 justify-evenly flex-col md:flex-row"
+        >
             <div
                 className="flex items-center bg-[url('https://i.imgur.com/yzO7MiG.png')] sm:bg-[url('https://i.imgur.com/uGKflOp.png')] bg-cover bg-center h-10 w-full sm:h-16 sm:w-16  rounded-md hover:cursor-pointer duration-300 transition-transform transform hover:scale-150"
                 onClick={() => {

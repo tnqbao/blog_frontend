@@ -5,13 +5,15 @@ import MenuBar from "@/components/menu-bar";
 import History from "@/components/contents/history";
 import ListBlog from "@/components/contents/list-blog";
 import { useRouter } from "next/router";
+import {GetServerSideProps} from "next";
+import {withAuth} from "@/utils/authGuard";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const SearchPage = () => {
     const [mindMapData, setMindMapData] = React.useState<MindmapDataTypes[]>([]);
     const aiDomain = localStorage.getItem("ai_domain");
     const router = useRouter();
     const keyword = router.query.keyword;
-
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -36,7 +38,7 @@ const SearchPage = () => {
     }, [aiDomain, keyword]);
 
     const listBlogPara: BlogType[] = mindMapData.map((blog, index) => ({
-        id: index,
+        id: blog.id,
         title: blog.title,
         body: blog.content,
         upvote: 0,
@@ -57,7 +59,7 @@ const SearchPage = () => {
                 <MenuBar isResponsive={false} defaultSelected={'1'} />
             </div>
             <div className={"flex flex-col md:w-3/5 gap-4 items-center md:px-5"}>
-                <h1>Search: {rootKeyword}</h1>
+                <h1>: {rootKeyword}</h1>
                 <Mindmap data={mindMapData} rootKeyword={rootKeyword} />
                 <ListBlog Blogs={listBlogPara} />
             </div>
@@ -67,5 +69,14 @@ const SearchPage = () => {
         </div>
     );
 }
+
+export const getServerSideProps: GetServerSideProps = withAuth(async ({locale}) => {
+    const currentLocale = locale || "en";
+    return {
+        props: {
+            ...(await serverSideTranslations(currentLocale, ["blog", "common", "menu"])),
+        },
+    };
+});
 
 export default SearchPage;
