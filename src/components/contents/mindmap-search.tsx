@@ -82,7 +82,7 @@ const Mindmap: React.FC<MindmapProps> = ({ data, rootKeyword }) => {
     const { nodes, edges } = buildBinaryTree(data, rootKeyword);
 
     return (
-        <div className={"w-full min-h-[50vh]"}>
+        <div className={"w-full min-h-[60vh]"}>
             <ReactFlow nodes={nodes} edges={edges} fitView>
             </ReactFlow>
         </div>
