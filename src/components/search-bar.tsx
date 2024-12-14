@@ -14,6 +14,7 @@ const SearchBar: React.FC = () => {
     const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
     const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const [dropdownVisible, setDropdownVisible] = useState(false); // Quản lý trạng thái dropdown
     const wsRef = useRef<WebSocket | null>(null);
     const apiDomain = typeof window !== 'undefined' ? localStorage.getItem("ai_domain") : null; // Kiểm tra để tránh lỗi SSR
     const router = useRouter();
@@ -32,6 +33,7 @@ const SearchBar: React.FC = () => {
             console.log("WebSocket message received:", data);
             setSuggestions(data.suggestions.slice(0, limit));
             setLoading(false);
+            setDropdownVisible(true); // Hiển thị dropdown khi có gợi ý
         };
 
         wsRef.current.onerror = (error) => {
@@ -57,11 +59,13 @@ const SearchBar: React.FC = () => {
     const handleSearch = async () => {
         if (!inputValue) return;
 
+        setDropdownVisible(false); // Đóng dropdown khi tìm kiếm
         await router.push(`/search?keyword=${inputValue}`);
     };
 
     const handleSuggestionClick = (suggestion: Suggestion) => {
         setInputValue(suggestion.text);
+        setDropdownVisible(false); // Đóng dropdown khi nhấp vào suggestion
         handleSearch();
     };
 
@@ -69,13 +73,12 @@ const SearchBar: React.FC = () => {
         <Menu>
             {suggestions.length > 0 ? (
                 suggestions.map((suggestion, index) => (
-                    console.log(suggestion.text),
-                        <Menu.Item key={index} onClick={() => handleSuggestionClick(suggestion)}>
-                            <div className={"flex w-full justify-between"}>
-                                <p className={"flex"}> {suggestion.text} </p>
-                                <p className={"flex"}> {(suggestion.similarity*100).toFixed(2) + "%"}</p>
-                            </div>
-                        </Menu.Item>
+                    <Menu.Item key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                        <div className={"flex w-full justify-between"}>
+                            <p className={"flex"}> {suggestion.text} </p>
+                            <p className={"flex"}> {(suggestion.similarity * 100).toFixed(2) + "%"}</p>
+                        </div>
+                    </Menu.Item>
                 ))
             ) : (
                 <Menu.Item disabled>{t('no_suggestions')}</Menu.Item>
@@ -101,7 +104,13 @@ const SearchBar: React.FC = () => {
             {loading && <Spin style={{ position: 'absolute', top: '45px', right: '15px' }} />}
 
             {inputValue && suggestions.length > 0 && (
-                <Dropdown overlay={menu} visible trigger={['click']} className="w-full">
+                <Dropdown
+                    overlay={menu}
+                    visible={dropdownVisible}
+                    onVisibleChange={setDropdownVisible}
+                    trigger={['click']}
+                    className="w-full"
+                >
                     <div></div>
                 </Dropdown>
             )}

@@ -59,7 +59,6 @@ const SearchPage = () => {
                 <MenuBar isResponsive={false} defaultSelected={'1'} />
             </div>
             <div className={"flex flex-col md:w-3/5 gap-4 items-center md:px-5"}>
-                <h1>: {rootKeyword}</h1>
                 <Mindmap data={mindMapData} rootKeyword={rootKeyword} />
                 <ListBlog Blogs={listBlogPara} />
             </div>
