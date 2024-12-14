@@ -46,6 +46,7 @@ export interface CommentType {
 }
 
 export interface MindmapDataTypes {
+    id : number;
     title: string;
     similarity: number;
     content: string;

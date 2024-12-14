@@ -12,6 +12,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "@/utils/redux/store";
 import {useRouter} from "next/router";
 import BlogMenu from "@/components/contents/blog-menu";
+import {useTranslation} from "react-i18next";
 
 const {Title, Text} = Typography;
 
@@ -31,6 +32,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
     const router = useRouter();
     const {user} = useSelector((state: RootState) => state.auth);
     const userId = user.id;
+    const { t } = useTranslation('menu');
     return (
         <div className="flex flex-wrap mx-auto w-full">
             <Card
@@ -38,7 +40,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                 <Space
                     className="flex min-w-full justify-between">
                     <Space className={"flex items-baseline flex-col"}>
-                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}} onClick={() => {router.push(`../user/${blog.user.id}`)}} className={"cursor-pointer"}>
                             {blog.user.fullname}
                         </Text>
                         <Text style={{fontSize: 13}} className={"text-gray-400 hover:cursor-pointer"} onClick={() => {
@@ -68,7 +70,7 @@ const BlogContent: FC<BlogContentProps> = ({blog}) => {
                             setCommentOpen(!isCommentOpen)
                         }}>
                             <CommentOutlined/>
-                            <Text>Comments</Text>
+                            <Text> {t('comment')}</Text>
                         </Button>
 
                         <Share blogId={blog.id}/>

@@ -9,6 +9,7 @@
   "delete": "Xóa",
   "edit": "Chỉnh sửa",
   "predict_emotion": "Dự đoán cảm xúc",
-  "share" : "Chia sẻ",
-  "comment": "Bình luận"
+  "share": "Chia sẻ",
+  "comment": "Bình luận",
+  "recent": "Gần đây"
 }
